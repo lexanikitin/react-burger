@@ -1,0 +1,46 @@
+.section{
+    max-width: 600px;
+    width: 100%;
+}
+.editedList{
+    overflow-y: scroll;
+    max-height: calc(100vh - 616px);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.editedItem{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+.total{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.amount{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.editedList::-webkit-scrollbar {
+    background: #2F2F37;
+    max-height: 664px;
+    width: 8px;
+}
+
+.editedList::-webkit-scrollbar-thumb {
+    background: #8585AD;
+    border: 3px solid #8585AD;
+    height: 492px;
+    width: 8px;
+}
+
+.editedList::-webkit-scrollbar-track {
+    background: #2F2F37;
+}

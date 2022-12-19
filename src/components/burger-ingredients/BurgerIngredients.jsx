@@ -20,7 +20,7 @@ const BurgerIngredients = (props, list) => {
             <div className={'pb-10'} style={{display: 'flex'}}>
                 {typeList.map(type => {
                     return (
-                        <Tab value={type.name} active={currentTab === type.name} onClick={setCurrentTab}>
+                        <Tab key={type.id} value={type.name} active={currentTab === type.name} onClick={setCurrentTab}>
                             {type.name}
                         </Tab>
                     )
@@ -37,7 +37,7 @@ const BurgerIngredients = (props, list) => {
                                 {props.list.map((item) => {
                                     if (item.type === type.type) {
                                         return (
-                                            <BurgerIngredient info={item}/>
+                                            <BurgerIngredient key={item._id} info={item}/>
                                         )
                                     }
                                 })}
