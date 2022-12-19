@@ -2,6 +2,7 @@ import React from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 const BurgerConstructor = (props) => {
     const bun = props.order.find((item) => {
@@ -11,7 +12,7 @@ const BurgerConstructor = (props) => {
     })
 
     return (
-        <section className={clsx(props.className, BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
+        <section className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
             <ConstructorElement {...bun} text={bun.name + '(верх)'} thumbnail={bun.image} type={'top'}
                                 isLocked={true} extraClass={clsx('mb-4', 'ml-8')}/>
             <ul className={clsx(BrgCnstrStyle.editedList)}>
@@ -42,3 +43,21 @@ const BurgerConstructor = (props) => {
 };
 
 export default BurgerConstructor;
+
+BurgerConstructor.propTypes = {
+    order: PropTypes.arrayOf(
+        PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            type: PropTypes.string.isRequired,
+            proteins: PropTypes.number.isRequired,
+            fat: PropTypes.number.isRequired,
+            carbohydrates: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired,
+            image: PropTypes.string.isRequired,
+            image_mobile: PropTypes.string.isRequired,
+            image_large: PropTypes.string.isRequired,
+            __v: PropTypes.number.isRequired
+        })
+    ).isRequired
+};

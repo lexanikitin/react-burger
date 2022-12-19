@@ -3,8 +3,9 @@ import clsx from "clsx";
 import ingrStyle from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
+import PropTypes from "prop-types";
 
-const BurgerIngredients = (props, list) => {
+const BurgerIngredients = (props) => {
 
     const typeList = [
         {id: 1, name: 'Булки', type: 'bun'},
@@ -15,7 +16,7 @@ const BurgerIngredients = (props, list) => {
     const [currentTab, setCurrentTab] = React.useState('Булки')
 
     return (
-        <section className={clsx(props.className, ingrStyle.section, 'pt-10')}>
+        <section className={clsx(ingrStyle.section,'ml-5', 'mr-5', 'pt-10')}>
             <h1 className={clsx('text', 'text_type_main-large', 'pb-5')}>Соберите бургер</h1>
             <div className={'pb-10'} style={{display: 'flex'}}>
                 {typeList.map(type => {
@@ -51,3 +52,21 @@ const BurgerIngredients = (props, list) => {
 };
 
 export default BurgerIngredients;
+
+BurgerIngredients.propTypes = {
+    list: PropTypes.arrayOf(
+        PropTypes.shape({
+            _id: PropTypes.string.isRequired,
+            name: PropTypes.string.isRequired,
+            type: PropTypes.string.isRequired,
+            proteins: PropTypes.number.isRequired,
+            fat: PropTypes.number.isRequired,
+            carbohydrates: PropTypes.number.isRequired,
+            price: PropTypes.number.isRequired,
+            image: PropTypes.string.isRequired,
+            image_mobile: PropTypes.string.isRequired,
+            image_large: PropTypes.string.isRequired,
+            __v: PropTypes.number.isRequired
+        })
+    ).isRequired
+};
