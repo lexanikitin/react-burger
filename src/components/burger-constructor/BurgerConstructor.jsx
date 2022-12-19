@@ -1,9 +1,9 @@
 import React from 'react';
 
-const BurgerConstructor = () => {
+const BurgerConstructor = (props) => {
     return (
-        <div>
-            
+        <div className={props.className}>
+            123
         </div>
     );
 };

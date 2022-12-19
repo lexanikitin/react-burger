@@ -1,0 +1,16 @@
+.section{
+    max-width: 600px;
+    width: 100%;
+}
+.ingredientsList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+.ingredientsTypeTitle {
+}
+.ingredientsTypeList{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
