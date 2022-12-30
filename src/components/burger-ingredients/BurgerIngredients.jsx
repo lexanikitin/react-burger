@@ -44,7 +44,8 @@ const BurgerIngredients = ({list}) => {
                 {list.map((item) => {
                   if (item.type === type.type) {
                     return (
-                      <BurgerIngredient key={item._id} info={item} setModalActive={setModalActive} setIngredient={setIngredient}/>
+                      <BurgerIngredient key={item._id} info={item} setModalActive={setModalActive}
+                                        setIngredient={setIngredient}/>
                     )
                   }
                 })}
@@ -57,7 +58,6 @@ const BurgerIngredients = ({list}) => {
       <Modal isActive={isModalActive} setter={setModalActive}>
         <IngredientDetails info={ingredient}/>
       </Modal>
-
 
     </section>
   );

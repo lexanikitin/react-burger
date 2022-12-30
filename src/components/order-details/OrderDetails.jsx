@@ -2,6 +2,7 @@ import React from 'react';
 import orderDetailsStyles from './order-details.module.css'
 import clsx from "clsx";
 import doneImg from '../../images/done.svg'
+import PropTypes from "prop-types";
 
 const OrderDetails = ({orderNum}) => {
   return (
@@ -17,3 +18,7 @@ const OrderDetails = ({orderNum}) => {
 };
 
 export default OrderDetails;
+
+OrderDetails.propTypes = {
+  orderNum: PropTypes.number.isRequired
+}

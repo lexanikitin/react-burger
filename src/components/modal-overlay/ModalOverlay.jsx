@@ -1,6 +1,7 @@
 import React from 'react';
 import modalOverlayStyles from './modal-overlay.module.css'
 import clsx from "clsx";
+import PropTypes from "prop-types";
 
 const ModalOverlay = ({isActive, setter, children}) => {
   return (
@@ -15,3 +16,9 @@ const ModalOverlay = ({isActive, setter, children}) => {
 };
 
 export default ModalOverlay;
+
+ModalOverlay.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+  setter: PropTypes.func.isRequired,
+  children: PropTypes.any.isRequired
+}

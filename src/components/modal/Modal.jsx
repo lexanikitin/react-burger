@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 import modalStyles from './modal.module.css'
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from "prop-types";
 
 const Modal = ({isActive, setter, children}) => {
   function closePopup() {
@@ -10,7 +11,6 @@ const Modal = ({isActive, setter, children}) => {
   }
 
   React.useEffect(() => {
-
     function closePopupByEscape(e) {
       if (e.key === 'Escape') {
         closePopup();
@@ -24,7 +24,6 @@ const Modal = ({isActive, setter, children}) => {
       }
     }
   }, [isActive]);
-
 
   return ReactDOM.createPortal(
     <ModalOverlay isActive={isActive} setter={setter}>
@@ -41,3 +40,9 @@ const Modal = ({isActive, setter, children}) => {
 };
 
 export default Modal;
+
+Modal.propTypes = {
+  isActive: PropTypes.bool.isRequired,
+  setter: PropTypes.func.isRequired,
+  children: PropTypes.any.isRequired
+}

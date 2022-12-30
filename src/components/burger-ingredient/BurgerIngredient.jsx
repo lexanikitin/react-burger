@@ -25,5 +25,7 @@ const BurgerIngredient = ({info, setIngredient, setModalActive}) => {
 export default BurgerIngredient;
 
 BurgerIngredient.propTypes = {
-  info: PropTypes.arrayOf(burgerProps).isRequired
+  info: PropTypes.arrayOf(burgerProps).isRequired,
+  setIngredient: PropTypes.func.isRequired,
+  setModalActive: PropTypes.func.isRequired
 };
