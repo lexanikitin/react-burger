@@ -6,6 +6,7 @@ import app_style from './App.module.css'
 import order from "../../utils/order";
 
 const apiUrl = 'https://norma.nomoreparties.space/api/ingredients ';
+const orderNum = '123456'
 
 function App() {
 
@@ -43,7 +44,7 @@ function App() {
             :
             <>
               <BurgerIngredients list={apiState.ingredients}/>
-              <BurgerConstructor order={order}/>
+              <BurgerConstructor order={order} orderNum={orderNum}/>
             </>
         }
       </main>

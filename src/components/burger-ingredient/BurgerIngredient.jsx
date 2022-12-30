@@ -5,16 +5,19 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
 
-const BurgerIngredient = (props) => {
+const BurgerIngredient = ({info, setIngredient, setModalActive}) => {
   return (
-    <li className={clsx(cardStyles.card)}>
+    <li className={clsx(cardStyles.card)} onClick={() => {
+      setIngredient(info);
+      setModalActive(true);
+    }}>
       <Counter count={1} size={"default"} extraClass="m-1"/>
-      <img src={props.info.image} alt={props.info.name}/>
+      <img src={info.image} alt={info.name}/>
       <div className={clsx('pt-1 pb-1', cardStyles.price)}>
-        <p className={`text text_type_digits-default`}>{props.info.price} </p>
+        <p className={`text text_type_digits-default`}>{info.price} </p>
         <CurrencyIcon type="primary"/>
       </div>
-      <p className={clsx('mt-2 mb-6 text text text_type_main-default', cardStyles.name)}>{props.info.name}</p>
+      <p className={clsx('mt-2 mb-6 text text text_type_main-default', cardStyles.name)}>{info.name}</p>
     </li>
   );
 };

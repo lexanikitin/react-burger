@@ -1,12 +1,17 @@
-import React from 'react';
+import React, {useState} from 'react';
 import clsx from "clsx";
 import ingrStyle from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
+import Modal from "../modal/Modal";
+import OrderDetails from "../order-details/OrderDetails";
+import IngredientDetails from "../ingredient-details/IngredientDetails";
 
-const BurgerIngredients = (props) => {
+const BurgerIngredients = ({list}) => {
+  const [isModalActive, setModalActive] = useState(false);
+  const [ingredient, setIngredient] = useState([]);
 
   const typeList = [
     {id: 1, name: 'Булки', type: 'bun'},
@@ -36,10 +41,10 @@ const BurgerIngredients = (props) => {
                 <p className={clsx('text text_type_main-medium', ingrStyle.ingredientsTypeTitle)}>{type.name}</p>
               </li>
               <ul className={clsx(ingrStyle.ingredientsList, 'pt-6', 'pl-4', 'pr-4', 'pb-10')}>
-                {props.list.map((item) => {
+                {list.map((item) => {
                   if (item.type === type.type) {
                     return (
-                      <BurgerIngredient key={item._id} info={item}/>
+                      <BurgerIngredient key={item._id} info={item} setModalActive={setModalActive} setIngredient={setIngredient}/>
                     )
                   }
                 })}
@@ -48,6 +53,12 @@ const BurgerIngredients = (props) => {
           );
         })}
       </ul>
+
+      <Modal isActive={isModalActive} setter={setModalActive}>
+        <IngredientDetails info={ingredient}/>
+      </Modal>
+
+
     </section>
   );
 };
