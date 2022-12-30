@@ -7,15 +7,15 @@ import data from '../../utils/data.js'
 import order from "../../utils/order";
 
 function App() {
-    return (
-        <div className="App">
-            <AppHeader/>
-            <main className={app_style.main_content}>
-                <BurgerIngredients list={data}/>
-                <BurgerConstructor order={order}/>
-            </main>
-        </div>
-    );
+  return (
+    <div className="App">
+      <AppHeader/>
+      <main className={app_style.main_content}>
+        <BurgerIngredients list={data}/>
+        <BurgerConstructor order={order}/>
+      </main>
+    </div>
+  );
 }
 
 export default App;

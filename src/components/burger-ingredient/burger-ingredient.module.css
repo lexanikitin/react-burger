@@ -1,23 +1,26 @@
 .card {
-    position: relative;
-    max-width: 272px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 208px;
-    box-sizing: border-box;
+  position: relative;
+  max-width: 272px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 208px;
+  box-sizing: border-box;
 }
-.image{
-    width: 240px;
+
+.image {
+  width: 240px;
 
 }
-.price{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 10px;
+
+.price {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 10px;
 }
-.name{
-    text-align: center;
+
+.name {
+  text-align: center;
 }
