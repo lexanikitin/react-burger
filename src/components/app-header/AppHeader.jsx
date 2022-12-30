@@ -17,7 +17,7 @@ const AppHeader = () => {
         <a href={'#'} className={clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button)}
         >
           <ListIcon type="secondary"/>
-          <span className={clsx('pl-2', 'text_color_inactive')}>Лента заказов</span>
+          <span className={clsx('pl-2', 'text', 'text_type_main-default', 'text_color_inactive')}>Лента заказов</span>
         </a>
       </nav>
       <div className={app_header.logo_wrapper}>
@@ -26,7 +26,7 @@ const AppHeader = () => {
       <a href={'#'} className={clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button)}
       >
         <ProfileIcon type="secondary"/>
-        <span className={clsx('pl-2', 'text_color_inactive')}>Личный кабинет</span>
+        <span className={clsx('pl-2', 'text', 'text_type_main-default', 'text_color_inactive')}>Личный кабинет</span>
       </a>
     </div>
   </header>);
