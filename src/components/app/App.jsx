@@ -4,8 +4,8 @@ import BurgerIngredients from "../burger-ingredients/BurgerIngredients";
 import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import app_style from './App.module.css'
 import order from "../../utils/order";
+import {getIngredientsFromApi} from "../../utils/burger-api";
 
-const apiUrl = 'https://norma.nomoreparties.space/api/ingredients ';
 const orderNum = '123456'
 
 function App() {
@@ -17,23 +17,9 @@ function App() {
   });
 
   useEffect(() => {
-    getIngredientsFromApi();
+    getIngredientsFromApi(apiState, setApiState);
   }, []);
 
-  const getIngredientsFromApi = async () => {
-    setApiState({...apiState, isLoading: true});
-    fetch(apiUrl)
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Код ошибки: ${res.status}`);
-      })
-      .then(data => setApiState({...apiState, ingredients: data.data, isLoading: false}))
-      .catch(e => {
-        setApiState({...apiState, error: e.message, isLoading: false});
-      });
-  };
 
   return (
     <div className="App">
