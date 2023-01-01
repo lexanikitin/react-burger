@@ -9,7 +9,7 @@ import OrderDetails from "../order-details/OrderDetails";
 
 const BurgerConstructor = ({order, orderNum}) => {
 
-  const [isModalOrderActive, setModalOrderActive]= useState(false)
+  const [isModalOrderActive, setModalOrderActive] = useState(false)
 
 
   const bun = order.find((item) => {
@@ -41,13 +41,15 @@ const BurgerConstructor = ({order, orderNum}) => {
           <p className="text text_type_digits-medium">{order.reduce((prev, curr) => prev + curr.price, 0)}</p>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={()=>{setModalOrderActive(true)}}>
+        <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
+          setModalOrderActive(true)
+        }}>
           Оформить заказ
         </Button>
       </div>
 
       <Modal isActive={isModalOrderActive} setter={setModalOrderActive}>
-        <OrderDetails orderNum={orderNum} />
+        <OrderDetails orderNum={orderNum}/>
       </Modal>
 
     </section>
@@ -57,5 +59,6 @@ const BurgerConstructor = ({order, orderNum}) => {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  order: PropTypes.arrayOf(burgerProps).isRequired
+  order: PropTypes.arrayOf(burgerProps).isRequired,
+  orderNum: PropTypes.number.isRequired
 };
