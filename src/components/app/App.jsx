@@ -6,7 +6,7 @@ import app_style from './App.module.css'
 import order from "../../utils/order";
 import {getIngredientsFromApi} from "../../utils/burger-api";
 
-const orderNum = '123456'
+const orderNum = 123456;
 
 function App() {
 
