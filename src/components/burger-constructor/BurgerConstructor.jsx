@@ -2,14 +2,12 @@ import React, {useContext, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
-import PropTypes from "prop-types";
-import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/BurgerContext";
 import {postOrderToApi} from "../../utils/burger-api";
 
-const BurgerConstructor = ({props}) => {
+const BurgerConstructor = ({}) => {
 
   const [isModalOrderActive, setModalOrderActive] = useState(false)
 
@@ -48,7 +46,8 @@ const BurgerConstructor = ({props}) => {
                           isLocked={true} extraClass={'mt-4 ml-8'}/>
       <div className={clsx('mt-10', BrgCnstrStyle.total)}>
         <div className={clsx('text text_type_main-large', BrgCnstrStyle.amount)}>
-          <p className="text text_type_digits-medium">{filling.reduce((prev, curr) => prev + curr.price, bun.price*2)}</p>
+          <p
+            className="text text_type_digits-medium">{filling.reduce((prev, curr) => prev + curr.price, bun.price * 2)}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
@@ -68,5 +67,3 @@ const BurgerConstructor = ({props}) => {
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {};
