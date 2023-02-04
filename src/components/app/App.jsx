@@ -31,7 +31,7 @@ function App() {
             :
             <>
               <BurgerIngredients list={apiState.ingredients}/>
-              <BurgerContext.Provider value={order}>
+              <BurgerContext.Provider value={apiState.ingredients}>
                 <BurgerConstructor orderNum={orderNum}/>
               </BurgerContext.Provider>
             </>

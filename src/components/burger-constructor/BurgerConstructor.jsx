@@ -7,8 +7,9 @@ import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/BurgerContext";
+import {postOrderToApi} from "../../utils/burger-api";
 
-const BurgerConstructor = ({orderNum}) => {
+const BurgerConstructor = ({props}) => {
 
   const [isModalOrderActive, setModalOrderActive] = useState(false)
 
@@ -20,20 +21,27 @@ const BurgerConstructor = ({orderNum}) => {
     }
   })
 
+  const filling = order.filter(item => item.type !== 'bun')
+
+  const [orderState, setOrderState] = useState({
+    ingredients: order.map(item => item._id),
+    data: undefined,
+    isLoading: true,
+    error: ''
+  });
+
   return (
     <section className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
       <ConstructorElement {...bun} text={bun.name + '(верх)'} thumbnail={bun.image} type={'top'}
                           isLocked={true} extraClass={clsx('mb-4', 'ml-8')}/>
       <ul className={clsx(BrgCnstrStyle.editedList)}>
-        {order.map(item => {
-          if (item.type !== 'bun') {
-            return (
-              <li className={clsx(BrgCnstrStyle.editedItem)} key={item._id}>
-                <DragIcon type="primary"/>
-                <ConstructorElement {...item} text={item.name} thumbnail={item.image}/>
-              </li>
-            )
-          }
+        {filling.map(item => {
+          return (
+            <li className={clsx(BrgCnstrStyle.editedItem)} key={item._id}>
+              <DragIcon type="primary"/>
+              <ConstructorElement {...item} text={item.name} thumbnail={item.image}/>
+            </li>
+          )
         })}
       </ul>
       <ConstructorElement {...bun} text={bun.name + '(низ)'} thumbnail={bun.image} type={'bottom'}
@@ -44,6 +52,7 @@ const BurgerConstructor = ({orderNum}) => {
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
+          postOrderToApi(orderState, setOrderState);
           setModalOrderActive(true)
         }}>
           Оформить заказ
@@ -51,7 +60,7 @@ const BurgerConstructor = ({orderNum}) => {
       </div>
 
       <Modal isActive={isModalOrderActive} setter={setModalOrderActive}>
-        <OrderDetails orderNum={orderNum}/>
+        <OrderDetails orderNum={orderState.data}/>
       </Modal>
 
     </section>
@@ -61,6 +70,4 @@ const BurgerConstructor = ({orderNum}) => {
 export default BurgerConstructor;
 
 BurgerConstructor.propTypes = {
-  order: PropTypes.arrayOf(burgerProps).isRequired,
-  orderNum: PropTypes.number.isRequired
 };
