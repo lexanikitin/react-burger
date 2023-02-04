@@ -3,11 +3,8 @@ import AppHeader from "../app-header/AppHeader";
 import BurgerIngredients from "../burger-ingredients/BurgerIngredients";
 import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import app_style from './App.module.css'
-import order from "../../utils/order";
 import {getIngredientsFromApi} from "../../utils/burger-api";
 import {BurgerContext} from "../../services/BurgerContext";
-
-const orderNum = 123456;
 
 function App() {
 
@@ -32,7 +29,7 @@ function App() {
             <>
               <BurgerIngredients list={apiState.ingredients}/>
               <BurgerContext.Provider value={apiState.ingredients}>
-                <BurgerConstructor orderNum={orderNum}/>
+                <BurgerConstructor/>
               </BurgerContext.Provider>
             </>
         }
