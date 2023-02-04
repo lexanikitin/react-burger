@@ -48,7 +48,7 @@ const BurgerConstructor = ({props}) => {
                           isLocked={true} extraClass={'mt-4 ml-8'}/>
       <div className={clsx('mt-10', BrgCnstrStyle.total)}>
         <div className={clsx('text text_type_main-large', BrgCnstrStyle.amount)}>
-          <p className="text text_type_digits-medium">{order.reduce((prev, curr) => prev + curr.price, 0)}</p>
+          <p className="text text_type_digits-medium">{filling.reduce((prev, curr) => prev + curr.price, bun.price*2)}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
@@ -69,5 +69,4 @@ const BurgerConstructor = ({props}) => {
 
 export default BurgerConstructor;
 
-BurgerConstructor.propTypes = {
-};
+BurgerConstructor.propTypes = {};
