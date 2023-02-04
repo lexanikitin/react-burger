@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
@@ -6,11 +6,13 @@ import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
+import {BurgerContext} from "../../services/BurgerContext";
 
-const BurgerConstructor = ({order, orderNum}) => {
+const BurgerConstructor = ({orderNum}) => {
 
   const [isModalOrderActive, setModalOrderActive] = useState(false)
 
+  const order = useContext(BurgerContext);
 
   const bun = order.find((item) => {
     if (item.type === 'bun') {

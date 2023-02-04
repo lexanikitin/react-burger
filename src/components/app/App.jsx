@@ -5,6 +5,7 @@ import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import app_style from './App.module.css'
 import order from "../../utils/order";
 import {getIngredientsFromApi} from "../../utils/burger-api";
+import {BurgerContext} from "../../services/BurgerContext";
 
 const orderNum = 123456;
 
@@ -30,7 +31,9 @@ function App() {
             :
             <>
               <BurgerIngredients list={apiState.ingredients}/>
-              <BurgerConstructor order={order} orderNum={orderNum}/>
+              <BurgerContext.Provider value={order}>
+                <BurgerConstructor orderNum={orderNum}/>
+              </BurgerContext.Provider>
             </>
         }
       </main>
