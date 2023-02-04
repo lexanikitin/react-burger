@@ -1,0 +1,15 @@
+.content {
+  background: #1C1C21;
+  border-radius: 40px;
+  max-width: 720px;
+  min-height: 300px;
+  position: relative;
+  width: 100%;
+}
+
+.close {
+  cursor: pointer;
+  position: absolute;
+  right: 40px;
+  top: 60px;
+}
