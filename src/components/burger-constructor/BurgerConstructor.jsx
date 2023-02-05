@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useMemo, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
@@ -13,16 +13,19 @@ const BurgerConstructor = ({}) => {
 
   const order = useContext(BurgerContext);
 
-  const bun = order.find((item) => {
-    if (item.type === 'bun') {
-      return item
-    }
-  })
+  const bun = useMemo(() => {
+    return order.find((item) => {
+      if (item.type === 'bun') {
+        return item
+      }
+    })
+  }, [order])
 
-  const filling = order.filter(item => item.type !== 'bun')
+  const filling = useMemo(() => {
+    return order.filter(item => item.type !== 'bun')
+  }, [order]);
 
   const [orderState, setOrderState] = useState({
-    ingredients: order.map(item => item._id),
     data: undefined,
     isLoading: true,
     error: ''
@@ -51,8 +54,8 @@ const BurgerConstructor = ({}) => {
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
-          postOrderToApi(orderState, setOrderState);
-          setModalOrderActive(true)
+          postOrderToApi(order.map(item => item._id), orderState, setOrderState);
+          setModalOrderActive(true);
         }}>
           Оформить заказ
         </Button>

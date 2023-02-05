@@ -14,7 +14,7 @@ export function getIngredientsFromApi(apiState, setApiState){
     });
 }
 
-export function postOrderToApi(apiState, setApiState){
+export function postOrderToApi(orderContent, apiState, setApiState){
   setApiState({...apiState,orderNum: undefined, isLoading: true});
   return fetch(`${API_URL}orders`, {
     method: 'POST',
@@ -22,7 +22,7 @@ export function postOrderToApi(apiState, setApiState){
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "ingredients": apiState.ingredients
+      "ingredients": orderContent
     })
   })
     .then(res => {
