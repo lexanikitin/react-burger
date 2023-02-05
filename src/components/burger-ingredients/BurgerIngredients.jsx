@@ -65,5 +65,5 @@ const BurgerIngredients = ({list}) => {
 export default BurgerIngredients;
 
 BurgerIngredients.propTypes = {
-  list: PropTypes.arrayOf(burgerProps).isRequired
+  list: PropTypes.arrayOf(burgerProps.isRequired).isRequired
 };
