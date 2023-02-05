@@ -26,7 +26,7 @@ const BurgerConstructor = ({}) => {
   }, [order]);
 
   const [orderState, setOrderState] = useState({
-    data: undefined,
+    data: 0,
     isLoading: true,
     error: ''
   });
