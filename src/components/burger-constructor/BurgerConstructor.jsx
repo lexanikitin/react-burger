@@ -31,6 +31,8 @@ const BurgerConstructor = ({}) => {
     error: ''
   });
 
+  var total = useMemo(()=>{return filling.reduce((prev, curr) => prev + curr.price, bun.price * 2)},[order])
+
   return (
     <section className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
       <ConstructorElement {...bun} text={bun.name + '(верх)'} thumbnail={bun.image} type={'top'}
@@ -50,7 +52,7 @@ const BurgerConstructor = ({}) => {
       <div className={clsx('mt-10', BrgCnstrStyle.total)}>
         <div className={clsx('text text_type_main-large', BrgCnstrStyle.amount)}>
           <p
-            className="text text_type_digits-medium">{filling.reduce((prev, curr) => prev + curr.price, bun.price * 2)}</p>
+            className="text text_type_digits-medium">{total}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
