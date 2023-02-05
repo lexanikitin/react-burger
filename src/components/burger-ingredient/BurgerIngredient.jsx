@@ -3,6 +3,7 @@ import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-com
 import cardStyles from './burger-ingredient.module.css'
 import clsx from "clsx";
 import PropTypes from "prop-types";
+import {burgerProps} from "../../utils/types";
 
 const BurgerIngredient = ({info, setIngredient, setModalActive}) => {
   return (
@@ -24,7 +25,7 @@ const BurgerIngredient = ({info, setIngredient, setModalActive}) => {
 export default BurgerIngredient;
 
 BurgerIngredient.propTypes = {
-  info: PropTypes.object.isRequired,
+  info: PropTypes.shape(burgerProps).isRequired,
   setIngredient: PropTypes.func.isRequired,
   setModalActive: PropTypes.func.isRequired
 };

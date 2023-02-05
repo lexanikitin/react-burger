@@ -10,7 +10,7 @@ import IngredientDetails from "../ingredient-details/IngredientDetails";
 
 const BurgerIngredients = ({list}) => {
   const [isModalActive, setModalActive] = useState(false);
-  const [ingredient, setIngredient] = useState({});
+  const [ingredient, setIngredient] = useState(list[0]);
 
   const typeList = [
     {id: 1, name: 'Булки', type: 'bun'},
@@ -18,7 +18,7 @@ const BurgerIngredients = ({list}) => {
     {id: 3, name: 'Начинки', type: 'main'}
   ];
 
-  const [currentTab, setCurrentTab] = React.useState('Булки')
+  const [currentTab, setCurrentTab] = React.useState('bun')
 
   return (
     <section className={clsx(ingrStyle.section, 'ml-5', 'mr-5', 'pt-10')}>
@@ -26,7 +26,7 @@ const BurgerIngredients = ({list}) => {
       <div className={'pb-10'} style={{display: 'flex'}}>
         {typeList.map((type, index) => {
           return (
-            <Tab key={`tab-${index}`} value={type.name} active={currentTab === type.name} onClick={setCurrentTab}>
+            <Tab key={`tab-${index}`} value={type.type} active={currentTab === type.type} onClick={setCurrentTab}>
               {type.name}
             </Tab>
           )
