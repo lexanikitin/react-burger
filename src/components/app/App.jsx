@@ -1,36 +1,29 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import AppHeader from "../app-header/AppHeader";
 import BurgerIngredients from "../burger-ingredients/BurgerIngredients";
 import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import app_style from './App.module.css'
-import {getIngredientsFromApi} from "../../utils/burger-api";
-import {BurgerContext} from "../../services/BurgerContext";
+import {getIngredientsList} from "../../services/actions/actions";
+import {useDispatch, useSelector} from 'react-redux';
 
 function App() {
-
-  const [apiState, setApiState] = useState({
-    ingredients: [],
-    isLoading: true,
-    error: ''
-  });
+  const dispatch = useDispatch();
+  const {isRequested, isFailed} = useSelector(store => store.list);
 
   useEffect(() => {
-    getIngredientsFromApi(apiState, setApiState);
+    dispatch(getIngredientsList());
   }, []);
-
 
   return (
     <div className="App">
       <AppHeader/>
       <main className={app_style.main_content}>
         {
-          apiState.isLoading ? <p className="text text_type_main-medium">Идет загрузка...</p>
+          isRequested && !isFailed ? <p className="text text_type_main-medium">Идет загрузка...</p>
             :
             <>
-              <BurgerIngredients list={apiState.ingredients}/>
-              <BurgerContext.Provider value={apiState.ingredients}>
-                <BurgerConstructor/>
-              </BurgerContext.Provider>
+              <BurgerIngredients/>
+              {/*<BurgerConstructor/>*/}
             </>
         }
       </main>

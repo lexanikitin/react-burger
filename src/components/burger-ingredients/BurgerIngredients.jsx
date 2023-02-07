@@ -7,40 +7,37 @@ import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import {useDispatch, useSelector} from "react-redux";
 
-const BurgerIngredients = ({list}) => {
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const {ingredientsList} = useSelector(store => store.list);
+  const {defaultTabsList, activeTabId} = useSelector(store => store.tabs);
+
+  const [ingredient, setIngredient] = useState(ingredientsList[0]);
   const [isModalActive, setModalActive] = useState(false);
-  const [ingredient, setIngredient] = useState(list[0]);
-
-  const typeList = [
-    {id: 1, name: 'Булки', type: 'bun'},
-    {id: 2, name: 'Соусы', type: 'sauce'},
-    {id: 3, name: 'Начинки', type: 'main'}
-  ];
-
-  const [currentTab, setCurrentTab] = React.useState('bun')
 
   return (
     <section className={clsx(ingrStyle.section, 'ml-5', 'mr-5', 'pt-10')}>
       <h1 className={clsx('text', 'text_type_main-large', 'pb-5')}>Соберите бургер</h1>
       <div className={'pb-10'} style={{display: 'flex'}}>
-        {typeList.map((type, index) => {
+        {defaultTabsList.map((tab, index) => {
           return (
-            <Tab key={`tab-${index}`} value={type.type} active={currentTab === type.type} onClick={setCurrentTab}>
-              {type.name}
+            <Tab key={`tab-${index}`} value={tab.type} active={activeTabId === tab.id}>
+              {tab.name}
             </Tab>
           )
         })}
       </div>
       <ul className={ingrStyle.ingredientsTypeList}>
-        {typeList.map((type, index) => {
+        {defaultTabsList.map((type, index) => {
           return (
             <div key={index}>
               <li>
                 <p className={clsx('text text_type_main-medium', ingrStyle.ingredientsTypeTitle)}>{type.name}</p>
               </li>
               <ul className={clsx(ingrStyle.ingredientsList, 'pt-6', 'pl-4', 'pr-4', 'pb-10')}>
-                {list.map((item, index) => {
+                {ingredientsList.map((item, index) => {
                   if (item.type === type.type) {
                     return (
                       <BurgerIngredient key={index} info={item} setModalActive={setModalActive}
@@ -54,9 +51,9 @@ const BurgerIngredients = ({list}) => {
         })}
       </ul>
 
-      <Modal isActive={isModalActive} setter={setModalActive}>
-        <IngredientDetails info={ingredient}/>
-      </Modal>
+      {/*<Modal isActive={isModalActive} setter={setModalActive}>*/}
+      {/*  <IngredientDetails info={ingredient}/>*/}
+      {/*</Modal>*/}
 
     </section>
   );
@@ -64,6 +61,8 @@ const BurgerIngredients = ({list}) => {
 
 export default BurgerIngredients;
 
+/*
 BurgerIngredients.propTypes = {
   list: PropTypes.arrayOf(burgerProps.isRequired).isRequired
 };
+*/
