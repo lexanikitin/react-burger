@@ -5,7 +5,12 @@ import clsx from "clsx";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {useDispatch, useSelector} from "react-redux";
-import {ADD_INGREDIENT_TO_ORDER, CHANGE_BUN_IN_ORDER, postOrder} from "../../services/actions/actions";
+import {
+  ADD_INGREDIENT_TO_ORDER,
+  CHANGE_BUN_IN_ORDER,
+  postOrder,
+  REMOVE_INGREDIENT_FROM_ORDER
+} from "../../services/actions/actions";
 import {useDrop} from "react-dnd";
 
 const BurgerConstructor = () => {
@@ -21,20 +26,26 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop(item) {
-      if(item.info.type === 'bun'){
+      if (item.info.type === 'bun') {
         dispatch({
           type: CHANGE_BUN_IN_ORDER,
           ingredient: item.info
         })
-      }else{
+      } else {
         dispatch({
           type: ADD_INGREDIENT_TO_ORDER,
           ingredient: item.info
         })
-
       }
     },
   });
+  const handleDeleteIngredient = (index) => {
+    console.log(index);
+    dispatch({
+      type: REMOVE_INGREDIENT_FROM_ORDER,
+      index: index
+    })
+  }
   return (
     <section ref={drop} className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
       <ConstructorElement {...selectedBun} text={selectedBun.name + '(верх)'} thumbnail={selectedBun.image} type={'top'}
@@ -42,9 +53,12 @@ const BurgerConstructor = () => {
       <ul className={clsx(BrgCnstrStyle.editedList)}>
         {selectedIngredients.map((item, index) => {
           return (
-            <li className={clsx(BrgCnstrStyle.editedItem)} key={item._id+index}>
+            <li className={clsx(BrgCnstrStyle.editedItem)} key={item._id + index}>
               <DragIcon type="primary"/>
-              <ConstructorElement {...item} text={item.name} thumbnail={item.image}/>
+              <ConstructorElement {...item} text={item.name} thumbnail={item.image}
+                                  handleClose={() => {
+                                    handleDeleteIngredient(index)
+                                  }}/>
             </li>
           )
         })}
@@ -59,12 +73,8 @@ const BurgerConstructor = () => {
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
-
-
           dispatch(postOrder([selectedIngredients.map(item => item._id), selectedBun._id].flat()));
           setModalOrderActive(true);
-
-
         }}>
           Оформить заказ
         </Button>

@@ -158,6 +158,7 @@ export const orderReducer = (state = initialStateOrder, action) => {
     case REMOVE_INGREDIENT_FROM_ORDER: {
       return {
         ...state,
+        selectedIngredients: state.selectedIngredients.filter((item, index)=>{if(index!==action.index){return item}})
       }
     }
     case CHANGE_BUN_IN_ORDER: {
