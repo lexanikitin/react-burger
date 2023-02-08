@@ -13,7 +13,6 @@ const BurgerIngredient = ({info, setModalActive}) => {
   const count = useMemo(() => {
     return [selectedIngredients, selectedBun].flat().filter(item => item._id === info._id).length
   }, [selectedIngredients, selectedBun])
-  console.log(count);
   return (
     <li className={clsx(cardStyles.card)} onClick={() => {
       dispatch({
