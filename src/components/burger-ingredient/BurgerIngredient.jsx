@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import cardStyles from './burger-ingredient.module.css'
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/actions";
 
 const BurgerIngredient = ({info, setModalActive}) => {
   const dispatch = useDispatch();
-
+  const {selectedIngredients, selectedBun} = useSelector(store => store.order);
+  const count = useMemo(() => {
+    return [selectedIngredients, selectedBun].flat().filter(item => item._id === info._id).length
+  }, [selectedIngredients, selectedBun])
+  console.log(count);
   return (
     <li className={clsx(cardStyles.card)} onClick={() => {
       dispatch({
@@ -18,7 +22,7 @@ const BurgerIngredient = ({info, setModalActive}) => {
       })
       setModalActive(true);
     }}>
-      <Counter count={1} size={"default"} extraClass="m-1"/>
+      {count ? <Counter count={count} size={"default"} extraClass="m-1"/> : ''}
       <img src={info.image} alt={info.name}/>
       <div className={clsx('pt-1 pb-1', cardStyles.price)}>
         <p className={`text text_type_digits-default`}>{info.price} </p>
