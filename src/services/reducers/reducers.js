@@ -64,7 +64,7 @@ export const tabsListReducer = (state = initialStateTab, action) => {
     case SET_ACTIVE_TAB: {
       return {
         ...state,
-        activeTabId: action.activeTabId
+        activeTabId: action.activeTabId+1>0 ? action.activeTabId+1: 3
       }
     }
 

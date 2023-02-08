@@ -11,29 +11,8 @@ import {postOrder} from "../../services/actions/actions";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-
   const [isModalOrderActive, setModalOrderActive] = useState(false)
-
-  // const order = useContext(BurgerContext);
   const {selectedIngredients, selectedBun} = useSelector(store => store.order);
-  // const bun = useMemo(() => {
-  //   return order.find((item) => {
-  //     if (item.type === 'bun') {
-  //       return item
-  //     }
-  //   })
-  // }, [order])
-  //
-  // const filling = useMemo(() => {
-  //   return order.filter(item => item.type !== 'bun')
-  // }, [order]);
-
-  const [orderState, setOrderState] = useState({
-    data: 0,
-    isLoading: true,
-    error: ''
-  });
-
   var total = useMemo(() => {
     return selectedIngredients.reduce((prev, curr) => prev + curr.price, selectedBun.price * 2)
   }, [selectedIngredients, selectedBun])
