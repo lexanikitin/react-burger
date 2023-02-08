@@ -9,7 +9,6 @@ import {useDispatch, useSelector} from 'react-redux';
 function App() {
   const dispatch = useDispatch();
   const {isRequested, isFailed} = useSelector(store => store.list);
-
   useEffect(() => {
     dispatch(getIngredientsList());
   }, []);
@@ -23,7 +22,7 @@ function App() {
             :
             <>
               <BurgerIngredients/>
-              {/*<BurgerConstructor/>*/}
+              <BurgerConstructor/>
             </>
         }
       </main>
