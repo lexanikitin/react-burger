@@ -6,14 +6,16 @@ import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
 import {BurgerContext} from "../../services/BurgerContext";
 import {postOrderToApi} from "../../utils/burger-api";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {postOrder} from "../../services/actions/actions";
 
 const BurgerConstructor = () => {
+  const dispatch = useDispatch();
 
   const [isModalOrderActive, setModalOrderActive] = useState(false)
 
-  const order = useContext(BurgerContext);
-  const {selectedIngredients, selectedBun} = useSelector(store => store.cnstrctr);
+  // const order = useContext(BurgerContext);
+  const {selectedIngredients, selectedBun} = useSelector(store => store.order);
   // const bun = useMemo(() => {
   //   return order.find((item) => {
   //     if (item.type === 'bun') {
@@ -32,7 +34,9 @@ const BurgerConstructor = () => {
     error: ''
   });
 
-  var total = useMemo(()=>{return selectedIngredients.reduce((prev, curr) => prev + curr.price, selectedBun.price * 2)},[selectedIngredients, selectedBun])
+  var total = useMemo(() => {
+    return selectedIngredients.reduce((prev, curr) => prev + curr.price, selectedBun.price * 2)
+  }, [selectedIngredients, selectedBun])
 
   return (
     <section className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
@@ -48,7 +52,8 @@ const BurgerConstructor = () => {
           )
         })}
       </ul>
-      <ConstructorElement {...selectedBun} text={selectedBun.name + '(низ)'} thumbnail={selectedBun.image} type={'bottom'}
+      <ConstructorElement {...selectedBun} text={selectedBun.name + '(низ)'} thumbnail={selectedBun.image}
+                          type={'bottom'}
                           isLocked={true} extraClass={'mt-4 ml-8'}/>
       <div className={clsx('mt-10', BrgCnstrStyle.total)}>
         <div className={clsx('text text_type_main-large', BrgCnstrStyle.amount)}>
@@ -59,8 +64,7 @@ const BurgerConstructor = () => {
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
 
 
-
-          postOrderToApi(order.map(item => item._id), orderState, setOrderState);
+          dispatch(postOrder([selectedIngredients.map(item => item._id), selectedBun._id].flat()));
           setModalOrderActive(true);
 
 
@@ -70,7 +74,7 @@ const BurgerConstructor = () => {
       </div>
 
       <Modal isActive={isModalOrderActive} setter={setModalOrderActive}>
-        <OrderDetails orderNum={orderState.data}/>
+        <OrderDetails/>
       </Modal>
 
     </section>

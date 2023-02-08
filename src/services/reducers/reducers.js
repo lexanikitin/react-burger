@@ -6,7 +6,12 @@ import {
   GET_INGREDIENTS_LIST_FAILED,
   SET_ACTIVE_TAB,
   MODAL_SET_CURRENT_INGREDIENT,
-  MODAL_CLEAR_CURRENT_INGREDIENT, ADD_INGREDIENT_TO_ORDER, REMOVE_INGREDIENT_FROM_ORDER
+  MODAL_CLEAR_CURRENT_INGREDIENT,
+  ADD_INGREDIENT_TO_ORDER,
+  REMOVE_INGREDIENT_FROM_ORDER,
+  ORDER_REQUEST,
+  ORDER_SUCCESS,
+  ORDER_FAILED
 } from '../actions/actions'
 
 const initialState = {
@@ -91,7 +96,7 @@ export const modalReducer = (state = initialStateModal, action) => {
     }
   }
 }
-const initialStateConstructor = {
+const initialStateOrder = {
   selectedIngredients: [
     {
       "_id": "60d3b41abdacab0026a733cc",
@@ -135,9 +140,14 @@ const initialStateConstructor = {
     "image_mobile": "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
     "image_large": "https://code.s3.yandex.net/react/code/bun-01-large.png",
     "__v": 0
-  }
+  },
+  orderList: [],
+  isRequested: false,
+  isFailed: false,
+  orderNumber: null
+
 };
-export const constructorReducer = (state = initialStateConstructor, action) => {
+export const orderReducer = (state = initialStateOrder, action) => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_ORDER: {
       return {
@@ -147,6 +157,30 @@ export const constructorReducer = (state = initialStateConstructor, action) => {
     case REMOVE_INGREDIENT_FROM_ORDER: {
       return {
         ...state,
+      }
+    }
+    case ORDER_REQUEST: {
+      return {
+        ...state,
+        isRequested: true,
+        isFailed: false,
+        orderNumber: null
+      }
+    }
+    case ORDER_SUCCESS: {
+      return {
+        ...state,
+        orderList: [],
+        isRequested: false,
+        isFailed: false,
+        orderNumber: action.orderNumber
+      }
+    }
+    case ORDER_FAILED: {
+      return {
+        ...state,
+        isRequested: false,
+        isFailed: true
       }
     }
     default: {
@@ -159,5 +193,5 @@ export const rootReducer = combineReducers({
   list: ingredientsListReducer,
   tabs: tabsListReducer,
   modals: modalReducer,
-  cnstrctr: constructorReducer
+  order: orderReducer
 })

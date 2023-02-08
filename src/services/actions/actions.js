@@ -1,4 +1,5 @@
-import {getIngredientsFromApi} from "../../utils/burger-api";
+import {getIngredientsFromApi, postOrderToApi} from "../../utils/burger-api";
+import {func} from "prop-types";
 
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENTS_LIST_REQUEST';
 export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
@@ -9,8 +10,12 @@ export const SET_ACTIVE_TAB = 'SET_ACTIVE_TAB';
 export const MODAL_SET_CURRENT_INGREDIENT = 'MODAL_SET_CURRENT_INGREDIENT';
 export const MODAL_CLEAR_CURRENT_INGREDIENT = 'MODAL_CLEAR_CURRENT_INGREDIENT';
 
-  export const ADD_INGREDIENT_TO_ORDER = 'ADD_INGREDIENT_TO_ORDER';
+export const ADD_INGREDIENT_TO_ORDER = 'ADD_INGREDIENT_TO_ORDER';
 export const REMOVE_INGREDIENT_FROM_ORDER = 'REMOVE_INGREDIENT_FROM_ORDER';
+export const ORDER_REQUEST = 'ORDER_REQUEST';
+export const ORDER_SUCCESS = 'ORDER_SUCCESS';
+export const ORDER_FAILED = 'ORDER_FAILED';
+
 
 export function getIngredientsList() {
   return function (dispatch) {
@@ -28,3 +33,26 @@ export function getIngredientsList() {
     })
   }
 }
+
+export function postOrder(orderContent) {
+  console.log(orderContent)
+  return function (dispatch) {
+    console.log(orderContent)
+
+    dispatch({type: ORDER_REQUEST});
+    postOrderToApi(orderContent).then(
+      data => {
+        dispatch({
+          type: ORDER_SUCCESS,
+          orderNumber: data.order.number
+        })
+      }
+    ).catch(e => {
+      console.log(e.message);
+      dispatch({type: ORDER_FAILED})
+    })
+  }
+}
+
+
+

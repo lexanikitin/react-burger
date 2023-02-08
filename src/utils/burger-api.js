@@ -12,8 +12,8 @@ export function getIngredientsFromApi() {
     .then(checkResponse)
 }
 
-export function postOrderToApi(orderContent, apiState, setApiState) {
-  setApiState({...apiState, orderNum: undefined, isLoading: true});
+export function postOrderToApi(orderContent) {
+  console.log('123')
   return fetch(`${API_URL}orders`, {
     method: 'POST',
     headers: {
@@ -24,9 +24,5 @@ export function postOrderToApi(orderContent, apiState, setApiState) {
     })
   })
     .then(checkResponse)
-    .then(data => setApiState({...apiState, data: data.order.number, isLoading: false}))
-    .catch(e => {
-      setApiState({...apiState, error: e.message, isLoading: false});
-    });
 }
 
