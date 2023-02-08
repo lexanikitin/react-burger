@@ -6,15 +6,24 @@ import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
 import {useDispatch, useSelector} from "react-redux";
 import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/actions";
+import {useDrag} from "react-dnd";
 
 const BurgerIngredient = ({info, setModalActive}) => {
   const dispatch = useDispatch();
+  const id = info._id;
   const {selectedIngredients, selectedBun} = useSelector(store => store.order);
   const count = useMemo(() => {
     return [selectedIngredients, selectedBun].flat().filter(item => item._id === info._id).length
-  }, [selectedIngredients, selectedBun])
+  }, [selectedIngredients, selectedBun]);
+  const [{ isDrag }, drag] = useDrag({
+    type: "ingredient",
+    item: {info},
+    collect: monitor => ({
+      isDrag: monitor.isDragging()
+    })
+  });
   return (
-    <li className={clsx(cardStyles.card)} onClick={() => {
+    <li ref={drag} className={clsx(cardStyles.card)} onClick={() => {
       dispatch({
         type: MODAL_SET_CURRENT_INGREDIENT,
         currentData: info

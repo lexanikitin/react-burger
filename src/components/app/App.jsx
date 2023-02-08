@@ -5,6 +5,8 @@ import BurgerConstructor from "../burger-constructor/BurgerConstructor";
 import app_style from './App.module.css'
 import {getIngredientsList} from "../../services/actions/actions";
 import {useDispatch, useSelector} from 'react-redux';
+import {DndProvider} from "react-dnd";
+import {HTML5Backend} from "react-dnd-html5-backend";
 
 function App() {
   const dispatch = useDispatch();
@@ -15,17 +17,19 @@ function App() {
 
   return (
     <div className="App">
-      <AppHeader/>
-      <main className={app_style.main_content}>
-        {
-          isRequested && !isFailed ? <p className="text text_type_main-medium">Идет загрузка...</p>
-            :
-            <>
-              <BurgerIngredients/>
-              <BurgerConstructor/>
-            </>
-        }
-      </main>
+      <DndProvider backend={HTML5Backend}>
+        <AppHeader/>
+        <main className={app_style.main_content}>
+          {
+            isRequested && !isFailed ? <p className="text text_type_main-medium">Идет загрузка...</p>
+              :
+              <>
+                <BurgerIngredients/>
+                <BurgerConstructor/>
+              </>
+          }
+        </main>
+      </DndProvider>
     </div>
   );
 }
