@@ -3,7 +3,15 @@ import {combineReducers} from 'redux';
 import {
   GET_INGREDIENTS_LIST_REQUEST,
   GET_INGREDIENTS_LIST_SUCCESS,
-  GET_INGREDIENTS_LIST_FAILED, SET_ACTIVE_TAB
+  GET_INGREDIENTS_LIST_FAILED,
+  SET_ACTIVE_TAB,
+  MODAL_INGREDIENT_DETAILS_SET_CURRENT,
+  MODAL_INGREDIENT_DETAILS_SET_CLEAR,
+  MODAL_INGREDIENT_DETAILS_ENABLE,
+  MODAL_INGREDIENT_DETAILS_DISABLE,
+  MODAL_DISABLE,
+  MODAL_SET_CURRENT_INGREDIENT,
+  MODAL_CLEAR_CURRENT_INGREDIENT
 } from '../actions/actions'
 
 const initialState = {
@@ -65,8 +73,32 @@ export const tabsListReducer = (state = initialStateTab, action) => {
     }
   }
 }
+const initialStateModal = {
+    modalDetailsCurrentData: {}
+  }
+;
+export const modalReducer = (state = initialStateModal, action) => {
+  switch (action.type) {
+    case MODAL_SET_CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        modalDetailsCurrentData: action.currentData,
+      }
+    }
+    case MODAL_CLEAR_CURRENT_INGREDIENT: {
+      return {
+        ...state,
+        modalDetailsCurrentData: {},
+      }
+    }
+    default: {
+      return state;
+    }
+  }
+}
 
 export const rootReducer = combineReducers({
   list: ingredientsListReducer,
-  tabs: tabsListReducer
+  tabs: tabsListReducer,
+  modals : modalReducer
 })

@@ -25,7 +25,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App/>
-      <div id={'react-modals'}></div>
     </Provider>
   </React.StrictMode>
 );

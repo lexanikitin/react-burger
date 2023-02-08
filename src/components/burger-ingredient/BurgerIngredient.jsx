@@ -4,11 +4,18 @@ import cardStyles from './burger-ingredient.module.css'
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
+import {useDispatch} from "react-redux";
+import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/actions";
 
-const BurgerIngredient = ({info, setIngredient, setModalActive}) => {
+const BurgerIngredient = ({info, setModalActive}) => {
+  const dispatch = useDispatch();
+
   return (
     <li className={clsx(cardStyles.card)} onClick={() => {
-      setIngredient(info);
+      dispatch({
+        type: MODAL_SET_CURRENT_INGREDIENT,
+        currentData: info
+      })
       setModalActive(true);
     }}>
       <Counter count={1} size={"default"} extraClass="m-1"/>
@@ -26,6 +33,5 @@ export default BurgerIngredient;
 
 BurgerIngredient.propTypes = {
   info: PropTypes.shape(burgerProps.isRequired).isRequired,
-  setIngredient: PropTypes.func.isRequired,
   setModalActive: PropTypes.func.isRequired
 };

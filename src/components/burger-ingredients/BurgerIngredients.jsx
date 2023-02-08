@@ -8,14 +8,22 @@ import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from "react-redux";
+import {MODAL_CLEAR_CURRENT_INGREDIENT} from "../../services/actions/actions";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const {ingredientsList} = useSelector(store => store.list);
   const {defaultTabsList, activeTabId} = useSelector(store => store.tabs);
 
-  const [ingredient, setIngredient] = useState(ingredientsList[0]);
   const [isModalActive, setModalActive] = useState(false);
+
+  React.useEffect(() => {
+    if(isModalActive === false){
+      dispatch({
+        type: MODAL_CLEAR_CURRENT_INGREDIENT
+      })
+    }
+  }, [isModalActive]);
 
   return (
     <section className={clsx(ingrStyle.section, 'ml-5', 'mr-5', 'pt-10')}>
@@ -40,8 +48,7 @@ const BurgerIngredients = () => {
                 {ingredientsList.map((item, index) => {
                   if (item.type === type.type) {
                     return (
-                      <BurgerIngredient key={index} info={item} setModalActive={setModalActive}
-                                        setIngredient={setIngredient}/>
+                      <BurgerIngredient key={index} info={item} setModalActive={setModalActive}/>
                     )
                   }
                 })}
@@ -51,9 +58,9 @@ const BurgerIngredients = () => {
         })}
       </ul>
 
-      {/*<Modal isActive={isModalActive} setter={setModalActive}>*/}
-      {/*  <IngredientDetails info={ingredient}/>*/}
-      {/*</Modal>*/}
+      <Modal isActive={isModalActive} setter={setModalActive}>
+        <IngredientDetails/>
+      </Modal>
 
     </section>
   );
