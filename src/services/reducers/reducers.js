@@ -41,7 +41,8 @@ export const ingredientsListReducer = (state = initialState, action) => {
       return {
         ...state,
         isRequested: false,
-        isFailed: true
+        isFailed: true,
+        ingredientsList:[]
       }
     }
     default: {
@@ -205,8 +206,10 @@ export const orderReducer = (state = initialStateOrder, action) => {
     case ORDER_FAILED: {
       return {
         ...state,
+        orderList: [],
         isRequested: false,
-        isFailed: true
+        isFailed: true,
+        orderNumber: null
       }
     }
     default: {
