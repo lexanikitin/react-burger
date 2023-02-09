@@ -3,48 +3,63 @@ import clsx from "clsx";
 import ingrStyle from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
-import PropTypes from "prop-types";
-import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
+import {useDispatch, useSelector} from "react-redux";
+import {MODAL_CLEAR_CURRENT_INGREDIENT} from "../../services/actions/modal";
+import {SET_ACTIVE_TAB} from "../../services/actions/tabs";
 
-const BurgerIngredients = ({list}) => {
+const BurgerIngredients = () => {
+  const dispatch = useDispatch();
+  const {ingredientsList} = useSelector(store => store.list);
+  const {defaultTabsList, activeTabId} = useSelector(store => store.tabs);
   const [isModalActive, setModalActive] = useState(false);
-  const [ingredient, setIngredient] = useState({});
 
-  const typeList = [
-    {id: 1, name: 'Булки', type: 'bun'},
-    {id: 2, name: 'Соусы', type: 'sauce'},
-    {id: 3, name: 'Начинки', type: 'main'}
-  ];
+  React.useEffect(() => {
+    if (isModalActive === false) {
+      dispatch({
+        type: MODAL_CLEAR_CURRENT_INGREDIENT
+      })
+    }
+  }, [isModalActive]);
 
-  const [currentTab, setCurrentTab] = React.useState('Булки')
+  const scrollHandler = (e) => {
+    dispatch({
+      type: SET_ACTIVE_TAB,
+      activeTabId: defaultTabsList.map(
+        (item, index) => {
+          return e.target.childNodes[index].getBoundingClientRect().top - e.target.getBoundingClientRect().top
+        }
+      ).findIndex((element) => {
+        return element >= 0
+      })
+    })
+  }
 
   return (
     <section className={clsx(ingrStyle.section, 'ml-5', 'mr-5', 'pt-10')}>
       <h1 className={clsx('text', 'text_type_main-large', 'pb-5')}>Соберите бургер</h1>
       <div className={'pb-10'} style={{display: 'flex'}}>
-        {typeList.map((type, index) => {
+        {defaultTabsList.map((tab, index) => {
           return (
-            <Tab key={`tab-${index}`} value={type.name} active={currentTab === type.name} onClick={setCurrentTab}>
-              {type.name}
+            <Tab key={`tab-${index}`} value={tab.type} active={activeTabId === tab.id}>
+              {tab.name}
             </Tab>
           )
         })}
       </div>
-      <ul className={ingrStyle.ingredientsTypeList}>
-        {typeList.map((type, index) => {
+      <ul className={ingrStyle.ingredientsTypeList} onScroll={scrollHandler}>
+        {defaultTabsList.map((type, index) => {
           return (
             <div key={index}>
               <li>
                 <p className={clsx('text text_type_main-medium', ingrStyle.ingredientsTypeTitle)}>{type.name}</p>
               </li>
               <ul className={clsx(ingrStyle.ingredientsList, 'pt-6', 'pl-4', 'pr-4', 'pb-10')}>
-                {list.map((item, index) => {
+                {ingredientsList.map((item, index) => {
                   if (item.type === type.type) {
                     return (
-                      <BurgerIngredient key={index} info={item} setModalActive={setModalActive}
-                                        setIngredient={setIngredient}/>
+                      <BurgerIngredient key={index} info={item} setModalActive={setModalActive}/>
                     )
                   }
                 })}
@@ -55,7 +70,7 @@ const BurgerIngredients = ({list}) => {
       </ul>
 
       <Modal isActive={isModalActive} setter={setModalActive}>
-        <IngredientDetails info={ingredient}/>
+        <IngredientDetails/>
       </Modal>
 
     </section>
@@ -63,7 +78,3 @@ const BurgerIngredients = ({list}) => {
 };
 
 export default BurgerIngredients;
-
-BurgerIngredients.propTypes = {
-  list: PropTypes.arrayOf(burgerProps).isRequired
-};

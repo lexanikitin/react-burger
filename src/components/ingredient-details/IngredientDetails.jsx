@@ -2,38 +2,47 @@ import React from 'react';
 import IngDetailsStyles from './ingredient-details.module.css'
 import clsx from "clsx";
 import PropTypes from "prop-types";
+import {useSelector} from "react-redux";
 
-const IngredientDetails = ({info}) => {
+const IngredientDetails = () => {
+  const {modalDetailsCurrentData} = useSelector(store => store.modals);
+
   return (
+    modalDetailsCurrentData._id ?
     <div className={IngDetailsStyles.wrapper}>
       <p className={clsx('mt-10', 'ml-10', 'pt-3', 'text', 'text_type_main-large')}>Детали ингредиента</p>
       <div className={IngDetailsStyles.description}>
-        <img className={clsx('mt-3')} src={info.image_large} alt={"изображение ингредиента"}/>
-        <p className={clsx('mt-4', 'text', 'text_type_main-medium')}>{info.name}</p>
+        <img className={clsx('mt-3')} src={modalDetailsCurrentData.image_large} alt={"изображение ингредиента"}/>
+        <p className={clsx('mt-4', 'text', 'text_type_main-medium')}>{modalDetailsCurrentData.name}</p>
         <ul className={clsx('mt-8', 'mb-15', IngDetailsStyles.stats)}>
           <li className={IngDetailsStyles.stat}>
             <p className={clsx('text', 'text_type_main-default', 'text_color_inactive')}>Калории,ккал</p>
-            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{info.calories}</p>
+            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{modalDetailsCurrentData.calories}</p>
           </li>
           <li className={IngDetailsStyles.stat}>
             <p className={clsx('text', 'text_type_main-default', 'text_color_inactive')}>Белки, г</p>
-            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{info.proteins}</p>
+            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{modalDetailsCurrentData.proteins}</p>
           </li>
           <li className={IngDetailsStyles.stat}>
             <p className={clsx('text', 'text_type_main-default', 'text_color_inactive')}>Жиры, г</p>
-            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{info.fat}</p>
+            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{modalDetailsCurrentData.fat}</p>
           </li>
           <li className={IngDetailsStyles.stat}>
             <p className={clsx('text', 'text_type_main-default', 'text_color_inactive')}>Углеводы, г</p>
-            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{info.carbohydrates}</p>
+            <p className={clsx('text', 'text_type_digits-default', 'text_color_inactive')}>{modalDetailsCurrentData.carbohydrates}</p>
           </li>
         </ul>
       </div>
-    </div>);
+    </div>
+    : <p className="text text_type_main-medium">Идет загрузка...</p>
+
+  );
+
+
 };
 
 export default IngredientDetails;
 
 IngredientDetails.propTypes = {
-  info: PropTypes.object.isRequired
+  info: PropTypes.object
 }

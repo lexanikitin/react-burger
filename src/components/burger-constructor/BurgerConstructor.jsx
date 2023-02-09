@@ -1,55 +1,75 @@
-import React, {useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
-import PropTypes from "prop-types";
-import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import OrderDetails from "../order-details/OrderDetails";
+import {useDispatch, useSelector} from "react-redux";
+import {
+  ADD_INGREDIENT_TO_ORDER,
+  CHANGE_BUN_IN_ORDER,
+  postOrder
+} from "../../services/actions/order";
+import {useDrop} from "react-dnd";
+import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
 
-const BurgerConstructor = ({order, orderNum}) => {
-
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
   const [isModalOrderActive, setModalOrderActive] = useState(false)
-
-
-  const bun = order.find((item) => {
-    if (item.type === 'bun') {
-      return item
-    }
-  })
+  const {selectedIngredients, selectedBun} = useSelector(store => store.order);
+  var total = useMemo(() => {
+    return selectedIngredients.reduce((prev, curr) => prev + curr.price, selectedBun.price * 2)
+  }, [selectedIngredients, selectedBun])
+  const [{isHover}, drop] = useDrop({
+    accept: "ingredient",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(item) {
+      if (item.info.type === 'bun') {
+        dispatch({
+          type: CHANGE_BUN_IN_ORDER,
+          ingredient: item.info
+        })
+      } else {
+        dispatch({
+          type: ADD_INGREDIENT_TO_ORDER,
+          ingredient: item.info
+        })
+      }
+    },
+  });
 
   return (
-    <section className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
-      <ConstructorElement {...bun} text={bun.name + '(верх)'} thumbnail={bun.image} type={'top'}
+    <section ref={drop} className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
+      <ConstructorElement {...selectedBun} text={selectedBun.name + '(верх)'} thumbnail={selectedBun.image} type={'top'}
                           isLocked={true} extraClass={clsx('mb-4', 'ml-8')}/>
       <ul className={clsx(BrgCnstrStyle.editedList)}>
-        {order.map(item => {
-          if (item.type !== 'bun') {
-            return (
-              <li className={clsx(BrgCnstrStyle.editedItem)} key={item._id}>
-                <DragIcon type="primary"/>
-                <ConstructorElement {...item} text={item.name} thumbnail={item.image}/>
-              </li>
-            )
-          }
+        {selectedIngredients.map((item, index) => {
+          return (
+            <BurgerConstructorIngredient key={index} item={item} index={index}/>
+          )
         })}
       </ul>
-      <ConstructorElement {...bun} text={bun.name + '(низ)'} thumbnail={bun.image} type={'bottom'}
+      <ConstructorElement {...selectedBun} text={selectedBun.name + '(низ)'} thumbnail={selectedBun.image}
+                          type={'bottom'}
                           isLocked={true} extraClass={'mt-4 ml-8'}/>
       <div className={clsx('mt-10', BrgCnstrStyle.total)}>
         <div className={clsx('text text_type_main-large', BrgCnstrStyle.amount)}>
-          <p className="text text_type_digits-medium">{order.reduce((prev, curr) => prev + curr.price, 0)}</p>
+          <p
+            className="text text_type_digits-medium">{total}</p>
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
-          setModalOrderActive(true)
+          dispatch(postOrder([selectedIngredients.map(item => item._id), selectedBun._id].flat()));
+          setModalOrderActive(true);
         }}>
           Оформить заказ
         </Button>
       </div>
 
       <Modal isActive={isModalOrderActive} setter={setModalOrderActive}>
-        <OrderDetails orderNum={orderNum}/>
+        <OrderDetails/>
       </Modal>
 
     </section>
@@ -57,8 +77,3 @@ const BurgerConstructor = ({order, orderNum}) => {
 };
 
 export default BurgerConstructor;
-
-BurgerConstructor.propTypes = {
-  order: PropTypes.arrayOf(burgerProps).isRequired,
-  orderNum: PropTypes.number.isRequired
-};

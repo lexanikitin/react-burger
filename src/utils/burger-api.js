@@ -1,15 +1,27 @@
 import {API_URL} from "./constants";
-export function getIngredientsFromApi(apiState, setApiState){
-  setApiState({...apiState, isLoading: true});
-  return fetch(API_URL)
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Код ошибки: ${res.status}`);
-    })
-    .then(data => setApiState({...apiState, ingredients: data.data, isLoading: false}))
-    .catch(e => {
-      setApiState({...apiState, error: e.message, isLoading: false});
-    });
+
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Код ошибки: ${res.status}`);
 }
+
+export function getIngredientsFromApi() {
+  return fetch(`${API_URL}ingredients`)
+    .then(checkResponse)
+}
+
+export function postOrderToApi(orderContent) {
+  return fetch(`${API_URL}orders`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "ingredients": orderContent
+    })
+  })
+    .then(checkResponse)
+}
+
