@@ -5,7 +5,7 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import {burgerProps} from "../../utils/types";
 import {useDispatch, useSelector} from "react-redux";
-import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/actions";
+import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
 import {useDrag} from "react-dnd";
 
 const BurgerIngredient = ({info, setModalActive}) => {

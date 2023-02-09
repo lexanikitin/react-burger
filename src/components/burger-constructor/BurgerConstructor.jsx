@@ -9,7 +9,7 @@ import {
   ADD_INGREDIENT_TO_ORDER,
   CHANGE_BUN_IN_ORDER,
   postOrder
-} from "../../services/actions/actions";
+} from "../../services/actions/order";
 import {useDrop} from "react-dnd";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
 

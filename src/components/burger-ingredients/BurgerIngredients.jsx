@@ -6,7 +6,8 @@ import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from "react-redux";
-import {MODAL_CLEAR_CURRENT_INGREDIENT, SET_ACTIVE_TAB} from "../../services/actions/actions";
+import {MODAL_CLEAR_CURRENT_INGREDIENT} from "../../services/actions/modal";
+import {SET_ACTIVE_TAB} from "../../services/actions/tabs";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();

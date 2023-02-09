@@ -2,7 +2,7 @@ import React, {useRef} from 'react';
 import clsx from "clsx";
 import BrgCnstrIngrStyle from "./burger-constructor-ingredient.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {DRAG_SELECTED_INGREDIENT_TO_POSITION, REMOVE_INGREDIENT_FROM_ORDER} from "../../services/actions/actions";
+import {DRAG_SELECTED_INGREDIENT_TO_POSITION, REMOVE_INGREDIENT_FROM_ORDER} from "../../services/actions/order";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
 import PropTypes from "prop-types";

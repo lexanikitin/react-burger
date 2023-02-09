@@ -1,102 +1,10 @@
-import {combineReducers} from 'redux';
-
 import {
-  GET_INGREDIENTS_LIST_REQUEST,
-  GET_INGREDIENTS_LIST_SUCCESS,
-  GET_INGREDIENTS_LIST_FAILED,
-  SET_ACTIVE_TAB,
-  MODAL_SET_CURRENT_INGREDIENT,
-  MODAL_CLEAR_CURRENT_INGREDIENT,
   ADD_INGREDIENT_TO_ORDER,
-  REMOVE_INGREDIENT_FROM_ORDER,
-  ORDER_REQUEST,
-  ORDER_SUCCESS,
-  ORDER_FAILED, CHANGE_BUN_IN_ORDER, DRAG_SELECTED_INGREDIENT_TO_POSITION
-} from '../actions/actions'
+  CHANGE_BUN_IN_ORDER,
+  DRAG_SELECTED_INGREDIENT_TO_POSITION, ORDER_FAILED, ORDER_REQUEST, ORDER_SUCCESS,
+  REMOVE_INGREDIENT_FROM_ORDER
+} from "../actions/order";
 
-const initialState = {
-  ingredientsList: [],
-  isRequested: false,
-  isFailed: false,
-}
-
-export const ingredientsListReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case GET_INGREDIENTS_LIST_REQUEST: {
-      return {
-        ...state,
-        isRequested: true,
-        isFailed: false
-      }
-    }
-    case GET_INGREDIENTS_LIST_SUCCESS: {
-      return {
-        ...state,
-        ingredientsList: action.list,
-        isRequested: false,
-        isFailed: false
-      }
-    }
-    case GET_INGREDIENTS_LIST_FAILED: {
-      return {
-        ...state,
-        isRequested: false,
-        isFailed: true,
-        ingredientsList:[]
-      }
-    }
-    default: {
-      return state;
-    }
-  }
-}
-
-const initialStateTab = {
-  defaultTabsList: [
-    {id: 1, name: 'Булки', type: 'bun'},
-    {id: 2, name: 'Соусы', type: 'sauce'},
-    {id: 3, name: 'Начинки', type: 'main'}
-  ],
-  activeTabId: 1,
-}
-
-export const tabsListReducer = (state = initialStateTab, action) => {
-  switch (action.type) {
-    case SET_ACTIVE_TAB: {
-      return {
-        ...state,
-        activeTabId: action.activeTabId+1>0 ? action.activeTabId+1: 3
-      }
-    }
-
-    default: {
-      return state;
-    }
-  }
-}
-const initialStateModal = {
-  modalDetailsCurrentData: {}
-}
-
-export const modalReducer = (state = initialStateModal, action) => {
-  switch (action.type) {
-    case MODAL_SET_CURRENT_INGREDIENT: {
-      return {
-        ...state,
-        modalDetailsCurrentData: action.currentData,
-      }
-    }
-    case MODAL_CLEAR_CURRENT_INGREDIENT: {
-      return {
-        ...state,
-        modalDetailsCurrentData: {},
-      }
-    }
-    default: {
-      return state;
-    }
-  }
-}
 const initialStateOrder = {
   selectedIngredients: [
     {
@@ -159,7 +67,11 @@ export const orderReducer = (state = initialStateOrder, action) => {
     case REMOVE_INGREDIENT_FROM_ORDER: {
       return {
         ...state,
-        selectedIngredients: state.selectedIngredients.filter((item, index)=>{if(index!==action.index){return item}})
+        selectedIngredients: state.selectedIngredients.filter((item, index) => {
+          if (index !== action.index) {
+            return item
+          }
+        })
       }
     }
     case CHANGE_BUN_IN_ORDER: {
@@ -170,14 +82,14 @@ export const orderReducer = (state = initialStateOrder, action) => {
     }
     case DRAG_SELECTED_INGREDIENT_TO_POSITION: {
       const draggedItem = state.selectedIngredients[action.dragged];
-      if(action.dragged > action.hovered){
+      if (action.dragged > action.hovered) {
         return {
           ...state,
           ...state.selectedIngredients.splice(action.hovered, 0, draggedItem),
-          ...state.selectedIngredients.splice(action.dragged+1, 1)
+          ...state.selectedIngredients.splice(action.dragged + 1, 1)
         }
 
-      }else{
+      } else {
         return {
           ...state,
           ...state.selectedIngredients.splice(action.dragged, 1),
@@ -217,10 +129,3 @@ export const orderReducer = (state = initialStateOrder, action) => {
     }
   }
 }
-
-export const rootReducer = combineReducers({
-  list: ingredientsListReducer,
-  tabs: tabsListReducer,
-  modals: modalReducer,
-  order: orderReducer
-})
