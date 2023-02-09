@@ -16,6 +16,7 @@ export const CHANGE_BUN_IN_ORDER = 'CHANGE_BUN_IN_ORDER';
 export const ORDER_REQUEST = 'ORDER_REQUEST';
 export const ORDER_SUCCESS = 'ORDER_SUCCESS';
 export const ORDER_FAILED = 'ORDER_FAILED';
+export const DRAG_SELECTED_INGREDIENT_TO_POSITION = 'DRAG_SELECTED_INGREDIENT_TO_POSITION';
 
 
 export function getIngredientsList() {

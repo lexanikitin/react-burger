@@ -11,7 +11,7 @@ import {
   REMOVE_INGREDIENT_FROM_ORDER,
   ORDER_REQUEST,
   ORDER_SUCCESS,
-  ORDER_FAILED, CHANGE_BUN_IN_ORDER
+  ORDER_FAILED, CHANGE_BUN_IN_ORDER, DRAG_SELECTED_INGREDIENT_TO_POSITION
 } from '../actions/actions'
 
 const initialState = {
@@ -165,6 +165,24 @@ export const orderReducer = (state = initialStateOrder, action) => {
       return {
         ...state,
         selectedBun: action.ingredient
+      }
+    }
+    case DRAG_SELECTED_INGREDIENT_TO_POSITION: {
+      const draggedItem = state.selectedIngredients[action.dragged];
+      if(action.dragged > action.hovered){
+        return {
+          ...state,
+          ...state.selectedIngredients.splice(action.hovered, 0, draggedItem),
+          ...state.selectedIngredients.splice(action.dragged+1, 1)
+        }
+
+      }else{
+        return {
+          ...state,
+          ...state.selectedIngredients.splice(action.dragged, 1),
+          ...state.selectedIngredients.splice(action.hovered, 0, draggedItem)
+        }
+
       }
     }
     case ORDER_REQUEST: {

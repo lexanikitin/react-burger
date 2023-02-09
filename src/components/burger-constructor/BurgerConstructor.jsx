@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
@@ -11,7 +11,8 @@ import {
   postOrder,
   REMOVE_INGREDIENT_FROM_ORDER
 } from "../../services/actions/actions";
-import {useDrop} from "react-dnd";
+import {useDrag, useDrop} from "react-dnd";
+import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
@@ -39,13 +40,7 @@ const BurgerConstructor = () => {
       }
     },
   });
-  const handleDeleteIngredient = (index) => {
-    console.log(index);
-    dispatch({
-      type: REMOVE_INGREDIENT_FROM_ORDER,
-      index: index
-    })
-  }
+
   return (
     <section ref={drop} className={clsx('ml-5', 'mr-5', BrgCnstrStyle.section, 'pt-25', 'pl-4')}>
       <ConstructorElement {...selectedBun} text={selectedBun.name + '(верх)'} thumbnail={selectedBun.image} type={'top'}
@@ -53,13 +48,7 @@ const BurgerConstructor = () => {
       <ul className={clsx(BrgCnstrStyle.editedList)}>
         {selectedIngredients.map((item, index) => {
           return (
-            <li className={clsx(BrgCnstrStyle.editedItem)} key={item._id + index}>
-              <DragIcon type="primary"/>
-              <ConstructorElement {...item} text={item.name} thumbnail={item.image}
-                                  handleClose={() => {
-                                    handleDeleteIngredient(index)
-                                  }}/>
-            </li>
+            <BurgerConstructorIngredient key={index} item={item} index={index}/>
           )
         })}
       </ul>

@@ -13,7 +13,6 @@ export function getIngredientsFromApi() {
 }
 
 export function postOrderToApi(orderContent) {
-  console.log('123')
   return fetch(`${API_URL}orders`, {
     method: 'POST',
     headers: {
