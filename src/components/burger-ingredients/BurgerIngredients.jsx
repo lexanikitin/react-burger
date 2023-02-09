@@ -3,8 +3,6 @@ import clsx from "clsx";
 import ingrStyle from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
-import PropTypes from "prop-types";
-import {burgerProps} from "../../utils/types";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from "react-redux";
@@ -79,9 +77,3 @@ const BurgerIngredients = () => {
 };
 
 export default BurgerIngredients;
-
-/*
-BurgerIngredients.propTypes = {
-  list: PropTypes.arrayOf(burgerProps.isRequired).isRequired
-};
-*/

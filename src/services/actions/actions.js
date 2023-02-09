@@ -1,6 +1,4 @@
 import {getIngredientsFromApi, postOrderToApi} from "../../utils/burger-api";
-import {func} from "prop-types";
-
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENTS_LIST_REQUEST';
 export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
 export const GET_INGREDIENTS_LIST_FAILED = 'GET_INGREDIENTS_LIST_FAILED';

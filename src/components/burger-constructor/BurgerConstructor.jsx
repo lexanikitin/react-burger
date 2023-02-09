@@ -8,10 +8,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {
   ADD_INGREDIENT_TO_ORDER,
   CHANGE_BUN_IN_ORDER,
-  postOrder,
-  REMOVE_INGREDIENT_FROM_ORDER
+  postOrder
 } from "../../services/actions/actions";
-import {useDrag, useDrop} from "react-dnd";
+import {useDrop} from "react-dnd";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
 
 const BurgerConstructor = () => {

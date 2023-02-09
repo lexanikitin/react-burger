@@ -5,6 +5,8 @@ import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger
 import {DRAG_SELECTED_INGREDIENT_TO_POSITION, REMOVE_INGREDIENT_FROM_ORDER} from "../../services/actions/actions";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
+import PropTypes from "prop-types";
+import {burgerProps} from "../../utils/types";
 
 const BurgerConstructorIngredient = ({item, index}) => {
   const dispatch = useDispatch();
@@ -73,3 +75,7 @@ const BurgerConstructorIngredient = ({item, index}) => {
 };
 
 export default BurgerConstructorIngredient;
+BurgerConstructorIngredient.propTypes = {
+  item: PropTypes.shape(burgerProps.isRequired).isRequired,
+  index: PropTypes.number.isRequired
+};
