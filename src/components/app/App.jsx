@@ -8,8 +8,10 @@ import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {getIngredientsList} from "../../services/actions/list";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import Login from "../../pages/login/login";
-import Register from "../../pages/register/register";
+import Login from "../../pages/login/Login";
+import Register from "../../pages/register/Register";
+import ResetPassword from "../../pages/reset-password/ResetPassword";
+import ForgotPassword from "../../pages/forgot-password/ForgotPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,8 +41,8 @@ function App() {
           />
           <Route path='/login' element={<Login/>}/>
           <Route path='/register' element={<Register/>}/>
-          <Route path='/forgot-password' element={'/forgot-password'}/>
-          <Route path='/reset-password' element={'reset-password'}/>
+          <Route path='/forgot-password' element={<ForgotPassword/>}/>
+          <Route path='/reset-password' element={<ResetPassword/>}/>
           <Route path='/profile' element={'/profile'}/>
           <Route path='/ingredients/:id' element={'ingredients/:id'}/>
 
