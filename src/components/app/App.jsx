@@ -7,6 +7,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import {getIngredientsList} from "../../services/actions/list";
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Login from "../../pages/login/login";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,19 +19,33 @@ function App() {
 
   return (
     <div className="App">
-      <DndProvider backend={HTML5Backend}>
-        <AppHeader/>
-        <main className={app_style.main_content}>
-          {
-            isRequested && !isFailed ? <p className="text text_type_main-medium">Идет загрузка...</p>
-              :
-              <>
-                <BurgerIngredients/>
-                <BurgerConstructor/>
-              </>
-          }
-        </main>
-      </DndProvider>
+      <AppHeader/>
+      <Router>
+        <Routes>
+          <Route path={'/'} element={
+            <DndProvider backend={HTML5Backend}>
+              <main className={app_style.main_content}>
+                {
+                  isRequested && !isFailed ? <p className="text text_type_main-medium">Идет загрузка...</p>
+                    :
+                    <>
+                      <BurgerIngredients/>
+                      <BurgerConstructor/>
+                    </>
+                }
+              </main>
+            </DndProvider>}
+          />
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/register' element={'register'}/>
+          <Route path='/forgot-password' element={'/forgot-password'}/>
+          <Route path='/reset-password' element={'reset-password'}/>
+          <Route path='/profile' element={'/profile'}/>
+          <Route path='/ingredients/:id' element={'ingredients/:id'}/>
+
+          <Route path='*' element={'404'}/>
+        </Routes>
+      </Router>
     </div>
   );
 }
