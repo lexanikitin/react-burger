@@ -25,3 +25,29 @@ export function postOrderToApi(orderContent) {
     .then(checkResponse)
 }
 
+export function postForgotPasswordToApi(email) {
+  return fetch(`${API_URL}password-reset`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": email
+    })
+  })
+    .then(checkResponse)
+}
+export function postResetPasswordToApi(password, token) {
+  return fetch(`${API_URL}password-reset/reset`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "password": password,
+      "token": token
+    })
+  })
+    .then(checkResponse)
+}
+

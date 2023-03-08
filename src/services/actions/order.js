@@ -26,7 +26,3 @@ export function postOrder(orderContent) {
     })
   }
 }
-
-
-
-

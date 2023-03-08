@@ -1,30 +1,34 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styles from "../register/register.module.css";
 import clsx from "clsx";
-import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {postForgotPassword} from "../../services/actions/auth";
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
+  const [formValue, setFormValue] = useState({email: ''});
+  const onChange = (e) => {
+    setFormValue({...formValue, [e.target.name]: e.target.value});
+  }
   return (
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')}>
         <h1 className={'pb-6 text text_type_main-medium'}>Восстановление пароля</h1>
-        <PasswordInput
-          placeholder={'Введите новый пароль'}
-          name={'password'}
-          extraClass='pb-6'
+        <EmailInput
+          placeholder={'Укажите e-mail'}
+          name={'email'}
+          isIcon={false}
+          extraClass={'pb-6'}
+          onChange={onChange}
+          value={formValue.email}
         />
-        <Input
-          type={'text'}
-          placeholder={'Введите код из письма'}
-          name={'code'}
-          error={false}
-          size={'default'}
-          extraClass="pb-6"
-        />
-
-        <Button htmlType='submit' type='primary' size='medium'>
-          Сохранить
+        <Button htmlType='button' type='primary' size='medium' onClick={() => {
+          dispatch(postForgotPassword(formValue.email));
+          //TODO: Переадресация на страницу смены пароля при успешном запросе
+        }}>
+          Восстановить
         </Button>
       </form>
 
@@ -33,6 +37,8 @@ const ForgotPassword = () => {
       </p>
     </div>
   );
+
+
 };
 
 export default ForgotPassword;
