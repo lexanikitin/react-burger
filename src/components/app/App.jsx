@@ -12,6 +12,7 @@ import Login from "../../pages/login/Login";
 import Register from "../../pages/register/Register";
 import ResetPassword from "../../pages/reset-password/ResetPassword";
 import ForgotPassword from "../../pages/forgot-password/ForgotPassword";
+import Profile from "../../pages/profile/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/forgot-password' element={<ForgotPassword/>}/>
           <Route path='/reset-password' element={<ResetPassword/>}/>
-          <Route path='/profile' element={'/profile'}/>
+          <Route path='/profile' element={<Profile/>}/>
           <Route path='/ingredients/:id' element={'ingredients/:id'}/>
 
           <Route path='*' element={'404'}/>

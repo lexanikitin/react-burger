@@ -8,7 +8,7 @@ const AppHeader = () => {
   return (<header className={app_header.header}>
     <div className={clsx(app_header.content, 'pt-4', 'pb-4')}>
       <nav className={clsx(app_header.nav_wrapper)}>
-        <a href={'#'} className={clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button)}
+        <a href={'/'} className={clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button)}
         >
           <BurgerIcon type="primary"/>
           <span
@@ -23,10 +23,10 @@ const AppHeader = () => {
       <div className={app_header.logo_wrapper}>
         <Logo/>
       </div>
-      <a href={'#'} className={clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button)}
+      <a href={'/profile'} className={clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button)}
       >
-        <ProfileIcon type="secondary"/>
-        <span className={clsx('pl-2', 'text', 'text_type_main-default', 'text_color_inactive')}>Личный кабинет</span>
+        <ProfileIcon type="primary"/>
+        <span className={clsx('pl-2', 'text', 'text_type_main-default')}>Личный кабинет</span>
       </a>
     </div>
   </header>);
