@@ -24,6 +24,12 @@
   text-decoration: none;
   cursor: pointer;
   color: #8585AD;
+
 }
+.link_active{
+  color: #F2F2F3;
+}
+
 .desc{
+  opacity: .4;
 }

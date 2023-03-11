@@ -21,7 +21,7 @@ const Profile = () => {
       <div className={styles.nav_wrapper}>
         <ul className={styles.nav}>
           <li className={styles.nav_item}>
-            <NavLink to={"/profile"} className={clsx(styles.link,'text','text_type_main-medium')}>Профиль</NavLink>
+            <NavLink to={"/profile"} className={clsx(styles.link, styles.link_active,'text','text_type_main-medium')}>Профиль</NavLink>
           </li>
           <li className={styles.nav_item}>
             <NavLink to={"/profile"} className={clsx(styles.link,'text','text_type_main-medium')}>История заказов</NavLink>

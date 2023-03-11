@@ -51,3 +51,58 @@ export function postResetPasswordToApi(password, token) {
     .then(checkResponse)
 }
 
+export function postRegisterToApi(email, password, name) {
+  return fetch(`${API_URL}auth/register`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": email,
+      "password": password,
+      "name": name
+    })
+  })
+    .then(checkResponse)
+}
+
+export function postLoginToApi(email, password) {
+  return fetch(`${API_URL}auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "email": email,
+      "password": password
+    })
+  })
+    .then(checkResponse)
+}
+
+export function postRefreshTokenToApi(token) {
+  return fetch(`${API_URL}auth/token`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "token": token
+    })
+  })
+    .then(checkResponse)
+}
+
+export function postLogoutToApi(token) {
+  return fetch(`${API_URL}auth/logout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      "token": token
+    })
+  })
+    .then(checkResponse)
+}
+
