@@ -1,20 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from "../register/register.module.css";
 import clsx from "clsx";
 import {Button, EmailInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {Link, useNavigate} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import {postForgotPassword} from "../../services/actions/auth";
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formValue, setFormValue] = useState({email: ''});
   const onChange = (e) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }
+  const {forgotPasswordIsSuccess} = useSelector(store => store.auth);
+  useEffect(()=>{
+    if(forgotPasswordIsSuccess){navigate('/reset-password')}
+  },[forgotPasswordIsSuccess])
   return (
     <div className={styles.wrapper}>
-      <form className={clsx(styles.form, 'pb-20')}>
+      <form className={clsx(styles.form, 'pb-20')} onSubmit={() => {
+        dispatch(postForgotPassword(formValue.email));
+        //TODO: Переадресация на страницу смены пароля при успешном запросе
+      }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Восстановление пароля</h1>
         <EmailInput
           placeholder={'Укажите e-mail'}
@@ -22,12 +30,8 @@ const ForgotPassword = () => {
           isIcon={false}
           extraClass={'pb-6'}
           onChange={onChange}
-          value={formValue.email}
         />
-        <Button htmlType='button' type='primary' size='medium' onClick={() => {
-          dispatch(postForgotPassword(formValue.email));
-          //TODO: Переадресация на страницу смены пароля при успешном запросе
-        }}>
+        <Button htmlType='submit' type='primary' size='medium'>
           Восстановить
         </Button>
       </form>
