@@ -70,7 +70,7 @@ export function postRegister(email, password, name) {
     postRegisterToApi(email, password, name).then(data => {
       dispatch({
         type: AUTH_REGISTER_SUCCESS,
-        data:data
+        data: data
       })
     }).catch(e => {
       console.log(e.message);
@@ -78,13 +78,14 @@ export function postRegister(email, password, name) {
     })
   }
 }
+
 export function postLogin(email, password) {
   return function (dispatch) {
     dispatch({type: AUTH_LOGIN_REQUEST})
     postLoginToApi(email, password).then(data => {
       dispatch({
         type: AUTH_LOGIN_SUCCESS,
-        data:data
+        data: data
       })
     }).catch(e => {
       console.log(e.message);
@@ -92,15 +93,15 @@ export function postLogin(email, password) {
     })
   }
 }
-function refreshToken() {
-  const token = getCookie('burgerRefreshToken');
+
+function refreshToken(token) {
   return function (dispatch) {
     dispatch({type: AUTH_REFRESH_TOKEN_REQUEST})
     postRefreshTokenToApi(token).then(data => {
       dispatch({
         type: AUTH_REFRESH_TOKEN_SUCCESS,
-        data:data
-      })
+        data: data
+      });
     }).catch(e => {
       console.log(e.message);
       dispatch({type: AUTH_REFRESH_TOKEN_FAILED})
@@ -111,7 +112,7 @@ function refreshToken() {
 export function postLogout() {
   const token = getCookie('burgerRefreshToken');
   return function (dispatch) {
-    dispatch({type: AUTH_LOGOUT_REQUEST})
+    dispatch({type: AUTH_LOGOUT_REQUEST});
     postLogoutToApi(token).then(data => {
       dispatch({
         type: AUTH_LOGOUT_SUCCESS
@@ -126,13 +127,16 @@ export function postLogout() {
 export function getProfile(accessToken) {
   const refToken = getCookie('burgerRefreshToken');
   return function (dispatch) {
-    dispatch({type: AUTH_GET_PROFILE_REQUEST})
+    dispatch({type: AUTH_GET_PROFILE_REQUEST});
     getProfileFromApi(accessToken).then(data => {
       dispatch({
-        type: AUTH_GET_PROFILE_SUCCESS
+        type: AUTH_GET_PROFILE_SUCCESS,
+        data: data
       })
     }).catch(e => {
-      dispatch(refreshToken(refToken))
+      if (refToken) {
+        dispatch(refreshToken(refToken))
+      }
       console.log(e.message);
       dispatch({type: AUTH_GET_PROFILE_FAILED})
     })

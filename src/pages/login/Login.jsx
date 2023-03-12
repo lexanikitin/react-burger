@@ -21,7 +21,6 @@ const Login = () => {
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
         e.preventDefault();
         dispatch(postLogin(formValue.email, formValue.password))
-        // TODO переадресация на корень
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Вход</h1>
         <EmailInput
@@ -29,17 +28,13 @@ const Login = () => {
           isIcon={false}
           extraClass={'pb-6'}
           onChange={onChange}
-          value={formValue.name}
-          required={true}
-
+          value={formValue.email}
         />
         <PasswordInput
           name={'password'}
           extraClass='pb-6'
           onChange={onChange}
-          value={formValue.name}
-          required={true}
-
+          value={formValue.password}
         />
         <Button htmlType='submit' type='primary' size='medium' >
           Войти
