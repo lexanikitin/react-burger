@@ -5,7 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import styles from './profile.module.css'
 import clsx from "clsx";
 import {getCookie} from "../../utils/cookies";
-import {getProfile} from "../../services/actions/auth";
+import {getProfile, postLogout} from "../../services/actions/auth";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -46,7 +46,10 @@ const Profile = () => {
             </NavLink>
           </li>
           <li className={styles.nav_item}>
-            <NavLink to={"/profile"} className={clsx(styles.link, 'text', 'text_type_main-medium')}>
+            <NavLink to={'/'} className={clsx(styles.link, 'text', 'text_type_main-medium')} onClick={()=>{
+              dispatch(postLogout())
+
+            }}>
               Выход
             </NavLink>
           </li>

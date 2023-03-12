@@ -205,6 +205,12 @@ export const authReducer = (state = initialState, action) => {
       setCookie('burgerRefreshToken', null, { expires: -1 })
       return {
         ...state,
+        isAuthSuccess: false,
+        user: {
+          email:'',
+          name:''
+        },
+        accessToken: '',
         logoutIsRequested: false,
         logoutIsSuccess: true,
       }
