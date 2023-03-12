@@ -15,6 +15,7 @@ const BurgerIngredients = () => {
   const {defaultTabsList, activeTabId} = useSelector(store => store.tabs);
   const [isModalActive, setModalActive] = useState(false);
 
+
   React.useEffect(() => {
     if (isModalActive === false) {
       dispatch({

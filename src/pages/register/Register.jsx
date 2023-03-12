@@ -15,7 +15,12 @@ const Register = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={clsx(styles.form, 'pb-20')}>
+      <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
+        e.preventDefault();
+        dispatch(postRegister(formValue.email, formValue.password, formValue.name));
+        //TODO: Переадресация  при успешном запросе
+
+      }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Регистрация</h1>
         <Input
           type={'text'}
@@ -43,12 +48,8 @@ const Register = () => {
           onChange={onChange}
           value={formValue.password}
           required={true}
-
         />
-        <Button htmlType='button' type='primary' size='medium' onClick={() => {
-          dispatch(postRegister(formValue.email, formValue.password, formValue.name));
-          //TODO: Переадресация  при успешном запросе
-        }}>
+        <Button htmlType='submit' type='primary' size='medium'>
           Зарегистрироваться
         </Button>
       </form>

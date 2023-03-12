@@ -1,13 +1,16 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import styles from './login.module.css'
 import clsx from "clsx";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {postLogin} from "../../services/actions/auth";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const {loginIsSuccess} = useSelector(store => store.auth);
+  useEffect(()=>{if(loginIsSuccess){navigate('/')}},[loginIsSuccess]);
   const [formValue, setFormValue] = useState({email: '', password: ''});
   const onChange = (e) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
@@ -15,7 +18,11 @@ const Login = () => {
 
   return (
     <div className={styles.wrapper}>
-      <form className={clsx(styles.form, 'pb-20')}>
+      <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
+        e.preventDefault();
+        dispatch(postLogin(formValue.email, formValue.password))
+        // TODO переадресация на корень
+      }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Вход</h1>
         <EmailInput
           name={'email'}
@@ -34,10 +41,7 @@ const Login = () => {
           required={true}
 
         />
-        <Button htmlType='button' type='primary' size='medium' onClick={()=>{
-          dispatch(postLogin(formValue.email, formValue.password))
-          // TODO переадресация на корень
-        }}>
+        <Button htmlType='submit' type='primary' size='medium' >
           Войти
         </Button>
       </form>

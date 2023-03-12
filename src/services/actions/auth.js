@@ -1,10 +1,12 @@
 import {
+  getProfileFromApi,
   postForgotPasswordToApi,
   postLoginToApi, postLogoutToApi, postRefreshTokenToApi,
   postRegisterToApi,
   postResetPasswordToApi
 } from "../../utils/burger-api";
 import {getCookie, setCookie} from "../../utils/cookies";
+import {useSelector} from "react-redux";
 
 export const AUTH_FORGOT_PASSWORD_REQUEST = 'AUTH_FORGOT_PASSWORD_REQUEST';
 export const AUTH_FORGOT_PASSWORD_SUCCESS = 'AUTH_FORGOT_PASSWORD_SUCCESS';
@@ -29,6 +31,10 @@ export const AUTH_REFRESH_TOKEN_FAILED = 'AUTH_REFRESH_TOKEN_FAILED';
 export const AUTH_LOGOUT_REQUEST = 'AUTH_LOGOUT_REQUEST';
 export const AUTH_LOGOUT_SUCCESS = 'AUTH_LOGOUT_SUCCESS';
 export const AUTH_LOGOUT_FAILED = 'AUTH_LOGOUT_FAILED';
+
+export const AUTH_GET_PROFILE_REQUEST = 'AUTH_GET_PROFILE_REQUEST';
+export const AUTH_GET_PROFILE_SUCCESS = 'AUTH_GET_PROFILE_SUCCESS';
+export const AUTH_GET_PROFILE_FAILED = 'AUTH_GET_PROFILE_FAILED';
 
 export function postForgotPassword(email) {
   return function (dispatch) {
@@ -86,7 +92,7 @@ export function postLogin(email, password) {
     })
   }
 }
-function refreshtoken() {
+function refreshToken() {
   const token = getCookie('burgerRefreshToken');
   return function (dispatch) {
     dispatch({type: AUTH_REFRESH_TOKEN_REQUEST})
@@ -102,7 +108,7 @@ function refreshtoken() {
   }
 }
 
-function postLogout() {
+export function postLogout() {
   const token = getCookie('burgerRefreshToken');
   return function (dispatch) {
     dispatch({type: AUTH_LOGOUT_REQUEST})
@@ -113,6 +119,22 @@ function postLogout() {
     }).catch(e => {
       console.log(e.message);
       dispatch({type: AUTH_LOGOUT_FAILED})
+    })
+  }
+}
+
+export function getProfile(accessToken) {
+  const refToken = getCookie('burgerRefreshToken');
+  return function (dispatch) {
+    dispatch({type: AUTH_GET_PROFILE_REQUEST})
+    getProfileFromApi(accessToken).then(data => {
+      dispatch({
+        type: AUTH_GET_PROFILE_SUCCESS
+      })
+    }).catch(e => {
+      dispatch(refreshToken(refToken))
+      console.log(e.message);
+      dispatch({type: AUTH_GET_PROFILE_FAILED})
     })
   }
 }

@@ -105,4 +105,14 @@ export function postLogoutToApi(token) {
   })
     .then(checkResponse)
 }
+export function getProfileFromApi(token) {
+  return fetch(`${API_URL}auth/user`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
+    }
+  })
+    .then(checkResponse)
+}
 

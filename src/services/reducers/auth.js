@@ -12,7 +12,12 @@ import {
   AUTH_LOGIN_SUCCESS,
   AUTH_LOGIN_FAILED,
   AUTH_REFRESH_TOKEN_REQUEST,
-  AUTH_REFRESH_TOKEN_SUCCESS, AUTH_REFRESH_TOKEN_FAILED, AUTH_LOGOUT_REQUEST, AUTH_LOGOUT_SUCCESS, AUTH_LOGOUT_FAILED,
+  AUTH_REFRESH_TOKEN_SUCCESS,
+  AUTH_REFRESH_TOKEN_FAILED,
+  AUTH_LOGOUT_REQUEST,
+  AUTH_LOGOUT_SUCCESS,
+  AUTH_LOGOUT_FAILED,
+  AUTH_GET_PROFILE_REQUEST, AUTH_GET_PROFILE_SUCCESS, AUTH_GET_PROFILE_FAILED,
 } from "../actions/auth";
 import {setCookie} from "../../utils/cookies";
 
@@ -31,7 +36,10 @@ const initialState = {
 
   isAuthSuccess: false,
 
-  user: {},
+  user: {
+    email:'',
+    name:''
+  },
   accessToken: '',
   accessTokenTimestamp: '',
 
@@ -46,6 +54,10 @@ const initialState = {
   logoutIsRequested: false,
   logoutIsFailed: false,
   logoutIsSuccess: false,
+
+  getProfileIsRequested: false,
+  getProfileIsFailed: false,
+  getProfileIsSuccess: false,
 
 }
 
@@ -201,6 +213,30 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         logoutIsRequested: false,
         logoutIsFailed: true
+      }
+    }
+
+    case AUTH_GET_PROFILE_REQUEST: {
+      return {
+        ...state,
+        getProfileIsRequested: true,
+        getProfileIsFailed: false,
+        getProfileIsSuccess: false
+      }
+    }
+    case AUTH_GET_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        getProfileIsRequested: false,
+        getProfileIsSuccess: true,
+        user : action.data.user,
+      }
+    }
+    case AUTH_GET_PROFILE_FAILED: {
+      return {
+        ...state,
+        getProfileIsRequested: false,
+        getProfileIsFailed: true
       }
     }
 
