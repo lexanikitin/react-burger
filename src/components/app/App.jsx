@@ -7,6 +7,8 @@ import ResetPassword from "../../pages/reset-password/ResetPassword";
 import ForgotPassword from "../../pages/forgot-password/ForgotPassword";
 import Profile from "../../pages/profile/Profile";
 import ConstructorPage from "../../pages/constructorPage/ConstructorPage";
+import OnlyAuthRouteElement from "../only-auth-route-element/OnlyAuthRouteElement";
+import OnlyNoAuthRouteElement from "../only-noauth-route-element/OnlyNoAuthRouteElement";
 
 function App() {
 
@@ -16,11 +18,17 @@ function App() {
         <AppHeader/>
         <Routes>
           <Route path={'/'} element={<ConstructorPage/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/register' element={<Register/>}/>
-          <Route path='/forgot-password' element={<ForgotPassword/>}/>
-          <Route path='/reset-password' element={<ResetPassword/>}/>
-          <Route path='/profile' element={<Profile/>}/>
+          <Route path='/login' element={
+            <OnlyNoAuthRouteElement element={<Login/>}/>}/>
+          <Route path='/register' element={
+            <OnlyNoAuthRouteElement element={<Register/>}/>}/>
+          <Route path='/forgot-password' element={
+            <OnlyNoAuthRouteElement element={<ForgotPassword/>}/>}/>
+          <Route path='/reset-password' element={
+            <OnlyNoAuthRouteElement element={<ResetPassword/>}/>}/>
+          <Route path='/profile' element={
+            <OnlyAuthRouteElement element={
+              <Profile/>}/>}/>
           <Route path='/ingredients/:id' element={'ingredients/:id'}/>
 
           <Route path='*' element={'404'}/>

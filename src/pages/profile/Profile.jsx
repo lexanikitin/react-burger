@@ -24,12 +24,11 @@ const Profile = () => {
 
 
 
-
-
-
-
   }, [accessToken])
 
+  useEffect(()=>{
+    setFormValue({...formValue, name:user.name, email: user.email})
+  },[user.name, user.password, user.email])
   return (
     <main className={styles.wrapper}>
       <div className={styles.nav_wrapper}>
@@ -59,11 +58,11 @@ const Profile = () => {
         </p>
       </div>
       <form className={'pl-15'}>
-        <Input type={"text"} extraClass={``} placeholder={'Имя'} value={user.name} name={"name"}
-               onChange={onChange} icon={"EditIcon"}/>
-        <EmailInput extraClass={`mt-6`} placeholder={'Логин'} value={user.email} name={"email"} onChange={onChange}
-                    icon={"EditIcon"}/>
-        <PasswordInput extraClass={`mt-6`} placeholder={'Пароль'} value={'**'} name={"password"}
+        <Input type={"text"} extraClass={``} placeholder={'Имя'} value={formValue.name} name={"name"}
+               onChange={onChange} {... ((user.name===formValue.name) ? {} : {icon: "EditIcon"})} />
+        <EmailInput extraClass={`mt-6`} placeholder={'Логин'} value={formValue.email} name={"email"} onChange={onChange}
+                    {... ((user.email===formValue.email) ? {} : {icon: "EditIcon"})}/>
+        <PasswordInput extraClass={`mt-6`} placeholder={'Пароль'} value={'   '} name={"password"}
                        onChange={onChange}
                        icon={"EditIcon"}/>
       </form>
