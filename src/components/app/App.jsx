@@ -9,6 +9,8 @@ import Profile from "../../pages/profile/Profile";
 import ConstructorPage from "../../pages/constructorPage/ConstructorPage";
 import OnlyAuthRouteElement from "../only-auth-route-element/OnlyAuthRouteElement";
 import OnlyNoAuthRouteElement from "../only-noauth-route-element/OnlyNoAuthRouteElement";
+import ProfileInfo from "../../pages/profileInfo/ProfileInfo";
+import ProfileOrders from "../../pages/profileOrders/ProfileOrders";
 
 function App() {
 
@@ -26,9 +28,10 @@ function App() {
             <OnlyNoAuthRouteElement element={<ForgotPassword/>}/>}/>
           <Route path='/reset-password' element={
             <OnlyNoAuthRouteElement element={<ResetPassword/>}/>}/>
-          <Route path='/profile' element={
-            <OnlyAuthRouteElement element={
-              <Profile/>}/>}/>
+          <Route exact={true} path='/profile' element={<OnlyAuthRouteElement element={<Profile/>}/>}>
+            <Route index element={<ProfileInfo/>}/>
+            <Route path='orders' element={<ProfileOrders/>}/>
+          </Route>
           <Route path='/ingredients/:id' element={'ingredients/:id'}/>
 
           <Route path='*' element={'404'}/>
