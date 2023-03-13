@@ -11,6 +11,7 @@ import OnlyAuthRouteElement from "../only-auth-route-element/OnlyAuthRouteElemen
 import OnlyNoAuthRouteElement from "../only-noauth-route-element/OnlyNoAuthRouteElement";
 import ProfileInfo from "../../pages/profileInfo/ProfileInfo";
 import ProfileOrders from "../../pages/profileOrders/ProfileOrders";
+import NotFound from "../../pages/notFound/NotFound";
 
 function App() {
 
@@ -28,13 +29,13 @@ function App() {
             <OnlyNoAuthRouteElement element={<ForgotPassword/>}/>}/>
           <Route path='/reset-password' element={
             <OnlyNoAuthRouteElement element={<ResetPassword/>}/>}/>
-          <Route exact={true} path='/profile' element={<OnlyAuthRouteElement element={<Profile/>}/>}>
+          <Route path='/profile' element={<OnlyAuthRouteElement element={<Profile/>}/>}>
             <Route index element={<ProfileInfo/>}/>
             <Route path='orders' element={<ProfileOrders/>}/>
           </Route>
           <Route path='/ingredients/:id' element={'ingredients/:id'}/>
 
-          <Route path='*' element={'404'}/>
+          <Route path='*' element={<NotFound/>}/>
         </Routes>
       </Router>
     </div>

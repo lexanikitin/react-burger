@@ -1,6 +1,5 @@
 import React from 'react';
 import clsx from "clsx";
-import styles from "../profile/profile.module.css";
 
 const ProfileOrders = () => {
   return (
@@ -9,5 +8,4 @@ const ProfileOrders = () => {
       </p>
   );
 };
-
 export default ProfileOrders;

@@ -3,7 +3,7 @@ import {EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-bu
 import {useSelector} from "react-redux";
 
 const ProfileInfo = () => {
-  const {user, isAuthSuccess, accessToken} = useSelector(store => store.auth);
+  const {user} = useSelector(store => store.auth);
   const [formValue, setFormValue] = useState({name: user.name, email: user.email, password: ''});
   const onChange = (e) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
