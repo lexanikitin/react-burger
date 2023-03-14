@@ -1,25 +1,28 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './register.module.css'
 import clsx from "clsx";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {postRegister} from "../../services/actions/auth";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [formValue, setFormValue] = useState({email: '', name: '', password: ''});
+  const {registerIsSuccess} = useSelector(store => store.auth);
+
   const onChange = (e) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }
-
+  useEffect(()=>{
+    if(registerIsSuccess === true){navigate('/')}
+  },[registerIsSuccess])
   return (
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
         e.preventDefault();
         dispatch(postRegister(formValue.email, formValue.password, formValue.name));
-        //TODO: Переадресация  при успешном запросе
-
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Регистрация</h1>
         <Input
