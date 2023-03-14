@@ -8,6 +8,7 @@ const initialState = {
   ingredientsList: [],
   isRequested: false,
   isFailed: false,
+  isSuccessful:false
 }
 
 export const ingredientsListReducer = (state = initialState, action) => {
@@ -16,7 +17,8 @@ export const ingredientsListReducer = (state = initialState, action) => {
       return {
         ...state,
         isRequested: true,
-        isFailed: false
+        isFailed: false,
+        isSuccessful:false
       }
     }
     case GET_INGREDIENTS_LIST_SUCCESS: {
@@ -24,7 +26,9 @@ export const ingredientsListReducer = (state = initialState, action) => {
         ...state,
         ingredientsList: action.list,
         isRequested: false,
-        isFailed: false
+        isFailed: false,
+        isSuccessful:true
+
       }
     }
     case GET_INGREDIENTS_LIST_FAILED: {
@@ -32,7 +36,8 @@ export const ingredientsListReducer = (state = initialState, action) => {
         ...state,
         isRequested: false,
         isFailed: true,
-        ingredientsList: []
+        ingredientsList: [],
+        isSuccessful:false
       }
     }
     default: {

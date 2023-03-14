@@ -12,6 +12,7 @@ import OnlyNoAuthRouteElement from "../only-noauth-route-element/OnlyNoAuthRoute
 import ProfileInfo from "../../pages/profileInfo/ProfileInfo";
 import ProfileOrders from "../../pages/profileOrders/ProfileOrders";
 import NotFound from "../../pages/notFound/NotFound";
+import Ingredient from "../../pages/ingredient/Ingredient";
 
 function App() {
 
@@ -33,7 +34,7 @@ function App() {
             <Route index element={<ProfileInfo/>}/>
             <Route path='orders' element={<ProfileOrders/>}/>
           </Route>
-          <Route path='/ingredients/:id' element={'ingredients/:id'}/>
+          <Route path='/ingredients/:id' element={<Ingredient/>}/>
 
           <Route path='*' element={<NotFound/>}/>
         </Routes>
