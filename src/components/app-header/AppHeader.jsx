@@ -27,9 +27,9 @@ const AppHeader = () => {
           <span className={clsx('pl-2', 'text', 'text_type_main-default', 'text_color_inactive')}>Лента заказов</span>
         </NavLink>
       </nav>
-      <div className={app_header.logo_wrapper}>
+      <NavLink to={'/'} className={app_header.logo_wrapper}>
         <Logo/>
-      </div>
+      </NavLink>
       <NavLink to={'/profile'} end className={choosingStyles}>
         <ProfileIcon type="primary"/>
         <span className={clsx('pl-2', 'text', 'text_type_main-default')}>Личный кабинет</span>
