@@ -42,11 +42,11 @@ export const AUTH_PATCH_PROFILE_FAILED = 'AUTH_PATCH_PROFILE_FAILED';
 export function postForgotPassword(email) {
   return function (dispatch) {
     dispatch({type: AUTH_FORGOT_PASSWORD_REQUEST})
-    postForgotPasswordToApi(email).then(
+    postForgotPasswordToApi(email).then(()=> {
       dispatch({
         type: AUTH_FORGOT_PASSWORD_SUCCESS,
       })
-    ).catch(e => {
+    }).catch(e => {
       console.log(e.message);
       dispatch({type: AUTH_FORGOT_PASSWORD_FAILED})
     })
@@ -56,11 +56,11 @@ export function postForgotPassword(email) {
 export function postResetPassword(password, token) {
   return function (dispatch) {
     dispatch({type: AUTH_RESET_PASSWORD_REQUEST})
-    postResetPasswordToApi(password, token).then(
+    postResetPasswordToApi(password, token).then(() => {
       dispatch({
         type: AUTH_RESET_PASSWORD_SUCCESS,
       })
-    ).catch(e => {
+    }).catch(e => {
       console.log(e.message);
       dispatch({type: AUTH_RESET_PASSWORD_FAILED})
     })
@@ -116,7 +116,7 @@ export function postLogout() {
   const token = getCookie('burgerRefreshToken');
   return function (dispatch) {
     dispatch({type: AUTH_LOGOUT_REQUEST});
-    postLogoutToApi(token).then(data => {
+    postLogoutToApi(token).then(() => {
       setCookie('burgerRefreshToken', null, -1)
       dispatch({
         type: AUTH_LOGOUT_SUCCESS
