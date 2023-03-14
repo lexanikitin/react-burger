@@ -137,11 +137,14 @@ export function getProfile(accessToken) {
         data: data
       })
     }).catch(e => {
-      if (refToken) {
-        dispatch(refreshToken(refToken))
+      if (e === 'Код ошибки: 401') {
+        if (refToken) {
+          dispatch(refreshToken(refToken))
+        }
+      } else {
+        console.log(e.message);
+        dispatch({type: AUTH_GET_PROFILE_FAILED})
       }
-      console.log(e.message);
-      dispatch({type: AUTH_GET_PROFILE_FAILED})
     })
   }
 }
@@ -157,11 +160,14 @@ export function patchProfile(accessToken, name, email, password) {
         data: data
       })
     }).catch(e => {
-      if (refToken) {
-        dispatch(refreshToken(refToken))
+      if (e === 'Код ошибки: 401') {
+        if (refToken) {
+          dispatch(refreshToken(refToken))
+        }
+      } else {
+        console.log(e.message);
+        dispatch({type: AUTH_PATCH_PROFILE_FAILED})
       }
-      console.log(e.message);
-      dispatch({type: AUTH_PATCH_PROFILE_FAILED})
     })
   }
 }

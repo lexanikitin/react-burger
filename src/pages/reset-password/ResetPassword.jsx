@@ -5,6 +5,7 @@ import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {postResetPasswordToApi} from "../../utils/burger-api";
+import {postResetPassword} from "../../services/actions/auth";
 
 const ResetPassword = () => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const ResetPassword = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e) => {
         e.preventDefault();
-        dispatch(postResetPasswordToApi(formValue.password, formValue.token));
+        dispatch(postResetPassword(formValue.password, formValue.token));
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Восстановление пароля</h1>
         <PasswordInput
