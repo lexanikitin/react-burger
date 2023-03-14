@@ -2,13 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
 import {patchProfile} from "../../services/actions/auth";
+import {getCookie} from "../../utils/cookies";
 
 const ProfileInfo = () => {
   const dispatch = useDispatch();
   const {user} = useSelector(store => store.auth);
   const [formValue, setFormValue] = useState({name: user.name, email: user.email, password: ''});
   const [formChangeFlag, setFormChangeFlag] = useState(false);
-  const {accessToken} = useSelector(store => store.auth);
+  const accessToken = getCookie('burgerAccessToken');
 
   const onChange = (e) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});

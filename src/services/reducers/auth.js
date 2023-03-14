@@ -44,8 +44,6 @@ const initialState = {
     email:'',
     name:''
   },
-  accessToken: '',
-  accessTokenTimestamp: '',
 
   loginIsRequested: false,
   loginIsFailed: false,
@@ -128,14 +126,14 @@ export const authReducer = (state = initialState, action) => {
       }
     }
     case AUTH_REGISTER_SUCCESS: {
-      setCookie('burgerRefreshToken', action.data.refreshToken)
+      setCookie('burgerRefreshToken', action.data.refreshToken);
+      setCookie('burgerAccessToken', action.data.accessToken.split(' ')[1]);
       return {
         ...state,
         registerIsRequested: false,
         registerIsSuccess: true,
         isAuthSuccess: true,
         user : action.data.user,
-        accessToken : action.data.accessToken.split(' ')[1],
       }
     }
     case AUTH_REGISTER_FAILED: {
@@ -156,14 +154,15 @@ export const authReducer = (state = initialState, action) => {
       }
     }
     case AUTH_LOGIN_SUCCESS: {
-      setCookie('burgerRefreshToken', action.data.refreshToken)
+      setCookie('burgerRefreshToken', action.data.refreshToken);
+      setCookie('burgerAccessToken', action.data.accessToken.split(' ')[1]);
+
       return {
         ...state,
         loginIsRequested: false,
         loginIsSuccess: true,
         isAuthSuccess: true,
         user : action.data.user,
-        accessToken : action.data.accessToken.split(' ')[1],
       }
     }
     case AUTH_LOGIN_FAILED: {
@@ -183,17 +182,19 @@ export const authReducer = (state = initialState, action) => {
       }
     }
     case AUTH_REFRESH_TOKEN_SUCCESS: {
-      setCookie('burgerRefreshToken', action.data.refreshToken)
+      setCookie('burgerRefreshToken', action.data.refreshToken);
+      setCookie('burgerAccessToken', action.data.accessToken.split(' ')[1]);
+
       return {
         ...state,
         isAuthSuccess: true,
         refreshTokenIsRequested: false,
         refreshTokenIsSuccess: true,
-        accessToken : action.data.accessToken.split(' ')[1],
       }
     }
     case AUTH_REFRESH_TOKEN_FAILED: {
-      setCookie('burgerRefreshToken', null, { expires: -1 })
+      setCookie('burgerRefreshToken', null, { expires: -1 });
+      setCookie('burgerAccessToken', null, { expires: -1 });
       return {
         ...state,
         refreshTokenIsRequested: false,
@@ -210,7 +211,8 @@ export const authReducer = (state = initialState, action) => {
       }
     }
     case AUTH_LOGOUT_SUCCESS: {
-      setCookie('burgerRefreshToken', null, { expires: -1 })
+      setCookie('burgerRefreshToken', null, { expires: -1 });
+      setCookie('burgerAccessToken', null, { expires: -1 });
       return {
         ...state,
         isAuthSuccess: false,
@@ -218,7 +220,6 @@ export const authReducer = (state = initialState, action) => {
           email:'',
           name:''
         },
-        accessToken: '',
         logoutIsRequested: false,
         logoutIsSuccess: true,
       }

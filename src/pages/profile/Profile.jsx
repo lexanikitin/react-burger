@@ -9,8 +9,9 @@ import {getProfile, postLogout} from "../../services/actions/auth";
 const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const refreshToken = getCookie('burgerRefreshToken')
-  const {accessToken} = useSelector(store => store.auth);
+  const refreshToken = getCookie('burgerRefreshToken');
+  const accessToken = getCookie('burgerAccessToken');
+  const {logoutIsSuccess} = useSelector(store => store.auth);
 
   useEffect(() => {
     if (!refreshToken) {
@@ -19,6 +20,12 @@ const Profile = () => {
     dispatch(getProfile(accessToken))
 
   }, [accessToken])
+  useEffect(() => {
+    if (logoutIsSuccess) {
+      navigate('/login')
+    }
+  }, [logoutIsSuccess])
+
   const choosingStyles = ({isActive}) =>
     isActive ?
       clsx(styles.link, 'text', 'text_type_main-medium', styles.link_active)

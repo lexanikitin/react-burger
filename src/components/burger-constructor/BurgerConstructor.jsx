@@ -13,13 +13,14 @@ import {
 import {useDrop} from "react-dnd";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
 import {useNavigate} from "react-router-dom";
+import {getCookie} from "../../utils/cookies";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOrderActive, setModalOrderActive] = useState(false)
   const {selectedIngredients, selectedBun} = useSelector(store => store.order);
-  const {accessToken} = useSelector(store => store.auth);
+  const accessToken = getCookie('burgerAccessToken');
   const {isAuthSuccess} = useSelector(store => store.auth);
   useEffect(()=>{
     if(window.localStorage.getItem('BURGER_SELECTED_BUN') !== null){
