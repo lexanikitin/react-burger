@@ -97,7 +97,7 @@ export function postLogin(email, password) {
   }
 }
 
-function refreshToken(token) {
+export function refreshToken(token) {
   return function (dispatch) {
     dispatch({type: AUTH_REFRESH_TOKEN_REQUEST})
     postRefreshTokenToApi(token).then(data => {
@@ -117,6 +117,7 @@ export function postLogout() {
   return function (dispatch) {
     dispatch({type: AUTH_LOGOUT_REQUEST});
     postLogoutToApi(token).then(data => {
+      setCookie('burgerRefreshToken', null, -1)
       dispatch({
         type: AUTH_LOGOUT_SUCCESS
       })

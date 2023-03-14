@@ -12,11 +12,12 @@ export function getIngredientsFromApi() {
     .then(checkResponse)
 }
 
-export function postOrderToApi(orderContent) {
+export function postOrderToApi(token, orderContent) {
   return fetch(`${API_URL}orders`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Authorization: 'Bearer ' + token
     },
     body: JSON.stringify({
       "ingredients": orderContent
