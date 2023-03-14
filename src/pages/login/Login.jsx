@@ -9,9 +9,15 @@ import {postLogin} from "../../services/actions/auth";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const {loginIsSuccess} = useSelector(store => store.auth);
-  useEffect(()=>{if(loginIsSuccess){navigate('/')}},[loginIsSuccess]);
   const [formValue, setFormValue] = useState({email: '', password: ''});
+  const {loginIsSuccess} = useSelector(store => store.auth);
+
+  useEffect(() => {
+    if (loginIsSuccess===true) {
+      navigate('/')
+    }
+  }, [loginIsSuccess])
+
   const onChange = (e) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }

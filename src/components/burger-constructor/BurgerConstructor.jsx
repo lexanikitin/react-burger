@@ -40,7 +40,7 @@ const BurgerConstructor = () => {
 
     }
   },[])
-  var total = useMemo(() => {
+  let total = useMemo(() => {
     return selectedIngredients.reduce((prev, curr) => prev + curr.price, selectedBun.price * 2)
   }, [selectedIngredients, selectedBun])
   const [{isHover}, drop] = useDrop({

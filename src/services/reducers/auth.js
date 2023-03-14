@@ -222,6 +222,8 @@ export const authReducer = (state = initialState, action) => {
         },
         logoutIsRequested: false,
         logoutIsSuccess: true,
+        loginIsSuccess: false
+
       }
     }
     case AUTH_LOGOUT_FAILED: {

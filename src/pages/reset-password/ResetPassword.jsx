@@ -16,14 +16,19 @@ const ResetPassword = () => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }
   const {resetPasswordIsSuccess} = useSelector(store => store.auth);
+
   useEffect(() => {
     if (resetPasswordIsSuccess) {
       navigate('/login')
     }
   }, [resetPasswordIsSuccess])
-  useEffect(()=>{
-    if(!location.state?.fromForgotPasswordPage) {navigate('/login')}
-  },[])
+
+  useEffect(() => {
+    if (!location.state?.fromForgotPasswordPage) {
+      navigate('/login')
+    }
+  }, [])
+
   return (
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e) => {
@@ -48,7 +53,6 @@ const ResetPassword = () => {
           onChange={onChange}
           value={formValue.token}
         />
-
         <Button htmlType='submit' type='primary' size='medium'>
           Сохранить
         </Button>
