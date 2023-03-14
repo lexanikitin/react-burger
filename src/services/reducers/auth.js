@@ -17,7 +17,11 @@ import {
   AUTH_LOGOUT_REQUEST,
   AUTH_LOGOUT_SUCCESS,
   AUTH_LOGOUT_FAILED,
-  AUTH_GET_PROFILE_REQUEST, AUTH_GET_PROFILE_SUCCESS, AUTH_GET_PROFILE_FAILED,
+  AUTH_GET_PROFILE_REQUEST,
+  AUTH_GET_PROFILE_SUCCESS,
+  AUTH_GET_PROFILE_FAILED,
+  AUTH_PATCH_PROFILE_SUCCESS,
+  AUTH_PATCH_PROFILE_REQUEST, AUTH_PATCH_PROFILE_FAILED,
 } from "../actions/auth";
 import {setCookie} from "../../utils/cookies";
 
@@ -58,6 +62,10 @@ const initialState = {
   getProfileIsRequested: false,
   getProfileIsFailed: false,
   getProfileIsSuccess: false,
+
+  patchProfileIsRequested: false,
+  patchProfileIsFailed: false,
+  patchProfileIsSuccess: false,
 
 }
 
@@ -244,6 +252,31 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         getProfileIsRequested: false,
         getProfileIsFailed: true
+      }
+    }
+
+
+    case AUTH_PATCH_PROFILE_REQUEST: {
+      return {
+        ...state,
+        patchProfileIsRequested: true,
+        patchProfileIsFailed: false,
+        patchProfileIsSuccess: false
+      }
+    }
+    case AUTH_PATCH_PROFILE_SUCCESS: {
+      return {
+        ...state,
+        patchProfileIsRequested: false,
+        patchProfileIsSuccess: true,
+        user : action.data.user,
+      }
+    }
+    case AUTH_PATCH_PROFILE_FAILED: {
+      return {
+        ...state,
+        patchProfileIsRequested: false,
+        patchProfileIsFailed: true
       }
     }
 

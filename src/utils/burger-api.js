@@ -37,6 +37,7 @@ export function postForgotPasswordToApi(email) {
   })
     .then(checkResponse)
 }
+
 export function postResetPasswordToApi(password, token) {
   return fetch(`${API_URL}password-reset/reset`, {
     method: 'POST',
@@ -105,6 +106,7 @@ export function postLogoutToApi(token) {
   })
     .then(checkResponse)
 }
+
 export function getProfileFromApi(token) {
   return fetch(`${API_URL}auth/user`, {
     method: 'GET',
@@ -114,5 +116,38 @@ export function getProfileFromApi(token) {
     }
   })
     .then(checkResponse)
+}
+
+export function patchProfileToApi(token, name, email, password) {
+  if (password==='') {
+    return fetch(`${API_URL}auth/user`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        "name": name,
+        "email": email
+      })
+
+    })
+      .then(checkResponse)
+  } else {
+    return fetch(`${API_URL}auth/user`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token
+      },
+      body: JSON.stringify({
+        "name": name,
+        "email": email,
+        "password": password,
+      })
+
+    })
+      .then(checkResponse)
+  }
 }
 

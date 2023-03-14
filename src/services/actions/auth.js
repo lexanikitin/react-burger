@@ -1,5 +1,5 @@
 import {
-  getProfileFromApi,
+  getProfileFromApi, patchProfileToApi,
   postForgotPasswordToApi,
   postLoginToApi, postLogoutToApi, postRefreshTokenToApi,
   postRegisterToApi,
@@ -35,6 +35,9 @@ export const AUTH_LOGOUT_FAILED = 'AUTH_LOGOUT_FAILED';
 export const AUTH_GET_PROFILE_REQUEST = 'AUTH_GET_PROFILE_REQUEST';
 export const AUTH_GET_PROFILE_SUCCESS = 'AUTH_GET_PROFILE_SUCCESS';
 export const AUTH_GET_PROFILE_FAILED = 'AUTH_GET_PROFILE_FAILED';
+export const AUTH_PATCH_PROFILE_REQUEST = 'AUTH_PATCH_PROFILE_REQUEST';
+export const AUTH_PATCH_PROFILE_SUCCESS = 'AUTH_PATCH_PROFILE_SUCCESS';
+export const AUTH_PATCH_PROFILE_FAILED = 'AUTH_PATCH_PROFILE_FAILED';
 
 export function postForgotPassword(email) {
   return function (dispatch) {
@@ -139,6 +142,26 @@ export function getProfile(accessToken) {
       }
       console.log(e.message);
       dispatch({type: AUTH_GET_PROFILE_FAILED})
+    })
+  }
+}
+
+
+export function patchProfile(accessToken, name, email, password) {
+  const refToken = getCookie('burgerRefreshToken');
+  return function (dispatch) {
+    dispatch({type: AUTH_PATCH_PROFILE_REQUEST});
+    patchProfileToApi(accessToken, name, email, password).then(data => {
+      dispatch({
+        type: AUTH_PATCH_PROFILE_SUCCESS,
+        data: data
+      })
+    }).catch(e => {
+      if (refToken) {
+        dispatch(refreshToken(refToken))
+      }
+      console.log(e.message);
+      dispatch({type: AUTH_PATCH_PROFILE_FAILED})
     })
   }
 }
