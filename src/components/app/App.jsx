@@ -13,6 +13,8 @@ import ProfileInfo from "../../pages/profileInfo/ProfileInfo";
 import ProfileOrders from "../../pages/profileOrders/ProfileOrders";
 import NotFound from "../../pages/notFound/NotFound";
 import Ingredient from "../../pages/ingredient/Ingredient";
+import Feed from "../../pages/feed/Feed";
+import OrderInfo from "../../pages/order-info/OrderInfo";
 
 function App() {
 
@@ -22,6 +24,9 @@ function App() {
         <AppHeader/>
         <Routes>
           <Route path={'/'} element={<ConstructorPage/>}/>
+          <Route path='/feed' element={<Feed/>}/>
+          <Route path='/feed/:id' element={<OrderInfo/>}/>
+
           <Route path='/login' element={
             <OnlyNoAuthRouteElement element={<Login/>}/>}/>
           <Route path='/register' element={
@@ -32,9 +37,13 @@ function App() {
             <OnlyNoAuthRouteElement element={<ResetPassword/>}/>}/>
           <Route path='/profile' element={<OnlyAuthRouteElement element={<Profile/>}/>}>
             <Route index element={<ProfileInfo/>}/>
+
             <Route path='orders' element={<ProfileOrders/>}/>
+            <Route path='orders/:id' element={<OrderInfo/>}/>
+
           </Route>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>
+
 
           <Route path='*' element={<NotFound/>}/>
         </Routes>

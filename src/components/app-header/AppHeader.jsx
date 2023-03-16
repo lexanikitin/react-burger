@@ -3,7 +3,6 @@ import {Logo, BurgerIcon, ProfileIcon, ListIcon} from "@ya.praktikum/react-devel
 import app_header from './app-header.module.css';
 import clsx from "clsx";
 import {NavLink} from "react-router-dom";
-import styles from "../../pages/profile/profile.module.css";
 
 
 const AppHeader = () => {
@@ -22,9 +21,9 @@ const AppHeader = () => {
             Конструктор
           </span>
         </NavLink>
-        <NavLink to={'/line'} className={choosingStyles}>
-          <ListIcon type="secondary"/>
-          <span className={clsx('pl-2', 'text', 'text_type_main-default', 'text_color_inactive')}>Лента заказов</span>
+        <NavLink to={'/feed'} className={choosingStyles}>
+          <ListIcon type="primary"/>
+          <span className={clsx('pl-2', 'text', 'text_type_main-default')}>Лента заказов</span>
         </NavLink>
       </nav>
       <NavLink to={'/'} className={app_header.logo_wrapper}>

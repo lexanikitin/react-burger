@@ -1,0 +1,45 @@
+.section {
+  max-width: 600px;
+  width: 100%;
+}
+
+.ingredientsList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.ingredientsTypeTitle {
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: scroll;
+  max-height: calc(100vh - 284px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.list::-webkit-scrollbar {
+  background: #2F2F37;
+  max-height: 664px;
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  border: 3px solid #8585AD;
+  height: 492px;
+  width: 8px;
+}
+
+.list::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.dis{
+
+}
