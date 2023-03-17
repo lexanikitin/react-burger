@@ -1,6 +1,6 @@
-import {SET_ACTIVE_TAB} from "../actions/tabs";
+import {FEED_SET_CURRENT_ORDER, FEED_CLEAR_CURRENT_ORDER} from "../actions/feed";
 
-const initialState = {
+const initialStateFeed = {
   orders: [
     {
       "ingredients": [
@@ -52,13 +52,34 @@ const initialState = {
     },
   ],
   total: 1,
-  totalToday: 1
+  totalToday: 1,
+  modalSelected: {
+    order: {},
+    ingredients: [],
+    total: 0
+  }
 }
 
-export const feedReducer = (state = initialState, action) => {
+export const feedReducer = (state = initialStateFeed, action) => {
   switch (action.type) {
-    case SET_ACTIVE_TAB: {
+    case FEED_SET_CURRENT_ORDER: {
       return {
+        ...state,
+        modalSelected: {
+          order: action.selectedOrder,
+          ingredients: action.selectedList,
+          total: action.selectedTotal
+        }
+      }
+    }
+    case FEED_CLEAR_CURRENT_ORDER: {
+      return {
+        ...state,
+        modalSelected: {
+          order: {},
+          ingredients: [],
+          total: 0
+        }
       }
     }
 

@@ -3,7 +3,7 @@ import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
 import Modal from "../modal/Modal";
-import OrderDetails from "../order-details/OrderDetails";
+import OrderInfo from "../order-info/OrderInfo";
 import {useDispatch, useSelector} from "react-redux";
 import {
   ADD_INGREDIENT_TO_ORDER,
@@ -98,7 +98,7 @@ const BurgerConstructor = () => {
       </div>
 
       <Modal isActive={isModalOrderActive} setter={setModalOrderActive}>
-        <OrderDetails/>
+        <OrderInfo/>
       </Modal>
 
     </section>

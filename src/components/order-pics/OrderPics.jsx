@@ -19,7 +19,7 @@ const OrderPics = ({ingredientList}) => {
     <>
       <ul className={styles.list}>
         {list.map((item, index) => {
-          return <img className={styles.item} src={item.image} alt={item.name}/>
+          return <img key={index} className={styles.item} src={item.image} alt={item.name}/>
 
         })}
 
