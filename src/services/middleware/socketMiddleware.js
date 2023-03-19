@@ -22,7 +22,6 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           const { success, ...restParsedData } = parsedData;
-          console.log(parsedData);
 
           dispatch({ type: onMessage, payload: restParsedData });
         };

@@ -8,11 +8,12 @@ import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from "react-redux";
 import OrderCard from "../order-card/OrderCard";
 import OrderDetails from "../order-details/OrderDetails";
-import {MODAL_CLEAR_CURRENT_INGREDIENT} from "../../services/actions/modal";
-import {FEED_CLEAR_CURRENT_ORDER} from "../../services/actions/feed";
+import {FEED_CLEAR_CURRENT_ORDER, FEED_SET_CURRENT_ORDER} from "../../services/actions/feed";
+import {useLocation} from "react-router-dom";
 
 const FeedList = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [isModalActive, setModalActive] = useState(false);
   const {orders} = useSelector(store => store.feed);
@@ -23,6 +24,18 @@ const FeedList = () => {
       })
     }
   }, [isModalActive]);
+  useEffect(() => {
+    if (location.state) {
+      dispatch({
+        type: FEED_SET_CURRENT_ORDER,
+        selectedOrder: JSON.parse(location.state).order,
+        selectedList: JSON.parse(location.state).ingredients,
+        selectedTotal: JSON.parse(location.state).total,
+      })
+      setModalActive(true);
+    }
+  }, [])
+
   return (
     <section className={clsx(styles.section)}>
       <ul className={clsx(styles.list)} >

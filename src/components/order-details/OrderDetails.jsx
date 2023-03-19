@@ -8,9 +8,12 @@ const OrderDetails = () => {
     const {modalSelected} = useSelector(store => store.feed);
     useEffect(() => {
       if (modalSelected.order._id) {
-        window.history.replaceState(null, "", "/feed/:" + modalSelected.order._id)
+        window.history.replaceState(null, "", "/feed/:" + modalSelected.order._id);
+        localStorage.setItem('MODAL_FEED_ORDER_STATE', JSON.stringify(modalSelected));
+
       } else {
-        window.history.replaceState(null, "", "/feed")
+        window.history.replaceState(null, "", "/feed");
+        localStorage.removeItem('MODAL_FEED_ORDER_STATE');
       }
     }, [modalSelected])
 
