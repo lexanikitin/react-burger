@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './order-info.module.css'
 import clsx from "clsx";
 import doneImg from '../../images/done.svg'
-import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 
 const OrderInfo = () => {

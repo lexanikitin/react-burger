@@ -38,7 +38,7 @@ const OrderCard = ({order, setModalActive}) => {
         <p className={clsx(styles.number, 'text', 'text_type_digits-default')}>#{order.number}</p>
         <FormattedDate className={clsx(styles.date, 'text text_type_main-default text_color_inactive')} date={new Date(order.createdAt)}/>
       </div>
-      <p className={clsx( 'text text_type_main-medium')}>Death Star Starship Main бургер</p>
+      <p className={clsx( 'text text_type_main-medium')}>{order.name}</p>
       <div className={styles.lastRow}>
         <OrderPics ingredientList={ingList} />
         <div className={clsx('text text_type_main-large', styles.sum)}>

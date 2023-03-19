@@ -6,3 +6,59 @@
   margin: 0 auto;
   padding-top: 40px;
 }
+.wrapper{
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  flex-wrap: nowrap;
+}
+.dataSection{
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 60px;
+}
+.ordersLists{
+  display: flex;
+  flex-direction: row;
+  gap: 36px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.ordersList{
+}
+.orderListHeader{
+  margin: 0;
+  padding-top: 0;
+}
+.doneList{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #00CCCC;
+  max-height: 320px;
+  flex-wrap: wrap;
+}
+.undoneList{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 320px;
+  flex-wrap: wrap;
+
+}
+.ordersListItem{
+  text-decoration: none;
+}
+.total{
+
+  margin: 0;
+  padding: 0;
+
+}

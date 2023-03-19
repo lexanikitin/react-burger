@@ -85,7 +85,7 @@ const BurgerConstructor = () => {
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
           if(isAuthSuccess){
-            dispatch(postOrder(accessToken, [selectedIngredients.map(item => item._id), selectedBun._id].flat()));
+            dispatch(postOrder(accessToken, [selectedBun._id, selectedIngredients.map(item => item._id)].flat()));
             setModalOrderActive(true);
           }else{
             window.localStorage.setItem('BURGER_SELECTED_BUN', JSON.stringify(selectedBun));
