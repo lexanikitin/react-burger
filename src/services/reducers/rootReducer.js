@@ -5,6 +5,7 @@ import {modalReducer} from "./modal";
 import {orderReducer} from "./order";
 import {authReducer} from './auth'
 import {feedReducer} from "./feed";
+import {privateFeedReducer} from "./privateFeed";
 
 export const rootReducer = combineReducers({
   list: ingredientsListReducer,
@@ -12,5 +13,6 @@ export const rootReducer = combineReducers({
   modals: modalReducer,
   order: orderReducer,
   auth: authReducer,
-  feed: feedReducer
+  feed: feedReducer,
+  privateFeed: privateFeedReducer
 })

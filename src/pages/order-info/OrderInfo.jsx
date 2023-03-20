@@ -17,6 +17,10 @@ const OrderInfo = () => {
     if (window.localStorage.getItem('MODAL_FEED_ORDER_STATE') !== null) {
       navigate('/feed', {state: window.localStorage.getItem('MODAL_FEED_ORDER_STATE')});
     }
+    if (window.localStorage.getItem('MODAL_PRIVATE_FEED_ORDER_STATE') !== null) {
+      navigate('/profile/orders', {state: window.localStorage.getItem('MODAL_FEED_ORDER_STATE')});
+    }
+
 
     dispatch(getIngredientsList());
     dispatch({type: 'WS_FEED_CONNECTION_START'});

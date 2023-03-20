@@ -8,8 +8,11 @@ import BrgCnstrStyle from "../burger-constructor/burger-constructor.module.css";
 import OrderPics from "../order-pics/OrderPics";
 import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
 import {FEED_SET_CURRENT_ORDER} from "../../services/actions/feed";
+import {useLocation} from "react-router-dom";
+import {PRIVATE_FEED_SET_CURRENT_ORDER} from "../../services/actions";
 
 const OrderCard = ({order, setModalActive}) => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const {ingredientsList} = useSelector(store => store.list);
   const ingList = useMemo(()=>{
@@ -25,15 +28,25 @@ const OrderCard = ({order, setModalActive}) => {
 
   return (
     <li className={clsx(styles.card, 'pt-6', 'pr-6', 'pb-6', 'pl-6', 'mr-2')} onClick={()=>{
-      dispatch({
-        type: FEED_SET_CURRENT_ORDER,
-        selectedOrder: order,
-        selectedList: ingList,
-        selectedTotal: orderSum,
-      })
-      setModalActive(true);
-
-    }}>
+      if(location.pathname==='/feed') {
+        dispatch({
+          type: FEED_SET_CURRENT_ORDER,
+          selectedOrder: order,
+          selectedList: ingList,
+          selectedTotal: orderSum,
+        })
+        setModalActive(true);
+      }
+      if(location.pathname==='/profile/orders') {
+        dispatch({
+          type: PRIVATE_FEED_SET_CURRENT_ORDER,
+          selectedOrder: order,
+          selectedList: ingList,
+          selectedTotal: orderSum,
+        })
+        setModalActive(true);
+      }
+      }}>
       <div className={clsx(styles.infoRow)}>
         <p className={clsx(styles.number, 'text', 'text_type_digits-default')}>#{order.number}</p>
         <FormattedDate className={clsx(styles.date, 'text text_type_main-default text_color_inactive')} date={new Date(order.createdAt)}/>
