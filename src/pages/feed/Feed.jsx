@@ -4,6 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIngredientsList} from "../../services/actions/list";
 import clsx from "clsx";
 import FeedList from "../../components/feed-list/FeedList";
+import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START} from "../../services/action-types";
 
 const Feed = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,10 @@ const Feed = () => {
     if (ingredientsList[0] === undefined) {
       dispatch(getIngredientsList());
     }
-    dispatch({type: 'WS_FEED_CONNECTION_START'})
+    dispatch({type: WS_FEED_CONNECTION_START})
+    return () => {
+      dispatch({type: WS_FEED_CONNECTION_CLOSED})
+    }
 
   }, []);
 
@@ -32,7 +36,7 @@ const Feed = () => {
                   <div className={styles.ordersList}>
                     <p className={clsx(styles.orderListHeader, 'text text_type_main-medium', 'pb-6')}>Готовы:</p>
                     <ul className={styles.doneList}>
-                      {ordersReady.map((item, index)=>{
+                      {ordersReady.map((item, index) => {
                         return (<li key={index} className={clsx('text text_type_digits-default')}>{item}</li>)
                       })}
                     </ul>
@@ -40,7 +44,7 @@ const Feed = () => {
                   <div className={styles.ordersList}>
                     <p className={clsx(styles.orderListHeader, 'text text_type_main-medium', 'pb-6')}>В работе:</p>
                     <ul className={styles.undoneList}>
-                      {ordersNotReady.map((item, index)=>{
+                      {ordersNotReady.map((item, index) => {
                         return (<li key={index} className={clsx('text text_type_digits-default')}>{item}</li>)
                       })}
                     </ul>
@@ -48,11 +52,11 @@ const Feed = () => {
                 </div>
                 <div>
                   <p className={clsx(styles.orderListHeader, 'text text_type_main-medium')}>Выполнено за все время:</p>
-                  <p className={clsx(styles.total,"text text_type_digits-large")}>{total}</p>
+                  <p className={clsx(styles.total, "text text_type_digits-large")}>{total}</p>
                 </div>
                 <div>
                   <p className={clsx(styles.orderListHeader, 'text text_type_main-medium')}>Выполнено за сегодня:</p>
-                  <p className={clsx(styles.total,"text text_type_digits-large")}>{totalToday}</p>
+                  <p className={clsx(styles.total, "text text_type_digits-large")}>{totalToday}</p>
                 </div>
               </div>
             </div>

@@ -13,6 +13,8 @@ import OrderCard from "../../components/order-card/OrderCard";
 import Modal from "../../components/modal/Modal";
 import PrivateOrderDetails from "../../components/private-order-details/PrivateOrderDetails";
 import {useLocation} from "react-router-dom";
+import {WS_PRIVATE_FEED_CONNECTION_START} from "../../services/action-types";
+import {WS_PRIVATE_FEED_CONNECTION_CLOSED} from "../../services/action-types";
 
 const ProfileOrders = () => {
   const dispatch = useDispatch();
@@ -26,11 +28,17 @@ const ProfileOrders = () => {
     if (ingredientsList[0] === undefined) {
       dispatch(getIngredientsList());
     }
-    dispatch({type:'WS_PRIVATE_FEED_CONNECTION_START'})
+    dispatch({type: WS_PRIVATE_FEED_CONNECTION_START})
+    return () => {
+      dispatch({type: WS_PRIVATE_FEED_CONNECTION_CLOSED})
+    }
+
   }, [])
-  useEffect(()=>{
-    if(orders){setDataReady(true)}
-  },[orders])
+  useEffect(() => {
+    if (orders) {
+      setDataReady(true)
+    }
+  }, [orders])
   useEffect(() => {
     if (isModalActive === false) {
       dispatch({
@@ -51,26 +59,24 @@ const ProfileOrders = () => {
   }, [])
 
 
-
-
   return (
-      <>
-        {isDataReady ?
-          <ul className={clsx(styles.list)} >
-            {orders.map((item, index) => {
-              return (
-                <OrderCard key={index} order={item} setModalActive={setModalActive}/>
-              );
-            })}
-          </ul>
-          :
-          <p className="text text_type_main-medium">Идет загрузка...</p>
-        }
-        <Modal isActive={isModalActive} setter={setModalActive}>
-          <PrivateOrderDetails/>
-        </Modal>
+    <>
+      {isDataReady ?
+        <ul className={clsx(styles.list)}>
+          {orders.map((item, index) => {
+            return (
+              <OrderCard key={index} order={item} setModalActive={setModalActive}/>
+            );
+          })}
+        </ul>
+        :
+        <p className="text text_type_main-medium">Идет загрузка...</p>
+      }
+      <Modal isActive={isModalActive} setter={setModalActive}>
+        <PrivateOrderDetails/>
+      </Modal>
 
-      </>)
+    </>)
 
 };
 export default ProfileOrders;

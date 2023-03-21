@@ -3,6 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {FEED_SET_CURRENT_ORDER, getIngredientsList} from "../../services/actions";
 import {useDispatch, useSelector} from "react-redux";
 import OrderDetailsPage from "../orderDetailsPage/OrderDetailsPage";
+import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START} from "../../services/action-types";
 
 const OrderInfo = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,10 @@ const OrderInfo = () => {
 
 
     dispatch(getIngredientsList());
-    dispatch({type: 'WS_FEED_CONNECTION_START'});
+    dispatch({type: WS_FEED_CONNECTION_START});
+    return () => {
+      dispatch({type: WS_FEED_CONNECTION_CLOSED})
+    }
 
   }, []);
 
