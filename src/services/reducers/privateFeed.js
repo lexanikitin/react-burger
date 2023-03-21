@@ -42,25 +42,25 @@ export const privateFeedReducer = (state = initialStatePrivateFeed, action) => {
     case WS_PRIVATE_FEED_CONNECTION_SUCCESS:
       return {
         ...state,
-        isConnected: true
+        isConnectedPr: true
       };
 
     case WS_PRIVATE_FEED_CONNECTION_ERROR:
       return {
         ...state,
-        isConnected: false
+        isConnectedPr: false
       };
 
     case WS_PRIVATE_FEED_CONNECTION_CLOSED:
       return {
         ...state,
-        isConnected: false
+        isConnectedPr: false
       };
 
     case WS_PRIVATE_FEED_GET_MESSAGE:
       return {
         ...state,
-        orders: action.payload.orders,
+        ordersPr: action.payload.orders,
       };
 
 

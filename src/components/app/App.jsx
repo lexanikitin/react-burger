@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from "../app-header/AppHeader";
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Routes, Route, useLocation} from 'react-router-dom';
 import Login from "../../pages/login/Login";
 import Register from "../../pages/register/Register";
 import ResetPassword from "../../pages/reset-password/ResetPassword";
@@ -17,9 +17,9 @@ import Feed from "../../pages/feed/Feed";
 import OrderInfo from "../../pages/order-info/OrderInfo";
 import PrivateOrderDetails from "../private-order-details/PrivateOrderDetails";
 import ProfileOrderDetails from "../profile-order-details/ProfileOrderDetails";
+import PrivateOrderInfo from "../../pages/private-order-info/PrivateOrderInfo";
 
 function App() {
-
   return (
     <div className="App">
       <Router>
@@ -41,7 +41,7 @@ function App() {
             <Route index element={<ProfileInfo/>}/>
 
             <Route path='orders' element={<ProfileOrders/>}/>
-            <Route path='orders/:id' element={<ProfileOrderDetails/>}/>
+            <Route path='orders/:id' element={<PrivateOrderInfo/>}/>
 
           </Route>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>

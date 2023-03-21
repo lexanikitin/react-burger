@@ -4,7 +4,7 @@ import {getCookie} from "../../utils/cookies";
 
 const OnlyNoAuthRouteElement = ({element}) => {
   const refreshToken = getCookie('burgerRefreshToken')
-  return !refreshToken ? element : <Navigate to="/" replace/>;
+  return !refreshToken!==null ? element : <Navigate to="/" replace/>;
 };
 
 export default OnlyNoAuthRouteElement;

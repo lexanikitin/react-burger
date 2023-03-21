@@ -3,9 +3,12 @@ import styles from './private-order-details.module.css';
 import {useSelector} from "react-redux";
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useLocation} from "react-router-dom";
 
 const PrivateOrderDetails = () => {
-    const {modalSelected} = useSelector(store => store.privateFeed);
+  const location = useLocation();
+
+  const {modalSelected} = useSelector(store => store.privateFeed);
     useEffect(() => {
       if (modalSelected.order._id) {
         window.history.replaceState(null, "", "/profile/orders/:" + modalSelected.order._id);

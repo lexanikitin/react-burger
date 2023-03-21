@@ -20,7 +20,7 @@ const ProfileOrders = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const {ingredientsList} = useSelector(store => store.list);
-  const {orders} = useSelector(store => store.privateFeed);
+  const {ordersPr} = useSelector(store => store.privateFeed);
   const [isDataReady, setDataReady] = useState(false);
   const [isModalActive, setModalActive] = useState(false);
 
@@ -35,10 +35,10 @@ const ProfileOrders = () => {
 
   }, [])
   useEffect(() => {
-    if (orders) {
+    if (ordersPr) {
       setDataReady(true)
     }
-  }, [orders])
+  }, [ordersPr])
   useEffect(() => {
     if (isModalActive === false) {
       dispatch({
@@ -48,6 +48,7 @@ const ProfileOrders = () => {
   }, [isModalActive]);
   useEffect(() => {
     if (location.state) {
+
       dispatch({
         type: PRIVATE_FEED_SET_CURRENT_ORDER,
         selectedOrder: JSON.parse(location.state).order,
@@ -63,7 +64,7 @@ const ProfileOrders = () => {
     <>
       {isDataReady ?
         <ul className={clsx(styles.list)}>
-          {orders.map((item, index) => {
+          {ordersPr.map((item, index) => {
             return (
               <OrderCard key={index} order={item} setModalActive={setModalActive}/>
             );
