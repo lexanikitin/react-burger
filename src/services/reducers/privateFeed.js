@@ -6,17 +6,17 @@ import {
   WS_PRIVATE_FEED_GET_MESSAGE
 } from "../action-types";
 
-const initialStateFeed = {
-  orders: [],
+const initialStatePrivateFeed = {
+  ordersPr: [],
   modalSelected: {
     order: {},
     ingredients: [],
     total: 0
   },
-  isConnected: false,
+  isConnectedPr: false,
 }
 
-export const privateFeedReducer = (state = initialStateFeed, action) => {
+export const privateFeedReducer = (state = initialStatePrivateFeed, action) => {
   switch (action.type) {
     case PRIVATE_FEED_SET_CURRENT_ORDER: {
       return {

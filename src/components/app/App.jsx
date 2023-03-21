@@ -15,6 +15,8 @@ import NotFound from "../../pages/notFound/NotFound";
 import Ingredient from "../../pages/ingredient/Ingredient";
 import Feed from "../../pages/feed/Feed";
 import OrderInfo from "../../pages/order-info/OrderInfo";
+import PrivateOrderDetails from "../private-order-details/PrivateOrderDetails";
+import ProfileOrderDetails from "../profile-order-details/ProfileOrderDetails";
 
 function App() {
 
@@ -39,7 +41,7 @@ function App() {
             <Route index element={<ProfileInfo/>}/>
 
             <Route path='orders' element={<ProfileOrders/>}/>
-            <Route path='orders/:id' element={<OrderInfo/>}/>
+            <Route path='orders/:id' element={<ProfileOrderDetails/>}/>
 
           </Route>
           <Route path='/ingredients/:id' element={<Ingredient/>}/>

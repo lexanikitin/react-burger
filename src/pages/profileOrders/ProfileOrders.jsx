@@ -70,7 +70,7 @@ const ProfileOrders = () => {
           })}
         </ul>
         :
-        <p className="text text_type_main-medium">Идет загрузка...</p>
+        <p className="text text_type_main-medium">Идет загрузка....</p>
       }
       <Modal isActive={isModalActive} setter={setModalActive}>
         <PrivateOrderDetails/>
