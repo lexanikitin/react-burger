@@ -1,0 +1,26 @@
+.wrapper {
+  width: 100%;
+}
+
+.description {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.stats {
+  column-gap: 50px;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  width: 100%;
+}
+
+.stat {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}

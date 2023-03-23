@@ -1,23 +1,46 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
 import Modal from "../modal/Modal";
-import OrderDetails from "../order-details/OrderDetails";
+import OrderInfo from "../order-info/OrderInfo";
 import {useDispatch, useSelector} from "react-redux";
 import {
   ADD_INGREDIENT_TO_ORDER,
   CHANGE_BUN_IN_ORDER,
-  postOrder
+  postOrder, RESTORE_INGREDIENTS_TO_ORDER
 } from "../../services/actions/order";
 import {useDrop} from "react-dnd";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
+import {useNavigate} from "react-router-dom";
+import {getCookie} from "../../utils/cookies";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isModalOrderActive, setModalOrderActive] = useState(false)
   const {selectedIngredients, selectedBun} = useSelector(store => store.order);
-  var total = useMemo(() => {
+  const accessToken = getCookie('burgerAccessToken');
+  const {isAuthSuccess} = useSelector(store => store.auth);
+  useEffect(()=>{
+    if(window.localStorage.getItem('BURGER_SELECTED_BUN') !== null){
+      dispatch({
+        type: CHANGE_BUN_IN_ORDER,
+        ingredient: JSON.parse(window.localStorage.getItem('BURGER_SELECTED_BUN'))
+      })
+      window.localStorage.removeItem('BURGER_SELECTED_BUN')
+    }
+    if(window.localStorage.getItem('BURGER_SELECTED_INGREDIENTS') !== null){
+      dispatch({
+        type: RESTORE_INGREDIENTS_TO_ORDER,
+        ingredients: JSON.parse(window.localStorage.getItem('BURGER_SELECTED_INGREDIENTS'))
+      })
+      window.localStorage.removeItem('BURGER_SELECTED_INGREDIENTS')
+
+
+    }
+  },[])
+  let total = useMemo(() => {
     return selectedIngredients.reduce((prev, curr) => prev + curr.price, selectedBun.price * 2)
   }, [selectedIngredients, selectedBun])
   const [{isHover}, drop] = useDrop({
@@ -61,15 +84,21 @@ const BurgerConstructor = () => {
           <CurrencyIcon type="primary"/>
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
-          dispatch(postOrder([selectedIngredients.map(item => item._id), selectedBun._id].flat()));
-          setModalOrderActive(true);
+          if(isAuthSuccess){
+            dispatch(postOrder(accessToken, [selectedBun._id, selectedIngredients.map(item => item._id)].flat()));
+            setModalOrderActive(true);
+          }else{
+            window.localStorage.setItem('BURGER_SELECTED_BUN', JSON.stringify(selectedBun));
+            window.localStorage.setItem('BURGER_SELECTED_INGREDIENTS', JSON.stringify(selectedIngredients));
+            navigate('/login')
+          }
         }}>
           Оформить заказ
         </Button>
       </div>
 
       <Modal isActive={isModalOrderActive} setter={setModalOrderActive}>
-        <OrderDetails/>
+        <OrderInfo/>
       </Modal>
 
     </section>

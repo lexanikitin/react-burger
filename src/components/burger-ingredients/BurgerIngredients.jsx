@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import clsx from "clsx";
 import ingrStyle from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -6,16 +6,17 @@ import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import Modal from "../modal/Modal";
 import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from "react-redux";
-import {MODAL_CLEAR_CURRENT_INGREDIENT} from "../../services/actions/modal";
+import {MODAL_CLEAR_CURRENT_INGREDIENT, MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
 import {SET_ACTIVE_TAB} from "../../services/actions/tabs";
+import {useLocation} from "react-router-dom";
 
 const BurgerIngredients = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
   const {ingredientsList} = useSelector(store => store.list);
   const {defaultTabsList, activeTabId} = useSelector(store => store.tabs);
   const [isModalActive, setModalActive] = useState(false);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (isModalActive === false) {
       dispatch({
         type: MODAL_CLEAR_CURRENT_INGREDIENT
@@ -23,6 +24,15 @@ const BurgerIngredients = () => {
     }
   }, [isModalActive]);
 
+  useEffect(() => {
+    if (location.state) {
+      dispatch({
+        type: MODAL_SET_CURRENT_INGREDIENT,
+        currentData: JSON.parse(location.state)
+      })
+      setModalActive(true);
+    }
+  }, [])
   const scrollHandler = (e) => {
     dispatch({
       type: SET_ACTIVE_TAB,

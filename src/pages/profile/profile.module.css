@@ -1,0 +1,38 @@
+.wrapper{
+  display: flex;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 120px;
+}
+.nav_wrapper{
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+.nav{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav_item{
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.link{
+  text-decoration: none;
+  cursor: pointer;
+  color: #8585AD;
+
+}
+.link_active{
+  color: #F2F2F3;
+}
+
+.desc{
+  opacity: .4;
+}
+.detailsWrapper{
+  margin: 0 auto;
+}

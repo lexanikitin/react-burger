@@ -1,8 +1,11 @@
 import {
   ADD_INGREDIENT_TO_ORDER,
   CHANGE_BUN_IN_ORDER,
-  DRAG_SELECTED_INGREDIENT_TO_POSITION, ORDER_FAILED, ORDER_REQUEST, ORDER_SUCCESS,
-  REMOVE_INGREDIENT_FROM_ORDER
+  DRAG_SELECTED_INGREDIENT_TO_POSITION,
+  ORDER_FAILED,
+  ORDER_REQUEST,
+  ORDER_SUCCESS,
+  REMOVE_INGREDIENT_FROM_ORDER, RESTORE_INGREDIENTS_TO_ORDER
 } from "../actions/order";
 
 const initialStateOrder = {
@@ -62,6 +65,12 @@ export const orderReducer = (state = initialStateOrder, action) => {
       return {
         ...state,
         selectedIngredients: [state.selectedIngredients, action.ingredient].flat()
+      }
+    }
+    case RESTORE_INGREDIENTS_TO_ORDER: {
+      return {
+        ...state,
+        selectedIngredients: action.ingredients
       }
     }
     case REMOVE_INGREDIENT_FROM_ORDER: {
