@@ -29,9 +29,7 @@ const wsFeedActions = {
   onError: WS_FEED_CONNECTION_ERROR,
   onMessage: WS_FEED_GET_MESSAGE
 };
-const accessToken = getCookie('burgerAccessToken')
-const wsPrivateFeedUrl = `wss://norma.nomoreparties.space/orders?token=${accessToken}`;
-
+const wsPrivateFeedUrl = `wss://norma.nomoreparties.space/orders`;
 const wsPrivateFeedActions = {
   wsInit: WS_PRIVATE_FEED_CONNECTION_START,
   wsSendMessage: WS_PRIVATE_FEED_SEND_MESSAGE,
