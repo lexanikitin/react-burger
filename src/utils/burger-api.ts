@@ -1,18 +1,18 @@
 import {API_URL} from "./constants";
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response): {} | Promise<string> => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Код ошибки: ${res.status}`);
 }
 
-export function getIngredientsFromApi() {
+export function getIngredientsFromApi(): Promise<{}> {
   return fetch(`${API_URL}ingredients`)
     .then(checkResponse)
 }
 
-export function postOrderToApi(token, orderContent) {
+export function postOrderToApi(token: string, orderContent: {}): Promise<{}> {
   return fetch(`${API_URL}orders`, {
     method: 'POST',
     headers: {
@@ -26,7 +26,7 @@ export function postOrderToApi(token, orderContent) {
     .then(checkResponse)
 }
 
-export function postForgotPasswordToApi(email) {
+export function postForgotPasswordToApi(email: string): Promise<{}> {
   return fetch(`${API_URL}password-reset`, {
     method: 'POST',
     headers: {
@@ -39,7 +39,7 @@ export function postForgotPasswordToApi(email) {
     .then(checkResponse)
 }
 
-export function postResetPasswordToApi(password, token) {
+export function postResetPasswordToApi(password: string, token: string): Promise<{}> {
   return fetch(`${API_URL}password-reset/reset`, {
     method: 'POST',
     headers: {
@@ -53,7 +53,7 @@ export function postResetPasswordToApi(password, token) {
     .then(checkResponse)
 }
 
-export function postRegisterToApi(email, password, name) {
+export function postRegisterToApi(email: string, password: string, name: string): Promise<{}> {
   return fetch(`${API_URL}auth/register`, {
     method: 'POST',
     headers: {
@@ -68,7 +68,7 @@ export function postRegisterToApi(email, password, name) {
     .then(checkResponse)
 }
 
-export function postLoginToApi(email, password) {
+export function postLoginToApi(email: string, password: string): Promise<{}> {
   return fetch(`${API_URL}auth/login`, {
     method: 'POST',
     headers: {
@@ -82,7 +82,7 @@ export function postLoginToApi(email, password) {
     .then(checkResponse)
 }
 
-export function postRefreshTokenToApi(token) {
+export function postRefreshTokenToApi(token: string): Promise<{}> {
   return fetch(`${API_URL}auth/token`, {
     method: 'POST',
     headers: {
@@ -95,7 +95,7 @@ export function postRefreshTokenToApi(token) {
     .then(checkResponse)
 }
 
-export function postLogoutToApi(token) {
+export function postLogoutToApi(token: string): Promise<{}> {
   return fetch(`${API_URL}auth/logout`, {
     method: 'POST',
     headers: {
@@ -108,7 +108,7 @@ export function postLogoutToApi(token) {
     .then(checkResponse)
 }
 
-export function getProfileFromApi(token) {
+export function getProfileFromApi(token: string): Promise<{}> {
   return fetch(`${API_URL}auth/user`, {
     method: 'GET',
     headers: {
@@ -119,8 +119,8 @@ export function getProfileFromApi(token) {
     .then(checkResponse)
 }
 
-export function patchProfileToApi(token, name, email, password) {
-  if (password==='') {
+export function patchProfileToApi(token: string, name: string, email: string, password: string): Promise<{}> {
+  if (password === '') {
     return fetch(`${API_URL}auth/user`, {
       method: 'PATCH',
       headers: {
