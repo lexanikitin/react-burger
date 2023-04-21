@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import clsx from "clsx";
 import styles from "./feed-list.module.css";
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerIngredient from "../burger-ingredient/BurgerIngredient";
 import Modal from "../modal/Modal";
-import IngredientDetails from "../ingredient-details/IngredientDetails";
 import {useDispatch, useSelector} from "react-redux";
 import OrderCard from "../order-card/OrderCard";
 import OrderDetails from "../order-details/OrderDetails";

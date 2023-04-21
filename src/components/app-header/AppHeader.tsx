@@ -6,7 +6,7 @@ import {NavLink} from "react-router-dom";
 
 
 const AppHeader = () => {
-  const choosingStyles = ({isActive}) =>
+  const choosingStyles = ({isActive}: { isActive: boolean }): string =>
     isActive ?
       clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button, app_header.button_active)
       :
@@ -15,7 +15,7 @@ const AppHeader = () => {
   return (<header className={app_header.header}>
     <div className={clsx(app_header.content, 'pt-4', 'pb-4')}>
       <nav className={clsx(app_header.nav_wrapper)}>
-        <NavLink  to={'/'} className={choosingStyles}>
+        <NavLink to={'/'} className={choosingStyles}>
           <BurgerIcon type="primary"/>
           <span className={clsx('pl-2', 'text', 'text_type_main-default')}>
             Конструктор
