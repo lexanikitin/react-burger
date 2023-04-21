@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {FC} from 'react';
 import {Logo, BurgerIcon, ProfileIcon, ListIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import app_header from './app-header.module.css';
 import clsx from "clsx";
 import {NavLink} from "react-router-dom";
 
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   const choosingStyles = ({isActive}: { isActive: boolean }): string =>
     isActive ?
       clsx('pl-5', 'pr-5', 'pt-4', 'pb-4', app_header.button, app_header.button_active)
