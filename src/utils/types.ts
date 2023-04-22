@@ -1,4 +1,4 @@
-export type burgerPropsT = {
+export type TBurgerIngredientInfo = {
   _id: string;
   name: string;
   type: string;
@@ -13,3 +13,13 @@ export type burgerPropsT = {
   calories: number;
   uuid?: string;
 };
+
+export type TOrder = {
+  ingredients: string[];
+  _id: string;
+  status: "done" | "pending" | "created";
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+  name: string;
+}

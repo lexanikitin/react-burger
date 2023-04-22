@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import IngDetailsStyles from './ingredient-details.module.css'
 import clsx from "clsx";
-import PropTypes from "prop-types";
 import {useSelector} from "react-redux";
 
-const IngredientDetails = () => {
+const IngredientDetails :FC = () => {
+// @ts-ignore
   const {modalDetailsCurrentData} = useSelector(store => store.modals);
 
   useEffect(() => {
@@ -50,12 +50,5 @@ const IngredientDetails = () => {
       : <p className="text text_type_main-medium">Идет загрузка...</p>
 
   );
-
-
 };
-
 export default IngredientDetails;
-
-IngredientDetails.propTypes = {
-  info: PropTypes.object
-}

@@ -1,10 +1,12 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import styles from './order-details.module.css';
 import {useSelector} from "react-redux";
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
+import {TBurgerIngredientInfo} from "../../utils/types";
 
-const OrderDetails = () => {
+const OrderDetails : FC = () => {
+  //@ts-ignore
     const {modalSelected} = useSelector(store => store.feed);
     useEffect(() => {
       if (modalSelected.order._id) {
@@ -28,7 +30,7 @@ const OrderDetails = () => {
         }
         <p className={clsx(styles.ingHeader, 'text_type_main-medium pb-6')}>Состав:</p>
         <ul className={clsx(styles.ingList, 'mb-10')}>
-          {modalSelected.ingredients.map((item, index) => {
+          {modalSelected.ingredients.map((item:TBurgerIngredientInfo, index:number) => {
             return (
               <li key={index} className={styles.ingredient}>
                 <div className={styles.ingWrapper}>

@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import IngDetailsStyles from './ingredient-details-on-page.module.css'
 import clsx from "clsx";
-import {burgerPropsT} from "../../utils/types";
+import {TBurgerIngredientInfo} from "../../utils/types";
 
 type TIngredientDetailsOnPage = {
-  info: burgerPropsT;
+  info: TBurgerIngredientInfo;
 }
 const IngredientDetailsOnPage: FC<TIngredientDetailsOnPage> = ({info}) => {
 
