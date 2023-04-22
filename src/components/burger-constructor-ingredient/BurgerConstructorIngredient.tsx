@@ -13,7 +13,7 @@ type TBurgerConstructorIngredient = {
 }
 const BurgerConstructorIngredient:FC<TBurgerConstructorIngredient> = ({item, index}) => {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
   const id = item._id;
 
   const [{isDragging}, drag] = useDrag({
@@ -30,23 +30,20 @@ const BurgerConstructorIngredient:FC<TBurgerConstructorIngredient> = ({item, ind
     collect: monitor => ({
       handlerId: monitor.getHandlerId()
     }),
-    hover(item, monitor) {
+    hover(item:any, monitor) {
       if (!ref.current) {
         return;
       }
-      //@ts-ignore
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
         return;
       }
-      //@ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      //@ts-ignore
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
       }
@@ -58,7 +55,6 @@ const BurgerConstructorIngredient:FC<TBurgerConstructorIngredient> = ({item, ind
         dragged: dragIndex,
         hovered: hoverIndex
       });
-      //@ts-ignore
       item.index = hoverIndex;
     },
   });
@@ -73,7 +69,9 @@ const BurgerConstructorIngredient:FC<TBurgerConstructorIngredient> = ({item, ind
   return (
     <li ref={ref} style={{opacity}} className={clsx(BrgCnstrIngrStyle.editedItem)} data-handler-id={handlerId}>
       <DragIcon type="primary"/>
-      <ConstructorElement price={item.price} text={item.name} thumbnail={item.image}
+      <ConstructorElement price={item.price}
+                          text={item.name}
+                          thumbnail={item.image}
                           handleClose={() => {
                             handleDeleteIngredient(index)
                           }}/>
