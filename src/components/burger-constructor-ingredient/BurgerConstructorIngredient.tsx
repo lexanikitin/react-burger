@@ -1,14 +1,17 @@
-import React, {useRef} from 'react';
+import React, {FC, useRef} from 'react';
 import clsx from "clsx";
 import BrgCnstrIngrStyle from "./burger-constructor-ingredient.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {DRAG_SELECTED_INGREDIENT_TO_POSITION, REMOVE_INGREDIENT_FROM_ORDER} from "../../services/actions/order";
 import {useDispatch} from "react-redux";
 import {useDrag, useDrop} from "react-dnd";
-import PropTypes from "prop-types";
+import {TBurgerIngredientInfo} from "../../utils/types";
 
-
-const BurgerConstructorIngredient = ({item, index}) => {
+type TBurgerConstructorIngredient = {
+  item:TBurgerIngredientInfo;
+  index : number;
+}
+const BurgerConstructorIngredient:FC<TBurgerConstructorIngredient> = ({item, index}) => {
   const dispatch = useDispatch();
   const ref = useRef(null);
   const id = item._id;
@@ -31,15 +34,18 @@ const BurgerConstructorIngredient = ({item, index}) => {
       if (!ref.current) {
         return;
       }
+      //@ts-ignore
       const dragIndex = item.index;
       const hoverIndex = index;
       if (dragIndex === hoverIndex) {
         return;
       }
+      //@ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
+      //@ts-ignore
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -52,12 +58,13 @@ const BurgerConstructorIngredient = ({item, index}) => {
         dragged: dragIndex,
         hovered: hoverIndex
       });
+      //@ts-ignore
       item.index = hoverIndex;
     },
   });
   const opacity = isDragging ? 0 : 1
   drag(drop(ref));
-  const handleDeleteIngredient = (index) => {
+  const handleDeleteIngredient = (index:number) => {
     dispatch({
       type: REMOVE_INGREDIENT_FROM_ORDER,
       index: index
@@ -66,7 +73,7 @@ const BurgerConstructorIngredient = ({item, index}) => {
   return (
     <li ref={ref} style={{opacity}} className={clsx(BrgCnstrIngrStyle.editedItem)} data-handler-id={handlerId}>
       <DragIcon type="primary"/>
-      <ConstructorElement {...item} text={item.name} thumbnail={item.image}
+      <ConstructorElement price={item.price} text={item.name} thumbnail={item.image}
                           handleClose={() => {
                             handleDeleteIngredient(index)
                           }}/>
