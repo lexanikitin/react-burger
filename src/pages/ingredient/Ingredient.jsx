@@ -30,7 +30,7 @@ const Ingredient = () => {
     }, [isSuccessful])
 
     return (
-      <IngredientDetailsOnPage props={currentData}/>
+      <IngredientDetailsOnPage info={currentData}/>
     );
   }
 ;
