@@ -1,17 +1,21 @@
-import React from 'react';
+import React, {FC} from 'react';
 import ReactDOM from 'react-dom';
 import ModalOverlay from "../modal-overlay/ModalOverlay";
 import modalStyles from './modal.module.css'
 import {CloseIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
-const Modal = ({isActive, setter, children}) => {
-  function closePopup() {
+type TModal = {
+  isActive: boolean;
+  setter: Function;
+  children: React.ReactNode
+}
+const Modal: FC<TModal> = ({isActive, setter, children}) => {
+  function closePopup():void {
     setter(false);
   }
 
   React.useEffect(() => {
-    function closePopupByEscape(e) {
+    function closePopupByEscape(e:KeyboardEvent):void {
       if (e.key === 'Escape') {
         closePopup();
       }
@@ -35,14 +39,8 @@ const Modal = ({isActive, setter, children}) => {
         </div>
         {children}
       </div>
-    </ModalOverlay>, document.getElementById('react-modals')
+    </ModalOverlay>, document.getElementById('react-modals')!
   );
 };
 
 export default Modal;
-
-Modal.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  setter: PropTypes.func.isRequired,
-  children: PropTypes.any.isRequired
-}

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import modalOverlayStyles from './modal-overlay.module.css'
 import clsx from "clsx";
-import PropTypes from "prop-types";
 
-const ModalOverlay = ({isActive, setter, children}) => {
+type ModalOverlayT = {
+  isActive: boolean;
+  setter: Function;
+  children: React.ReactNode
+}
+const ModalOverlay: FC<ModalOverlayT> = ({isActive, setter, children}) => {
   return (
     <div
       className={isActive ? clsx(modalOverlayStyles.overlay, modalOverlayStyles.overlay_active) : modalOverlayStyles.overlay}
@@ -16,9 +20,3 @@ const ModalOverlay = ({isActive, setter, children}) => {
 };
 
 export default ModalOverlay;
-
-ModalOverlay.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-  setter: PropTypes.func.isRequired,
-  children: PropTypes.any.isRequired
-}
