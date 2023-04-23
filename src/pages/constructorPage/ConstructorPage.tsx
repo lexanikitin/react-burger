@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {getIngredientsList} from "../../services/actions/list";
 import {DndProvider} from "react-dnd";
@@ -7,10 +7,12 @@ import app_style from "./constructor-page.module.css";
 import BurgerIngredients from "../../components/burger-ingredients/BurgerIngredients";
 import BurgerConstructor from "../../components/burger-constructor/BurgerConstructor";
 
-const ConstructorPage = () => {
+const ConstructorPage:FC = () => {
   const dispatch = useDispatch();
+  //@ts-ignore
   const {isRequested, isFailed} = useSelector(store => store.list);
   useEffect(() => {
+    // @ts-ignore
     dispatch(getIngredientsList());
   }, []);
 
