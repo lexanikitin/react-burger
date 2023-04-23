@@ -19,7 +19,7 @@ import PrivateOrderDetails from "../private-order-details/PrivateOrderDetails";
 import ProfileOrderDetails from "../profile-order-details/ProfileOrderDetails";
 import PrivateOrderInfo from "../../pages/private-order-info/PrivateOrderInfo";
 
-function App() {
+function App():JSX.Element {
   return (
     <div className="App">
       <Router>
