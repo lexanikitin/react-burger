@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import clsx from "clsx";
 import ingrStyle from './burger-ingredients.module.css'
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,13 +9,16 @@ import {useDispatch, useSelector} from "react-redux";
 import {MODAL_CLEAR_CURRENT_INGREDIENT, MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
 import {SET_ACTIVE_TAB} from "../../services/actions/tabs";
 import {useLocation} from "react-router-dom";
+import {TBurgerIngredientInfo, TTab} from "../../utils/types";
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const dispatch = useDispatch();
   const location = useLocation();
+  //@ts-ignore
   const {ingredientsList} = useSelector(store => store.list);
+  //@ts-ignore
   const {defaultTabsList, activeTabId} = useSelector(store => store.tabs);
-  const [isModalActive, setModalActive] = useState(false);
+  const [isModalActive, setModalActive] = useState<boolean>(false);
   useEffect(() => {
     if (isModalActive === false) {
       dispatch({
@@ -33,14 +36,14 @@ const BurgerIngredients = () => {
       setModalActive(true);
     }
   }, [])
-  const scrollHandler = (e) => {
+  const scrollHandler = (e:any) => {
     dispatch({
       type: SET_ACTIVE_TAB,
       activeTabId: defaultTabsList.map(
-        (item, index) => {
+        (item:TTab, index:number) => {
           return e.target.childNodes[index].getBoundingClientRect().top - e.target.getBoundingClientRect().top
         }
-      ).findIndex((element) => {
+      ).findIndex((element:number) => {
         return element >= 0
       })
     })
@@ -50,23 +53,23 @@ const BurgerIngredients = () => {
     <section className={clsx(ingrStyle.section, 'ml-5', 'mr-5', 'pt-10')}>
       <h1 className={clsx('text', 'text_type_main-large', 'pb-5')}>Соберите бургер</h1>
       <div className={'pb-10'} style={{display: 'flex'}}>
-        {defaultTabsList.map((tab, index) => {
+        {defaultTabsList.map((tab:TTab, index:number) => {
           return (
-            <Tab key={`tab-${index}`} value={tab.type} active={activeTabId === tab.id}>
+            <Tab key={`tab-${index}`} value={tab.type} active={activeTabId === tab.id} onClick={()=>{}}>
               {tab.name}
             </Tab>
           )
         })}
       </div>
       <ul className={ingrStyle.ingredientsTypeList} onScroll={scrollHandler}>
-        {defaultTabsList.map((type, index) => {
+        {defaultTabsList.map((type:TTab, index:number) => {
           return (
             <div key={index}>
               <li>
                 <p className={clsx('text text_type_main-medium', ingrStyle.ingredientsTypeTitle)}>{type.name}</p>
               </li>
               <ul className={clsx(ingrStyle.ingredientsList, 'pt-6', 'pl-4', 'pr-4', 'pb-10')}>
-                {ingredientsList.map((item, index) => {
+                {ingredientsList.map((item:TBurgerIngredientInfo, index:number) => {
                   if (item.type === type.type) {
                     return (
                       <BurgerIngredient key={index} info={item} setModalActive={setModalActive}/>

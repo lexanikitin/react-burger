@@ -23,3 +23,9 @@ export type TOrder = {
   updatedAt: string;
   name: string;
 }
+
+export type TTab = {
+  id: number;
+  name: string;
+  type: string;
+}
