@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {FC, useEffect, useMemo, useState} from 'react';
 import styles from './order-card.module.css'
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -10,25 +10,33 @@ import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
 import {FEED_SET_CURRENT_ORDER} from "../../services/actions/feed";
 import {useLocation} from "react-router-dom";
 import {PRIVATE_FEED_SET_CURRENT_ORDER} from "../../services/actions";
+import {TBurgerIngredientInfo, TOrder} from "../../utils/types";
 
-const OrderCard = ({order, setModalActive}) => {
+type TOrderCard = {
+  order: TOrder;
+  setModalActive: Function
+}
+const OrderCard: FC<TOrderCard> = ({order, setModalActive}) => {
   const location = useLocation();
   const dispatch = useDispatch();
+  //@ts-ignore
   const {ingredientsList} = useSelector(store => store.list);
-  const ingList = useMemo(()=>{
-    return order.ingredients.map((item, index)=>{
-        return ingredientsList.find((el)=>{return el._id===item});
+  const ingList = useMemo<TBurgerIngredientInfo[]>(() => {
+    return order.ingredients.map((item:string, index:number) => {
+      return ingredientsList.find((el:TBurgerIngredientInfo) => {
+        return el._id === item
+      });
     })
-  },[order, ingredientsList])
+  }, [order, ingredientsList])
 
-  const orderSum = useMemo(()=>{
-    return ingList.reduce((prev, curr) => curr.type==='bun'? prev + curr.price*2: prev + curr.price,0)
+  const orderSum = useMemo(() => {
+    return ingList.reduce((prev:number, curr:TBurgerIngredientInfo) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0)
 
-  },[ingList])
+  }, [ingList])
 
   return (
-    <li className={clsx(styles.card, 'pt-6', 'pr-6', 'pb-6', 'pl-6', 'mr-2')} onClick={()=>{
-      if(location.pathname==='/feed') {
+    <li className={clsx(styles.card, 'pt-6', 'pr-6', 'pb-6', 'pl-6', 'mr-2')} onClick={() => {
+      if (location.pathname === '/feed') {
         dispatch({
           type: FEED_SET_CURRENT_ORDER,
           selectedOrder: order,
@@ -37,7 +45,7 @@ const OrderCard = ({order, setModalActive}) => {
         })
         setModalActive(true);
       }
-      if(location.pathname==='/profile/orders') {
+      if (location.pathname === '/profile/orders') {
         dispatch({
           type: PRIVATE_FEED_SET_CURRENT_ORDER,
           selectedOrder: order,
@@ -46,14 +54,15 @@ const OrderCard = ({order, setModalActive}) => {
         })
         setModalActive(true);
       }
-      }}>
+    }}>
       <div className={clsx(styles.infoRow)}>
         <p className={clsx(styles.number, 'text', 'text_type_digits-default')}>#{order.number}</p>
-        <FormattedDate className={clsx(styles.date, 'text text_type_main-default text_color_inactive')} date={new Date(order.createdAt)}/>
+        <FormattedDate className={clsx(styles.date, 'text text_type_main-default text_color_inactive')}
+                       date={new Date(order.createdAt)}/>
       </div>
-      <p className={clsx( 'text text_type_main-medium')}>{order.name}</p>
+      <p className={clsx('text text_type_main-medium')}>{order.name}</p>
       <div className={styles.lastRow}>
-        <OrderPics ingredientList={ingList} />
+        <OrderPics ingredientList={ingList}/>
         <div className={clsx('text text_type_main-large', styles.sum)}>
           <p className="text text_type_digits-default">{orderSum}</p>
           <CurrencyIcon type="primary"/>
