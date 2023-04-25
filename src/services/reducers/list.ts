@@ -19,7 +19,7 @@ const initialState: TListState = {
   isSuccessful: false
 }
 
-export const ingredientsListReducer = (state = initialState, action: TListActions): TListState => {
+export const ingredientsListReducer = (state:TListState = initialState, action: TListActions): TListState => {
   switch (action.type) {
     case GET_INGREDIENTS_LIST_REQUEST: {
       return {
