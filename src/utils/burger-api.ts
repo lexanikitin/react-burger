@@ -1,15 +1,29 @@
 import {API_URL} from "./constants";
+import {TBurgerIngredientInfo} from "./types";
 
-const checkResponse = (res: Response): {} | Promise<string> => {
+const checkResponse2 = (res: Response): {} | Promise<string> => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Код ошибки: ${res.status}`);
 }
+const checkResponse = <T>(res: Response): Promise<T> => {
+  if (res.ok) {
+    return res.json();
+  }
+  return Promise.reject(`Код ошибки: ${res.status}`);
+}
+type TResponseBody<TDataKey extends string = '', TDataType = {}> = {
+  [key in TDataKey]: TDataType
+} & {
+  success?: boolean;
+  message?: string;
+  headers?: Headers;
+};
 
-export function getIngredientsFromApi(): Promise<{}> {
-  return fetch(`${API_URL}ingredients`)
-    .then(checkResponse)
+export const getIngredientsFromApi = async (): Promise<TResponseBody<'data', Array<TBurgerIngredientInfo>>> => {
+  return await fetch(`${API_URL}ingredients`)
+    .then(checkResponse<Promise<TResponseBody<'data', Array<TBurgerIngredientInfo>>>>)
 }
 
 export function postOrderToApi(token: string, orderContent: {}): Promise<{}> {
@@ -23,7 +37,7 @@ export function postOrderToApi(token: string, orderContent: {}): Promise<{}> {
       "ingredients": orderContent
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function postForgotPasswordToApi(email: string): Promise<{}> {
@@ -36,7 +50,7 @@ export function postForgotPasswordToApi(email: string): Promise<{}> {
       "email": email
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function postResetPasswordToApi(password: string, token: string): Promise<{}> {
@@ -50,7 +64,7 @@ export function postResetPasswordToApi(password: string, token: string): Promise
       "token": token
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function postRegisterToApi(email: string, password: string, name: string): Promise<{}> {
@@ -65,7 +79,7 @@ export function postRegisterToApi(email: string, password: string, name: string)
       "name": name
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function postLoginToApi(email: string, password: string): Promise<{}> {
@@ -79,7 +93,7 @@ export function postLoginToApi(email: string, password: string): Promise<{}> {
       "password": password
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function postRefreshTokenToApi(token: string): Promise<{}> {
@@ -92,7 +106,7 @@ export function postRefreshTokenToApi(token: string): Promise<{}> {
       "token": token
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function postLogoutToApi(token: string): Promise<{}> {
@@ -105,7 +119,7 @@ export function postLogoutToApi(token: string): Promise<{}> {
       "token": token
     })
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function getProfileFromApi(token: string): Promise<{}> {
@@ -116,7 +130,7 @@ export function getProfileFromApi(token: string): Promise<{}> {
       Authorization: 'Bearer ' + token
     }
   })
-    .then(checkResponse)
+    .then(checkResponse2)
 }
 
 export function patchProfileToApi(token: string, name: string, email: string, password: string): Promise<{}> {
@@ -133,7 +147,7 @@ export function patchProfileToApi(token: string, name: string, email: string, pa
       })
 
     })
-      .then(checkResponse)
+      .then(checkResponse2)
   } else {
     return fetch(`${API_URL}auth/user`, {
       method: 'PATCH',
@@ -148,7 +162,7 @@ export function patchProfileToApi(token: string, name: string, email: string, pa
       })
 
     })
-      .then(checkResponse)
+      .then(checkResponse2)
   }
 }
 

@@ -1,24 +1,32 @@
 import {
   GET_INGREDIENTS_LIST_FAILED,
   GET_INGREDIENTS_LIST_REQUEST,
-  GET_INGREDIENTS_LIST_SUCCESS
+  GET_INGREDIENTS_LIST_SUCCESS, TListActions
 } from "../actions/list";
+import {TBurgerIngredientInfo} from "../../utils/types";
 
-const initialState = {
+type TListState = {
+  ingredientsList: TBurgerIngredientInfo[];
+  isRequested: boolean;
+  isFailed: boolean;
+  isSuccessful: boolean;
+}
+
+const initialState: TListState = {
   ingredientsList: [],
   isRequested: false,
   isFailed: false,
-  isSuccessful:false
+  isSuccessful: false
 }
 
-export const ingredientsListReducer = (state = initialState, action) => {
+export const ingredientsListReducer = (state = initialState, action: TListActions): TListState => {
   switch (action.type) {
     case GET_INGREDIENTS_LIST_REQUEST: {
       return {
         ...state,
         isRequested: true,
         isFailed: false,
-        isSuccessful:false
+        isSuccessful: false
       }
     }
     case GET_INGREDIENTS_LIST_SUCCESS: {
@@ -27,7 +35,7 @@ export const ingredientsListReducer = (state = initialState, action) => {
         ingredientsList: action.list,
         isRequested: false,
         isFailed: false,
-        isSuccessful:true
+        isSuccessful: true
 
       }
     }
@@ -37,7 +45,7 @@ export const ingredientsListReducer = (state = initialState, action) => {
         isRequested: false,
         isFailed: true,
         ingredientsList: [],
-        isSuccessful:false
+        isSuccessful: false
       }
     }
     default: {

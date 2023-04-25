@@ -16,7 +16,7 @@ declare global {
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-const store = initStore();
+export const store = initStore();
 
 
 root.render(
