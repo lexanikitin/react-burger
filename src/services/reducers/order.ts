@@ -5,10 +5,19 @@ import {
   ORDER_FAILED,
   ORDER_REQUEST,
   ORDER_SUCCESS,
-  REMOVE_INGREDIENT_FROM_ORDER, RESTORE_INGREDIENTS_TO_ORDER
+  REMOVE_INGREDIENT_FROM_ORDER, RESTORE_INGREDIENTS_TO_ORDER, TOrderActions
 } from "../actions/order";
+import {TBurgerIngredientInfo} from "../../utils/types";
 
-const initialStateOrder = {
+type TInitialStateOrder = {
+  selectedIngredients: TBurgerIngredientInfo[],
+  selectedBun: TBurgerIngredientInfo,
+  orderList: [],
+  isRequested: boolean,
+  isFailed: boolean,
+  orderNumber: number
+};
+const initialStateOrder: TInitialStateOrder = {
   selectedIngredients: [
     {
       "_id": "60d3b41abdacab0026a733cc",
@@ -56,10 +65,9 @@ const initialStateOrder = {
   orderList: [],
   isRequested: false,
   isFailed: false,
-  orderNumber: null
-
+  orderNumber: 0
 };
-export const orderReducer = (state = initialStateOrder, action) => {
+export const orderReducer = (state: TInitialStateOrder = initialStateOrder, action: TOrderActions): TInitialStateOrder => {
   switch (action.type) {
     case ADD_INGREDIENT_TO_ORDER: {
       return {
@@ -112,7 +120,7 @@ export const orderReducer = (state = initialStateOrder, action) => {
         ...state,
         isRequested: true,
         isFailed: false,
-        orderNumber: null
+        orderNumber: 0
       }
     }
     case ORDER_SUCCESS: {
@@ -130,7 +138,7 @@ export const orderReducer = (state = initialStateOrder, action) => {
         orderList: [],
         isRequested: false,
         isFailed: true,
-        orderNumber: null
+        orderNumber: 0
       }
     }
     default: {

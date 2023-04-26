@@ -1,5 +1,5 @@
 import {API_URL} from "./constants";
-import {TBurgerIngredientInfo} from "./types";
+import {TBurgerIngredientInfo, TOrder} from "./types";
 
 const checkResponse2 = (res: Response): {} | Promise<string> => {
   if (res.ok) {
@@ -25,9 +25,8 @@ export const getIngredientsFromApi = async (): Promise<TResponseBody<'data', Arr
   return await fetch(`${API_URL}ingredients`)
     .then(checkResponse<Promise<TResponseBody<'data', Array<TBurgerIngredientInfo>>>>)
 }
-
-export function postOrderToApi(token: string, orderContent: {}): Promise<{}> {
-  return fetch(`${API_URL}orders`, {
+export const postOrderToApi = async (token: string, orderContent: string[]): Promise<TResponseBody<'order', TOrder>> => {
+  return await fetch(`${API_URL}orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -37,7 +36,7 @@ export function postOrderToApi(token: string, orderContent: {}): Promise<{}> {
       "ingredients": orderContent
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseBody<'order', TOrder>>>)
 }
 
 export function postForgotPasswordToApi(email: string): Promise<{}> {
@@ -96,8 +95,13 @@ export function postLoginToApi(email: string, password: string): Promise<{}> {
     .then(checkResponse2)
 }
 
-export function postRefreshTokenToApi(token: string): Promise<{}> {
-  return fetch(`${API_URL}auth/token`, {
+type TResponseRefreshToken = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+}
+export const postRefreshTokenToApi= async (token: string): Promise<TResponseBody<'data', Array<TResponseRefreshToken>>> => {
+  return await fetch(`${API_URL}auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -106,7 +110,7 @@ export function postRefreshTokenToApi(token: string): Promise<{}> {
       "token": token
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseBody<'data', Array<TResponseRefreshToken>>>>)
 }
 
 export function postLogoutToApi(token: string): Promise<{}> {
