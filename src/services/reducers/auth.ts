@@ -21,11 +21,49 @@ import {
   AUTH_GET_PROFILE_SUCCESS,
   AUTH_GET_PROFILE_FAILED,
   AUTH_PATCH_PROFILE_SUCCESS,
-  AUTH_PATCH_PROFILE_REQUEST, AUTH_PATCH_PROFILE_FAILED,
+  AUTH_PATCH_PROFILE_REQUEST, AUTH_PATCH_PROFILE_FAILED, TAuthActions,
 } from "../actions/auth";
 import {setCookie} from "../../utils/cookies";
+import {TUser} from "../../utils/types";
+type TinitialState = {
+  forgotPasswordIsRequested: boolean,
+  forgotPasswordIsFailed: boolean,
+  forgotPasswordIsSuccess: boolean,
 
-const initialState = {
+  resetPasswordIsRequested: boolean,
+  resetPasswordIsFailed: boolean,
+  resetPasswordIsSuccess: boolean,
+
+  registerIsRequested: boolean,
+  registerIsFailed: boolean,
+  registerIsSuccess: boolean,
+
+  isAuthSuccess: boolean,
+
+  user: TUser,
+
+  loginIsRequested: boolean,
+  loginIsFailed: boolean,
+  loginIsSuccess: boolean,
+
+  refreshTokenIsRequested: boolean,
+  refreshTokenIsFailed: boolean,
+  refreshTokenIsSuccess: boolean,
+
+  logoutIsRequested: boolean,
+  logoutIsFailed: boolean,
+  logoutIsSuccess: boolean,
+
+  getProfileIsRequested: boolean,
+  getProfileIsFailed: boolean,
+  getProfileIsSuccess: boolean,
+
+  patchProfileIsRequested: boolean,
+  patchProfileIsFailed: boolean,
+  patchProfileIsSuccess: boolean,
+
+}
+const initialState:TinitialState = {
   forgotPasswordIsRequested: false,
   forgotPasswordIsFailed: false,
   forgotPasswordIsSuccess: false,
@@ -67,7 +105,7 @@ const initialState = {
 
 }
 
-export const authReducer = (state = initialState, action) => {
+export const authReducer = (state:TinitialState = initialState, action:TAuthActions):TinitialState => {
   switch (action.type) {
     case AUTH_FORGOT_PASSWORD_REQUEST: {
       return {
@@ -193,8 +231,8 @@ export const authReducer = (state = initialState, action) => {
       }
     }
     case AUTH_REFRESH_TOKEN_FAILED: {
-      setCookie('burgerRefreshToken', null, { expires: -1 });
-      setCookie('burgerAccessToken', null, { expires: -1 });
+      setCookie('burgerRefreshToken', '', { expires: -1 });
+      setCookie('burgerAccessToken', '', { expires: -1 });
       return {
         ...state,
         refreshTokenIsRequested: false,
@@ -211,8 +249,8 @@ export const authReducer = (state = initialState, action) => {
       }
     }
     case AUTH_LOGOUT_SUCCESS: {
-      setCookie('burgerRefreshToken', null, { expires: -1 });
-      setCookie('burgerAccessToken', null, { expires: -1 });
+      setCookie('burgerRefreshToken', '', { expires: -1 });
+      setCookie('burgerAccessToken', '', { expires: -1 });
       return {
         ...state,
         isAuthSuccess: false,

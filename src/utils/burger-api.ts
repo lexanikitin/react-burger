@@ -1,5 +1,12 @@
 import {API_URL} from "./constants";
-import {TBurgerIngredientInfo, TOrder} from "./types";
+import {
+  TBurgerIngredientInfo,
+  TOrder,
+  TResponseAuthUser,
+  TResponseGetProfile,
+  TResponseRefreshToken,
+  TUser
+} from "./types";
 
 const checkResponse2 = (res: Response): {} | Promise<string> => {
   if (res.ok) {
@@ -39,8 +46,8 @@ export const postOrderToApi = async (token: string, orderContent: string[]): Pro
     .then(checkResponse<Promise<TResponseBody<'order', TOrder>>>)
 }
 
-export function postForgotPasswordToApi(email: string): Promise<{}> {
-  return fetch(`${API_URL}password-reset`, {
+export const postForgotPasswordToApi = async (email: string): Promise<TResponseBody> => {
+  return await fetch(`${API_URL}password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -49,11 +56,11 @@ export function postForgotPasswordToApi(email: string): Promise<{}> {
       "email": email
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseBody>>)
 }
 
-export function postResetPasswordToApi(password: string, token: string): Promise<{}> {
-  return fetch(`${API_URL}password-reset/reset`, {
+export const postResetPasswordToApi = async (password: string, token: string): Promise<TResponseBody> => {
+  return await fetch(`${API_URL}password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -63,11 +70,12 @@ export function postResetPasswordToApi(password: string, token: string): Promise
       "token": token
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseBody>>)
 }
 
-export function postRegisterToApi(email: string, password: string, name: string): Promise<{}> {
-  return fetch(`${API_URL}auth/register`, {
+export const postRegisterToApi = async (email: string, password: string, name: string):
+  Promise<TResponseAuthUser> => {
+  return await fetch(`${API_URL}auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -78,11 +86,12 @@ export function postRegisterToApi(email: string, password: string, name: string)
       "name": name
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseAuthUser>>)
 }
 
-export function postLoginToApi(email: string, password: string): Promise<{}> {
-  return fetch(`${API_URL}auth/login`, {
+export const postLoginToApi = async (email: string, password: string):
+  Promise<TResponseAuthUser> =>{
+  return await fetch(`${API_URL}auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -92,15 +101,11 @@ export function postLoginToApi(email: string, password: string): Promise<{}> {
       "password": password
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseAuthUser>>)
 }
 
-type TResponseRefreshToken = {
-  success: boolean;
-  accessToken: string;
-  refreshToken: string;
-}
-export const postRefreshTokenToApi= async (token: string): Promise<TResponseBody<'data', Array<TResponseRefreshToken>>> => {
+
+export const postRefreshTokenToApi = async (token: string): Promise<TResponseRefreshToken> => {
   return await fetch(`${API_URL}auth/token`, {
     method: 'POST',
     headers: {
@@ -110,11 +115,11 @@ export const postRefreshTokenToApi= async (token: string): Promise<TResponseBody
       "token": token
     })
   })
-    .then(checkResponse<Promise<TResponseBody<'data', Array<TResponseRefreshToken>>>>)
+    .then(checkResponse<Promise<TResponseRefreshToken>>)
 }
 
-export function postLogoutToApi(token: string): Promise<{}> {
-  return fetch(`${API_URL}auth/logout`, {
+export const postLogoutToApi = async (token: string): Promise<TResponseBody> =>{
+  return await fetch(`${API_URL}auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -123,21 +128,22 @@ export function postLogoutToApi(token: string): Promise<{}> {
       "token": token
     })
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseBody>>)
 }
 
-export function getProfileFromApi(token: string): Promise<{}> {
-  return fetch(`${API_URL}auth/user`, {
+export const getProfileFromApi = async (token: string): Promise<TResponseGetProfile> =>{
+  return await fetch(`${API_URL}auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
       Authorization: 'Bearer ' + token
     }
   })
-    .then(checkResponse2)
+    .then(checkResponse<Promise<TResponseGetProfile>>)
 }
 
-export function patchProfileToApi(token: string, name: string, email: string, password: string): Promise<{}> {
+export const patchProfileToApi = async (token: string, name: string, email: string, password: string):
+  Promise<TResponseGetProfile> =>{
   if (password === '') {
     return fetch(`${API_URL}auth/user`, {
       method: 'PATCH',
@@ -151,7 +157,7 @@ export function patchProfileToApi(token: string, name: string, email: string, pa
       })
 
     })
-      .then(checkResponse2)
+      .then(checkResponse<Promise<TResponseGetProfile>>)
   } else {
     return fetch(`${API_URL}auth/user`, {
       method: 'PATCH',
@@ -166,7 +172,7 @@ export function patchProfileToApi(token: string, name: string, email: string, pa
       })
 
     })
-      .then(checkResponse2)
+      .then(checkResponse<Promise<TResponseGetProfile>>)
   }
 }
 

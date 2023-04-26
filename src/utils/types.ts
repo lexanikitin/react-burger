@@ -29,3 +29,25 @@ export type TTab = {
   name: string;
   type: string;
 }
+
+export type TUser = {
+  email: string;
+  name: string
+}
+
+export type TResponseAuthUser = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+  user: TUser;
+}
+
+export type TResponseRefreshToken = {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+}
+export type TResponseGetProfile = {
+  success: boolean;
+  user: TUser
+}
