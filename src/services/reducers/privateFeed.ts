@@ -1,5 +1,10 @@
-import {PRIVATE_FEED_SET_CURRENT_ORDER, PRIVATE_FEED_CLEAR_CURRENT_ORDER} from "../actions/privateFeed";
 import {
+  PRIVATE_FEED_SET_CURRENT_ORDER,
+  PRIVATE_FEED_CLEAR_CURRENT_ORDER,
+  TPrivateFeedActions
+} from "../actions/privateFeed";
+import {
+  TWSPrivateFeedActions,
   WS_PRIVATE_FEED_CONNECTION_CLOSED,
   WS_PRIVATE_FEED_CONNECTION_ERROR,
   WS_PRIVATE_FEED_CONNECTION_SUCCESS,
@@ -16,7 +21,7 @@ const initialStatePrivateFeed = {
   isConnectedPr: false,
 }
 
-export const privateFeedReducer = (state = initialStatePrivateFeed, action) => {
+export const privateFeedReducer = (state = initialStatePrivateFeed, action:TPrivateFeedActions|TWSPrivateFeedActions) => {
   switch (action.type) {
     case PRIVATE_FEED_SET_CURRENT_ORDER: {
       return {
@@ -62,10 +67,6 @@ export const privateFeedReducer = (state = initialStatePrivateFeed, action) => {
         ...state,
         ordersPr: action.payload.orders,
       };
-
-
-
-
 
     default: {
       return state;

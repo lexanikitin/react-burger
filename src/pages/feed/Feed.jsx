@@ -23,6 +23,7 @@ const Feed = () => {
 
   }, []);
 
+
   return (
     <main className={styles.main_content}>
       {

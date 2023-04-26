@@ -1,12 +1,27 @@
-import {FEED_SET_CURRENT_ORDER, FEED_CLEAR_CURRENT_ORDER} from "../actions/feed";
+import {FEED_SET_CURRENT_ORDER, FEED_CLEAR_CURRENT_ORDER, TFeedActions} from "../actions/feed";
 import {
+  TWSFeedActions,
   WS_FEED_CONNECTION_CLOSED,
   WS_FEED_CONNECTION_ERROR,
   WS_FEED_CONNECTION_SUCCESS,
   WS_FEED_GET_MESSAGE
 } from "../action-types";
+import {TBurgerIngredientInfo, TOrder} from "../../utils/types";
+type TInitialStateFeed = {
+  orders: TOrder[],
+  total: number,
+  totalToday: number,
+  modalSelected: {
+    order: TOrder|{},
+    ingredients: TBurgerIngredientInfo[],
+    total: number
+  },
+  isConnected: boolean,
+  ordersReady:(number|undefined)[],
+  ordersNotReady:(number|undefined)[],
 
-const initialStateFeed = {
+}
+const initialStateFeed:TInitialStateFeed = {
   orders: [],
   total: 1,
   totalToday: 1,
@@ -21,7 +36,7 @@ const initialStateFeed = {
 
 }
 
-export const feedReducer = (state = initialStateFeed, action) => {
+export const feedReducer = (state:TInitialStateFeed = initialStateFeed, action:TFeedActions|TWSFeedActions):TInitialStateFeed => {
   switch (action.type) {
     case FEED_SET_CURRENT_ORDER: {
       return {
@@ -73,15 +88,12 @@ export const feedReducer = (state = initialStateFeed, action) => {
             return item.number
           }
         }),
-        ordersNotReady: action.payload.orders.filter((item)=>{
+        ordersNotReady: action.payload.orders.map((item)=>{
           if(item.status==='pending'){
-            return true
+            return item.number
           }
-          else{return false}
-        })
+        }),
       };
-
-
 
 
 

@@ -359,6 +359,7 @@ export const getProfile: AppThunk = (accessToken) =>
     }).catch(e => {
       if (e === 'Код ошибки: 401') {
         if (refToken) {
+
           // @ts-ignore
           dispatch(refreshToken(refToken))
         }
