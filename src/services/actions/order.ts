@@ -98,7 +98,6 @@ export type TOrderActions =
   | IOrderFailedAction
   | IDragSelectedIngredientToPositionAction;
 
-
 export const postOrder: AppThunk =
   (accessToken: string, orderContent: string[]) => (dispatch: AppDispatch) => {
     const refToken = getCookie('burgerRefreshToken');

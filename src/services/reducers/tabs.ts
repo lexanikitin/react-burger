@@ -1,6 +1,17 @@
-import {SET_ACTIVE_TAB} from "../actions/tabs";
+import {SET_ACTIVE_TAB, TTabsActions} from "../actions/tabs";
+import {string} from "prop-types";
 
-const initialStateTab = {
+type TinitialStateTab = {
+  defaultTabsList:
+    {
+      id: number;
+      name: string;
+      type: string;
+    }[],
+  activeTabId: number,
+}
+
+const initialStateTab: TinitialStateTab = {
   defaultTabsList: [
     {id: 1, name: 'Булки', type: 'bun'},
     {id: 2, name: 'Соусы', type: 'sauce'},
@@ -9,7 +20,7 @@ const initialStateTab = {
   activeTabId: 1,
 }
 
-export const tabsListReducer = (state = initialStateTab, action) => {
+export const tabsListReducer = (state:TinitialStateTab = initialStateTab, action:TTabsActions):TinitialStateTab => {
   switch (action.type) {
     case SET_ACTIVE_TAB: {
       return {
