@@ -28,8 +28,8 @@ const Ingredient: FC = () => {
     useEffect(() => {
       if (ingredientsList) {
 
-          // @ts-ignore
-        setCurrentData(ingredientsList.find((item: TBurgerIngredientInfo) => item._id === id.substring(1)));
+
+        setCurrentData(ingredientsList.find((item: TBurgerIngredientInfo) => item._id === id?.substring(1)));
 
       }
     }, [isSuccessful])

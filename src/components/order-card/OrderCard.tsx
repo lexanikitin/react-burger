@@ -23,16 +23,13 @@ const OrderCard: FC<TOrderCard> = ({order, setModalActive}) => {
 
   const {ingredientsList} = useSelector(store => store.list);
 
-  // @ts-ignore
-  const ingList = useMemo<TBurgerIngredientInfo[]>(() => {
+  const ingList = useMemo<any>(() => {
     if (ingredientsList) {
       return order.ingredients.map((item: string, index: number) => {
         return ingredientsList.find((el: TBurgerIngredientInfo) => {
           return el._id === item
         });
       })
-    } else {
-      return []
     }
   }, [order, ingredientsList])
 

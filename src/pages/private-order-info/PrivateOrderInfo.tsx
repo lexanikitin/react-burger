@@ -48,19 +48,18 @@ const PrivateOrderInfo:FC = () => {
     console.log(ordersPr)
 
     if (isConnectedPr === true && isSuccessful === true && ordersPr.length !== 0 ) {
-      var order = ordersPr.filter((item) => {
-        // @ts-ignore
-        return item._id === id.substring(1);
+      let order = ordersPr.filter((item) => {
+        return item._id === id?.substring(1);
       })[0];
-      // @ts-ignore
-      var ingList:TBurgerIngredientInfo[] = order.ingredients.map((item, index) => {
-        return ingredientsList.find((el) => {
+
+      let ingList:any = order.ingredients.map((item:string, index) => {
+        return ingredientsList.find((el:TBurgerIngredientInfo) => {
           return el._id === item
         });
       })
-      var orderSum = ingList.reduce((prev, curr) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0);
+      let orderSum = ingList.reduce((prev:number, curr:TBurgerIngredientInfo) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0);
       console.log(order)
-      dispatch(privateFeedSetCurrentOrderAction(order, ingList, orderSum))
+      dispatch(privateFeedSetCurrentOrderAction(order, ingList, orderSum));
       navigate('/profile', {state: {PRIVATE_FEED_ORDER_STATE : true}})
     }
   }, [isSuccessful, ordersPr,isConnectedPr])

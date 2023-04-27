@@ -39,18 +39,18 @@ const OrderInfo:FC = () => {
   useEffect(() => {
 
     if ((isConnected === true || isConnectedPr === true) && isSuccessful === true && (orders.length !== 0 || ordersPr.length !== 0)) {
-      var order = orders.filter((item) => {
+      let order = orders.filter((item) => {
 
-        // @ts-ignore
-        return item._id === id.substring(1);
+
+        return item._id === id?.substring(1);
       })[0];
-      // @ts-ignore
-      var ingList:TBurgerIngredientInfo[] = order.ingredients.map((item, index:number) => {
+
+      let ingList:any = order.ingredients.map((item, index:number) => {
         return ingredientsList.find((el) => {
           return el._id === item
         });
       })
-      var orderSum = ingList.reduce((prev, curr) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0);
+      let orderSum = ingList.reduce((prev:number, curr:TBurgerIngredientInfo) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0);
 
       dispatch(feedSetCurrentOrderAction(order, ingList, orderSum))
       setDataReady(true);

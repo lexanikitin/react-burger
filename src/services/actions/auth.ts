@@ -360,8 +360,8 @@ export const getProfile: AppThunk = (accessToken) =>
       if (e === 'Код ошибки: 401') {
         if (refToken) {
 
-          // @ts-ignore
-          dispatch(refreshToken(refToken))
+
+          refreshToken(refToken)
         }
       } else {
         console.log(e.message);
