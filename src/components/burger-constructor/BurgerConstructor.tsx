@@ -1,46 +1,36 @@
-import React, {FC, useEffect, useMemo, useRef, useState} from 'react';
-import {Button, ConstructorElement, CurrencyIcon, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import React, {FC, useEffect, useMemo, useState} from 'react';
+import {Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import BrgCnstrStyle from './burger-constructor.module.css'
 import clsx from "clsx";
 import Modal from "../modal/Modal";
 import OrderInfo from "../order-info/OrderInfo";
-import {useDispatch, useSelector} from "react-redux";
 import {
-  ADD_INGREDIENT_TO_ORDER,
-  CHANGE_BUN_IN_ORDER,
-  postOrder, RESTORE_INGREDIENTS_TO_ORDER
+  addIngredientToOrderAction,
+  changeBunAction,
+  postOrder, restoreTngredientToOrderAction
 } from "../../services/actions/order";
 import {useDrop} from "react-dnd";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/BurgerConstructorIngredient";
 import {useNavigate} from "react-router-dom";
 import {getCookie} from "../../utils/cookies";
 import {TBurgerIngredientInfo} from "../../utils/types";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isModalOrderActive, setModalOrderActive] = useState<boolean>(false)
-  //@ts-ignore
   const {selectedIngredients, selectedBun} = useSelector(store => store.order);
   const accessToken = getCookie('burgerAccessToken');
-  //@ts-ignore
   const {isAuthSuccess} = useSelector(store => store.auth);
   useEffect(() => {
     if (window.localStorage.getItem('BURGER_SELECTED_BUN') !== null) {
-      dispatch({
-        type: CHANGE_BUN_IN_ORDER,
-        ingredient: JSON.parse(window.localStorage.getItem('BURGER_SELECTED_BUN')!)
-      })
+      dispatch(changeBunAction(JSON.parse(window.localStorage.getItem('BURGER_SELECTED_BUN')!)))
       window.localStorage.removeItem('BURGER_SELECTED_BUN')
     }
     if (window.localStorage.getItem('BURGER_SELECTED_INGREDIENTS') !== null) {
-      dispatch({
-        type: RESTORE_INGREDIENTS_TO_ORDER,
-        ingredients: JSON.parse(window.localStorage.getItem('BURGER_SELECTED_INGREDIENTS')!)
-      })
+      dispatch(restoreTngredientToOrderAction(JSON.parse(window.localStorage.getItem('BURGER_SELECTED_INGREDIENTS')!)))
       window.localStorage.removeItem('BURGER_SELECTED_INGREDIENTS')
-
-
     }
   }, [])
   let total = useMemo(() => {
@@ -54,17 +44,12 @@ const BurgerConstructor: FC = () => {
     drop(item) {
       //@ts-ignore
       if (item.info.type === 'bun') {
-        dispatch({
-          type: CHANGE_BUN_IN_ORDER,
-          //@ts-ignore
-          ingredient: item.info
-        })
+        // @ts-ignore
+        dispatch(changeBunAction(item.info))
       } else {
-        dispatch({
-          type: ADD_INGREDIENT_TO_ORDER,
-          //@ts-ignore
-          ingredient: item.info
-        })
+
+        // @ts-ignore
+        dispatch(addIngredientToOrderAction(item.info))
       }
     },
   });
@@ -91,8 +76,11 @@ const BurgerConstructor: FC = () => {
         </div>
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
           if (isAuthSuccess) {
-            //@ts-ignore
-            dispatch(postOrder(accessToken, [selectedBun._id, selectedIngredients.map((item:TBurgerIngredientInfo) => item._id)].flat()));
+
+            // @ts-ignore
+            dispatch(postOrder(accessToken, [selectedBun._id, selectedIngredients.map((item: TBurgerIngredientInfo) => item._id)].flat()));
+
+
             setModalOrderActive(true);
           } else {
             window.localStorage.setItem('BURGER_SELECTED_BUN', JSON.stringify(selectedBun));

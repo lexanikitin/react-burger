@@ -2,10 +2,15 @@ import React, {FC, useRef} from 'react';
 import clsx from "clsx";
 import BrgCnstrIngrStyle from "./burger-constructor-ingredient.module.css";
 import {ConstructorElement, DragIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {DRAG_SELECTED_INGREDIENT_TO_POSITION, REMOVE_INGREDIENT_FROM_ORDER} from "../../services/actions/order";
-import {useDispatch} from "react-redux";
+import {
+  DRAG_SELECTED_INGREDIENT_TO_POSITION,
+  dragSelectedIngredientToPositionAction,
+  REMOVE_INGREDIENT_FROM_ORDER, removeIngredientToOrderAction
+} from "../../services/actions/order";
+
 import {useDrag, useDrop} from "react-dnd";
 import {TBurgerIngredientInfo} from "../../utils/types";
+import {useDispatch} from "../../services/hooks";
 
 type TBurgerConstructorIngredient = {
   item:TBurgerIngredientInfo;
@@ -50,21 +55,14 @@ const BurgerConstructorIngredient:FC<TBurgerConstructorIngredient> = ({item, ind
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return;
       }
-      dispatch({
-        type: DRAG_SELECTED_INGREDIENT_TO_POSITION,
-        dragged: dragIndex,
-        hovered: hoverIndex
-      });
+      dispatch(dragSelectedIngredientToPositionAction(dragIndex, hoverIndex))
       item.index = hoverIndex;
     },
   });
   const opacity = isDragging ? 0 : 1
   drag(drop(ref));
   const handleDeleteIngredient = (index:number) => {
-    dispatch({
-      type: REMOVE_INGREDIENT_FROM_ORDER,
-      index: index
-    })
+    dispatch(removeIngredientToOrderAction(index));
   }
   return (
     <li ref={ref} style={{opacity}} className={clsx(BrgCnstrIngrStyle.editedItem)} data-handler-id={handlerId}>

@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 import styles from "../order-details/order-details.module.css";
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,7 +8,6 @@ import {TBurgerIngredientInfo} from "../../utils/types";
 
 const ProfileOrderDetails:FC = () => {
   const navigate = useNavigate();
-  //@ts-ignore
   const {modalSelected} = useSelector(store => store.privateFeed);
   useEffect(() => {
     if (modalSelected.order._id) {

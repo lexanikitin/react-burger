@@ -2,10 +2,10 @@ import React, {FC} from 'react';
 import styles from './order-info.module.css'
 import clsx from "clsx";
 import doneImg from '../../images/done.svg'
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 
 const OrderInfo: FC = () => {
-  //@ts-ignore
+
   const {orderNumber} = useSelector(store => store.order);
 
   return (

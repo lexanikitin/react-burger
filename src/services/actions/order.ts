@@ -87,7 +87,10 @@ interface IDragSelectedIngredientToPositionAction {
   readonly dragged: number;
   readonly hovered: number;
 }
-
+export const dragSelectedIngredientToPositionAction = (dragged: number, hovered: number): IDragSelectedIngredientToPositionAction => ({
+  type: DRAG_SELECTED_INGREDIENT_TO_POSITION,
+  dragged, hovered
+});
 export type TOrderActions =
   IAddIngredientToOrderAction
   | IRestoreTngredientToOrderAction
@@ -100,6 +103,7 @@ export type TOrderActions =
 
 export const postOrder: AppThunk =
   (accessToken: string, orderContent: string[]) => (dispatch: AppDispatch) => {
+    console.log('postOrder')
     const refToken = getCookie('burgerRefreshToken');
     dispatch(orderRequestAction());
     postOrderToApi(accessToken, orderContent).then(
@@ -111,6 +115,7 @@ export const postOrder: AppThunk =
         if (refToken) {
           //@ts-ignore
           dispatch(postRefreshTokenToApi(refToken))
+
         }
       } else {
         console.log(e.message);

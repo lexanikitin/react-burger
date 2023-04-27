@@ -2,10 +2,11 @@ import React, {FC, useMemo} from 'react';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import cardStyles from './burger-ingredient.module.css'
 import clsx from "clsx";
-import {useDispatch, useSelector} from "react-redux";
-import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
+
+import {MODAL_SET_CURRENT_INGREDIENT, setCurrentIngredientAction} from "../../services/actions/modal";
 import {useDrag} from "react-dnd";
 import {TBurgerIngredientInfo} from "../../utils/types";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 type TBurgerIngredient = {
   info: TBurgerIngredientInfo;
@@ -13,7 +14,6 @@ type TBurgerIngredient = {
 }
 const BurgerIngredient: FC<TBurgerIngredient> = ({info, setModalActive}) => {
   const dispatch = useDispatch();
-  //@ts-ignore
   const {selectedIngredients, selectedBun} = useSelector(store => store.order);
   const count = useMemo<number | undefined>(() => {
     return [selectedIngredients, selectedBun].flat().filter((item: TBurgerIngredientInfo) => item._id === info._id).length
@@ -27,10 +27,7 @@ const BurgerIngredient: FC<TBurgerIngredient> = ({info, setModalActive}) => {
   });
   return (
     <li ref={drag} className={clsx(cardStyles.card)} onClick={() => {
-      dispatch({
-        type: MODAL_SET_CURRENT_INGREDIENT,
-        currentData: info
-      })
+      dispatch(setCurrentIngredientAction(info));
       setModalActive(true);
     }}>
       {count ? <Counter count={count} size={"default"} extraClass="m-1"/> : ''}

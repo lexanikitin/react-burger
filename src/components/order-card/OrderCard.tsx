@@ -3,14 +3,15 @@ import styles from './order-card.module.css'
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {orderReducer} from "../../services/reducers/order";
-import {useDispatch, useSelector} from "react-redux";
+
 import BrgCnstrStyle from "../burger-constructor/burger-constructor.module.css";
 import OrderPics from "../order-pics/OrderPics";
 import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
-import {FEED_SET_CURRENT_ORDER} from "../../services/actions/feed";
+import {FEED_SET_CURRENT_ORDER, feedSetCurrentOrderAction} from "../../services/actions/feed";
 import {useLocation} from "react-router-dom";
-import {PRIVATE_FEED_SET_CURRENT_ORDER} from "../../services/actions";
+import {PRIVATE_FEED_SET_CURRENT_ORDER, privateFeedSetCurrentOrderAction} from "../../services/actions";
 import {TBurgerIngredientInfo, TOrder} from "../../utils/types";
+import {useDispatch, useSelector} from "../../services/hooks";
 
 type TOrderCard = {
   order: TOrder;
@@ -19,39 +20,32 @@ type TOrderCard = {
 const OrderCard: FC<TOrderCard> = ({order, setModalActive}) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  //@ts-ignore
+
   const {ingredientsList} = useSelector(store => store.list);
+  // @ts-ignore
   const ingList = useMemo<TBurgerIngredientInfo[]>(() => {
-    return order.ingredients.map((item:string, index:number) => {
-      return ingredientsList.find((el:TBurgerIngredientInfo) => {
+    return order.ingredients.map((item: string, index: number) => {
+      return ingredientsList.find((el: TBurgerIngredientInfo) => {
         return el._id === item
       });
     })
   }, [order, ingredientsList])
 
   const orderSum = useMemo(() => {
-    return ingList.reduce((prev:number, curr:TBurgerIngredientInfo) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0)
+
+    // @ts-ignore
+    return ingList ? ingList.reduce((prev:number, curr) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0) : 0
 
   }, [ingList])
 
   return (
     <li className={clsx(styles.card, 'pt-6', 'pr-6', 'pb-6', 'pl-6', 'mr-2')} onClick={() => {
       if (location.pathname === '/feed') {
-        dispatch({
-          type: FEED_SET_CURRENT_ORDER,
-          selectedOrder: order,
-          selectedList: ingList,
-          selectedTotal: orderSum,
-        })
+        dispatch(feedSetCurrentOrderAction(order, ingList, orderSum))
         setModalActive(true);
       }
       if (location.pathname === '/profile/orders') {
-        dispatch({
-          type: PRIVATE_FEED_SET_CURRENT_ORDER,
-          selectedOrder: order,
-          selectedList: ingList,
-          selectedTotal: orderSum,
-        })
+        dispatch(privateFeedSetCurrentOrderAction(order, ingList, orderSum))
         setModalActive(true);
       }
     }}>

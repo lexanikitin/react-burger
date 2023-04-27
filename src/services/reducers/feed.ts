@@ -12,7 +12,7 @@ type TInitialStateFeed = {
   total: number,
   totalToday: number,
   modalSelected: {
-    order: TOrder|{},
+    order: TOrder,
     ingredients: TBurgerIngredientInfo[],
     total: number
   },
@@ -26,7 +26,15 @@ const initialStateFeed:TInitialStateFeed = {
   total: 1,
   totalToday: 1,
   modalSelected: {
-    order: {},
+    order: {
+      ingredients: [''],
+      _id: '',
+      status: 'created',
+      number: 0,
+      createdAt: '',
+      updatedAt: '',
+      name: '',
+    },
     ingredients: [],
     total: 0
   },
@@ -52,7 +60,15 @@ export const feedReducer = (state:TInitialStateFeed = initialStateFeed, action:T
       return {
         ...state,
         modalSelected: {
-          order: {},
+          order: {
+            ingredients: [''],
+            _id: '',
+            status: 'created',
+            number: 0,
+            createdAt: '',
+            updatedAt: '',
+            name: '',
+          },
           ingredients: [],
           total: 0
         }

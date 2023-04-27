@@ -1,12 +1,12 @@
 import React, {FC, useEffect} from 'react';
 import styles from './order-details.module.css';
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 import {TBurgerIngredientInfo} from "../../utils/types";
 
 const OrderDetails : FC = () => {
-  //@ts-ignore
+
     const {modalSelected} = useSelector(store => store.feed);
     useEffect(() => {
       if (modalSelected.order._id) {

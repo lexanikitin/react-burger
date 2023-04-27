@@ -1,9 +1,9 @@
 import {Middleware, MiddlewareAPI} from "redux";
 import {TFeedActions, TPrivateFeedActions} from "../action-types";
-import {AppDispatch, RootState} from "../types";
+import {AppDispatch, TRootState} from "../types";
 
 export const socketMiddleware = (wsUrl:string, wsActions:TFeedActions|TPrivateFeedActions):Middleware => {
-  return (store:MiddlewareAPI<AppDispatch, RootState>) => {
+  return (store:MiddlewareAPI<AppDispatch, TRootState>) => {
     let socket:WebSocket|null = null;
 
     return next => action => {

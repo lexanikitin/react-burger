@@ -1,10 +1,10 @@
 import React, {FC, useEffect} from 'react';
 import IngDetailsStyles from './ingredient-details.module.css'
 import clsx from "clsx";
-import {useSelector} from "react-redux";
+import {useSelector} from "../../services/hooks";
 
 const IngredientDetails :FC = () => {
-// @ts-ignore
+
   const {modalDetailsCurrentData} = useSelector(store => store.modals);
 
   useEffect(() => {

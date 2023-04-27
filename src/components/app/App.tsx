@@ -15,8 +15,6 @@ import NotFound from "../../pages/notFound/NotFound";
 import Ingredient from "../../pages/ingredient/Ingredient";
 import Feed from "../../pages/feed/Feed";
 import OrderInfo from "../../pages/order-info/OrderInfo";
-import PrivateOrderDetails from "../private-order-details/PrivateOrderDetails";
-import ProfileOrderDetails from "../profile-order-details/ProfileOrderDetails";
 import PrivateOrderInfo from "../../pages/private-order-info/PrivateOrderInfo";
 
 function App():JSX.Element {
