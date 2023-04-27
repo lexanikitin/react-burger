@@ -26,7 +26,7 @@ const Login:FC = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
         e.preventDefault();
-        // @ts-ignore
+
         dispatch(postLogin(formValue.email, formValue.password))
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Вход</h1>

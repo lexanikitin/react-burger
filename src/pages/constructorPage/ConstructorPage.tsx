@@ -12,7 +12,7 @@ const ConstructorPage:FC = () => {
   const {isRequested, isFailed} = useSelector(store => store.list);
   useEffect(() => {
 
-    // @ts-ignore
+
     dispatch(getIngredientsList());
   }, []);
 

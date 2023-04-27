@@ -26,7 +26,6 @@ const Profile:FC = () => {
     if (!refreshToken || refreshToken === 'null') {
       navigate('/login');
     }
-    // @ts-ignore
     dispatch(getProfile(accessToken))
 
   }, [accessToken])
@@ -108,7 +107,6 @@ const Profile:FC = () => {
                          className={clsx(styles.link, 'text', 'text_type_main-medium')}
                          onClick={(e) => {
                            e.preventDefault();
-                           // @ts-ignore
                            dispatch(postLogout())
                          }}>
                   Выход

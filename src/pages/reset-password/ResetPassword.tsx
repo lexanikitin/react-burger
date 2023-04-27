@@ -33,7 +33,7 @@ const ResetPassword:FC = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e) => {
         e.preventDefault();
-        // @ts-ignore
+
         dispatch(postResetPassword(formValue.password, formValue.token));
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Восстановление пароля</h1>

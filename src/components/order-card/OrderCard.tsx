@@ -22,20 +22,22 @@ const OrderCard: FC<TOrderCard> = ({order, setModalActive}) => {
   const dispatch = useDispatch();
 
   const {ingredientsList} = useSelector(store => store.list);
+
   // @ts-ignore
   const ingList = useMemo<TBurgerIngredientInfo[]>(() => {
-    return order.ingredients.map((item: string, index: number) => {
-      return ingredientsList.find((el: TBurgerIngredientInfo) => {
-        return el._id === item
-      });
-    })
+    if (ingredientsList) {
+      return order.ingredients.map((item: string, index: number) => {
+        return ingredientsList.find((el: TBurgerIngredientInfo) => {
+          return el._id === item
+        });
+      })
+    } else {
+      return []
+    }
   }, [order, ingredientsList])
 
   const orderSum = useMemo(() => {
-
-    // @ts-ignore
-    return ingList ? ingList.reduce((prev:number, curr) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0) : 0
-
+    return ingList ? ingList.reduce((prev: number, curr: any) => curr.type === 'bun' ? prev + curr.price * 2 : prev + curr.price, 0) : 0
   }, [ingList])
 
   return (

@@ -41,14 +41,11 @@ const BurgerConstructor: FC = () => {
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    drop(item) {
-      //@ts-ignore
+    drop(item:any) {
+      console.log(item);
       if (item.info.type === 'bun') {
-        // @ts-ignore
         dispatch(changeBunAction(item.info))
       } else {
-
-        // @ts-ignore
         dispatch(addIngredientToOrderAction(item.info))
       }
     },
@@ -77,7 +74,7 @@ const BurgerConstructor: FC = () => {
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
           if (isAuthSuccess) {
 
-            // @ts-ignore
+
             dispatch(postOrder(accessToken, [selectedBun._id, selectedIngredients.map((item: TBurgerIngredientInfo) => item._id)].flat()));
 
 

@@ -28,7 +28,6 @@ const ProfileInfo:FC = () => {
           }}
           onSubmit={(e) => {
             e.preventDefault();
-            // @ts-ignore
             dispatch(patchProfile(accessToken, formValue.name, formValue.email, formValue.password))
           }}>
       <Input type={"text"} extraClass={``} placeholder={'Имя'} value={formValue.name} name={"name"}

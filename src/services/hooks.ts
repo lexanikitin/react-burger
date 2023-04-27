@@ -8,8 +8,9 @@ import {ThunkDispatch} from "redux-thunk";
 
 type TAppDispatch = ThunkDispatch<TRootState, never, TAllOfActions>
 export const useSelector: TypedUseSelectorHook<TRootState> = selectorHook;
-export const useDispatch = () => dispatchHook<TAppDispatch>();
+//export const useDispatch = () => dispatchHook<TAppDispatch>();
 
 
 
-//export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();
+// @ts-ignore
+export const useDispatch = () => dispatchHook<AppDispatch | AppThunk>();

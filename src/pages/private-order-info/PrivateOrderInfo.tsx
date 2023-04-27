@@ -32,7 +32,6 @@ const PrivateOrderInfo:FC = () => {
       }
       console.log(id)
 
-      // @ts-ignore
       dispatch(getIngredientsList());
       dispatch(wsPrivateFeedConnectionStartAction)
       return () => {

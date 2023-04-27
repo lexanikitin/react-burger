@@ -25,7 +25,6 @@ const OrderInfo:FC = () => {
       if (window.localStorage.getItem('MODAL_FEED_ORDER_STATE') !== null) {
         navigate('/feed', {state: window.localStorage.getItem('MODAL_FEED_ORDER_STATE')});
       }
-      // @ts-ignore
       dispatch(getIngredientsList());
       dispatch(wsFeedConnectionStartAction)
       return () => {

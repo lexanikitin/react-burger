@@ -22,7 +22,7 @@ const Register:FC = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
         e.preventDefault();
-        // @ts-ignore
+
         dispatch(postRegister(formValue.email, formValue.password, formValue.name));
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Регистрация</h1>

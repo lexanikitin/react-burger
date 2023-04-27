@@ -8,27 +8,29 @@ import {MODAL_SET_CURRENT_INGREDIENT} from "../../services/actions/modal";
 import IngredientDetailsOnPage from "../../components/ingredient-details-on-page/IngredientDetailsOnPage";
 import {TBurgerIngredientInfo} from "../../utils/types";
 
-const Ingredient:FC = () => {
+const Ingredient: FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [currentData, setCurrentData] = useState<TBurgerIngredientInfo>();
     const {ingredientsList, isSuccessful} = useSelector(store => store.list);
 
-    let {id} = useParams();
+    let {id} = useParams<{ id: string }>();
 
     useEffect(() => {
       if (window.localStorage.getItem('MODAL_INGREDIENT_STATE') !== null) {
         navigate('/', {state: window.localStorage.getItem('MODAL_INGREDIENT_STATE')});
       }
 
-      // @ts-ignore
+
       dispatch(getIngredientsList());
     }, []);
 
     useEffect(() => {
       if (ingredientsList) {
-        // @ts-ignore
-        setCurrentData(ingredientsList.find((item:TBurgerIngredientInfo) => item._id === id.substring(1)));
+
+          // @ts-ignore
+        setCurrentData(ingredientsList.find((item: TBurgerIngredientInfo) => item._id === id.substring(1)));
+
       }
     }, [isSuccessful])
 

@@ -29,7 +29,6 @@ const ProfileOrders: FC = () => {
 
   useEffect(() => {
     if (ingredientsList[0] === undefined) {
-      // @ts-ignore
       dispatch(getIngredientsList());
     }
     dispatch(wsPrivateFeedConnectionStartAction)
