@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Button, EmailInput, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from 'react-router-dom';
 import styles from './login.module.css'
 import clsx from "clsx";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {postLogin} from "../../services/actions/auth";
 
-const Login = () => {
+const Login:FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formValue, setFormValue] = useState({email: '', password: ''});
+  const [formValue, setFormValue] = useState<{email:string, password:string}>({email: '', password: ''});
   const {loginIsSuccess} = useSelector(store => store.auth);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const Login = () => {
     }
   }, [loginIsSuccess])
 
-  const onChange = (e) => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }
 
@@ -26,6 +26,7 @@ const Login = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
         e.preventDefault();
+        // @ts-ignore
         dispatch(postLogin(formValue.email, formValue.password))
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Вход</h1>

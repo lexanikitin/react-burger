@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {NavLink, Outlet, useLocation, useNavigate, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import styles from './profile.module.css'
 import clsx from "clsx";
 import {getCookie} from "../../utils/cookies";
@@ -10,14 +10,14 @@ import {getIngredientsList, PRIVATE_FEED_SET_CURRENT_ORDER} from "../../services
 import {WS_PRIVATE_FEED_CONNECTION_CLOSED, WS_PRIVATE_FEED_CONNECTION_START} from "../../services/action-types";
 import PrivateOrderDetails from "../../components/private-order-details/PrivateOrderDetails";
 
-const Profile = () => {
+const Profile:FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
   const refreshToken = getCookie('burgerRefreshToken');
   const accessToken = getCookie('burgerAccessToken');
   const {logoutIsSuccess} = useSelector(store => store.auth);
-  const [isOrderDetailsActive, setOrderDetailsActive] = useState(false);
+  const [isOrderDetailsActive, setOrderDetailsActive] = useState<boolean>(false);
   const {ingredientsList} = useSelector(store => store.list);
   const {ordersPr} = useSelector(store => store.privateFeed);
 
@@ -26,6 +26,7 @@ const Profile = () => {
     if (!refreshToken || refreshToken === 'null') {
       navigate('/login');
     }
+    // @ts-ignore
     dispatch(getProfile(accessToken))
 
   }, [accessToken])
@@ -73,6 +74,7 @@ const Profile = () => {
 */
 
 
+  // @ts-ignore
   const choosingStyles = ({isActive}) =>
     isActive ?
       clsx(styles.link, 'text', 'text_type_main-medium', styles.link_active)
@@ -106,6 +108,7 @@ const Profile = () => {
                          className={clsx(styles.link, 'text', 'text_type_main-medium')}
                          onClick={(e) => {
                            e.preventDefault();
+                           // @ts-ignore
                            dispatch(postLogout())
                          }}>
                   Выход

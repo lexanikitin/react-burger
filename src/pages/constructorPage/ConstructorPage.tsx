@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {getIngredientsList} from "../../services/actions/list";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
@@ -9,9 +9,9 @@ import BurgerConstructor from "../../components/burger-constructor/BurgerConstru
 
 const ConstructorPage:FC = () => {
   const dispatch = useDispatch();
-  //@ts-ignore
   const {isRequested, isFailed} = useSelector(store => store.list);
   useEffect(() => {
+
     // @ts-ignore
     dispatch(getIngredientsList());
   }, []);

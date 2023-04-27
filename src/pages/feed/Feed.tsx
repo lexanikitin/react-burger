@@ -1,12 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {FC, useEffect} from 'react';
 import styles from "./feed.module.css";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {getIngredientsList} from "../../services/actions/list";
 import clsx from "clsx";
 import FeedList from "../../components/feed-list/FeedList";
-import {WS_FEED_CONNECTION_CLOSED, WS_FEED_CONNECTION_START} from "../../services/action-types";
+import {
+  wsFeedConnectionClosedAction,
+  wsFeedConnectionStartAction
+} from "../../services/action-types";
 
-const Feed = () => {
+const Feed:FC = () => {
   const dispatch = useDispatch();
   const {isSuccessful} = useSelector(store => store.list);
   const {ingredientsList} = useSelector(store => store.list);
@@ -14,11 +17,12 @@ const Feed = () => {
 
   useEffect(() => {
     if (ingredientsList[0] === undefined) {
+      // @ts-ignore
       dispatch(getIngredientsList());
     }
-    dispatch({type: WS_FEED_CONNECTION_START})
+    dispatch(wsFeedConnectionStartAction)
     return () => {
-      dispatch({type: WS_FEED_CONNECTION_CLOSED})
+      dispatch(wsFeedConnectionClosedAction)
     }
 
   }, []);

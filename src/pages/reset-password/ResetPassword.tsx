@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import styles from './reset-password.module.css'
 import clsx from "clsx";
 import {Button, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useLocation, useNavigate} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 import {postResetPasswordToApi} from "../../utils/burger-api";
 import {postResetPassword} from "../../services/actions/auth";
 
-const ResetPassword = () => {
+const ResetPassword:FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const [formValue, setFormValue] = useState({password: '', token: ''});
-  const onChange = (e) => {
+  const [formValue, setFormValue] = useState<{password: string, token: string}>({password: '', token: ''});
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }
   const {resetPasswordIsSuccess} = useSelector(store => store.auth);
@@ -33,6 +33,7 @@ const ResetPassword = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e) => {
         e.preventDefault();
+        // @ts-ignore
         dispatch(postResetPassword(formValue.password, formValue.token));
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Восстановление пароля</h1>

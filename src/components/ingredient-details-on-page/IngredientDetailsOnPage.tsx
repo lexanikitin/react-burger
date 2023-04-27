@@ -4,7 +4,7 @@ import clsx from "clsx";
 import {TBurgerIngredientInfo} from "../../utils/types";
 
 type TIngredientDetailsOnPage = {
-  info: TBurgerIngredientInfo;
+  info: TBurgerIngredientInfo|undefined;
 }
 const IngredientDetailsOnPage: FC<TIngredientDetailsOnPage> = ({info}) => {
 

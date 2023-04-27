@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
-import {useSelector} from "react-redux";
+import React, {FC, useEffect} from 'react';
+import {useSelector} from "../../services/hooks";
 import styles from "./order-details-page.module.css";
 import clsx from "clsx";
 import {CurrencyIcon, FormattedDate} from "@ya.praktikum/react-developer-burger-ui-components";
 
-const OrderDetailsPage = () => {
+const OrderDetailsPage:FC = () => {
   const {modalSelected} = useSelector(store => store.feed);
 
   return (

@@ -14,6 +14,7 @@ import {TWSFeedActions, TWSPrivateFeedActions} from "../action-types";
 
 export type TAllOfActions = TListActions|TModalActions|TOrderActions|TTabsActions|TAuthActions|TWSFeedActions|TWSPrivateFeedActions|TFeedActions|TPrivateFeedActions;
 export type TRootState = ReturnType<typeof store.getState>;
-export type dispatch = <ReturnType = void>(action: TAllOfActions | AppThunk) => ReturnType;
 export type AppThunk<ReturnType = void> = ActionCreator<ThunkAction<ReturnType, Action, TRootState, TAllOfActions>>;
+export type dispatch = <ReturnType = void>(action: TAllOfActions | AppThunk) => ReturnType;
+
 export type AppDispatch = Dispatch<TAllOfActions>;

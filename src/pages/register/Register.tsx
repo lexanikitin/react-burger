@@ -1,18 +1,18 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import styles from './register.module.css'
 import clsx from "clsx";
 import {Button, EmailInput, Input, PasswordInput} from "@ya.praktikum/react-developer-burger-ui-components";
 import {Link, useNavigate} from "react-router-dom";
 import {postRegister} from "../../services/actions/auth";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "../../services/hooks";
 
-const Register = () => {
+const Register:FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [formValue, setFormValue] = useState({email: '', name: '', password: ''});
+  const [formValue, setFormValue] = useState<{email: string, name: string, password: string}>({email: '', name: '', password: ''});
   const {registerIsSuccess} = useSelector(store => store.auth);
 
-  const onChange = (e) => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setFormValue({...formValue, [e.target.name]: e.target.value});
   }
   useEffect(()=>{
@@ -22,6 +22,7 @@ const Register = () => {
     <div className={styles.wrapper}>
       <form className={clsx(styles.form, 'pb-20')} onSubmit={(e)=>{
         e.preventDefault();
+        // @ts-ignore
         dispatch(postRegister(formValue.email, formValue.password, formValue.name));
       }}>
         <h1 className={'pb-6 text text_type_main-medium'}>Регистрация</h1>

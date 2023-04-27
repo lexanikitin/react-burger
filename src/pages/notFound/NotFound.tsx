@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {FC} from 'react';
 import styles from "../login/login.module.css";
 import {Link} from "react-router-dom";
 import clsx from "clsx";
 
-const NotFound = () => {
+const NotFound:FC = () => {
   return (
     <div className={styles.wrapper}>
       <h1 className={'pb-6 text text_type_main-medium'}>Страница не найдена</h1>
