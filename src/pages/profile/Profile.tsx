@@ -72,9 +72,7 @@ const Profile:FC = () => {
   }, [location.state])
 */
 
-
-  // @ts-ignore
-  const choosingStyles = ({isActive}) =>
+  const choosingStyles = ({isActive}:{isActive: boolean}):string =>
     isActive ?
       clsx(styles.link, 'text', 'text_type_main-medium', styles.link_active)
       :
