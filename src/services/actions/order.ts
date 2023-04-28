@@ -4,6 +4,8 @@ import {TBurgerIngredientInfo} from "../../utils/types";
 import {MODAL_SET_CURRENT_INGREDIENT} from "./modal";
 import {GET_INGREDIENTS_LIST_REQUEST} from "./list";
 import {AppDispatch, AppThunk} from "../types";
+import {refreshToken} from "./auth";
+import {useDispatch} from "../hooks";
 
 
 export const ADD_INGREDIENT_TO_ORDER: 'ADD_INGREDIENT_TO_ORDER' = 'ADD_INGREDIENT_TO_ORDER';
@@ -113,9 +115,8 @@ export const postOrder: AppThunk =
     ).catch(e => {
       if (e === 'Код ошибки: 401') {
         if (refToken) {
-          //@ts-ignore
-          dispatch(postRefreshTokenToApi(refToken))
-
+          const dispatch = useDispatch();
+          dispatch(refreshToken(refToken))
         }
       } else {
         console.log(e.message);

@@ -74,9 +74,7 @@ const BurgerConstructor: FC = () => {
         <Button htmlType="button" type="primary" size="large" extraClass="ml-10 mr-4" onClick={() => {
           if (isAuthSuccess) {
 
-
             dispatch(postOrder(accessToken, [selectedBun._id, selectedIngredients.map((item: TBurgerIngredientInfo) => item._id)].flat()));
-
 
             setModalOrderActive(true);
           } else {

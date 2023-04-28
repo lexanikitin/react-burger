@@ -38,8 +38,7 @@ export const getIngredientsListActionFailed = (): IGetIngredientsListActionFaile
 });
 
 
-export const getIngredientsList: AppThunk =
-  () => (dispatch: AppDispatch) => {
+export const getIngredientsList: AppThunk =  () => (dispatch: AppDispatch) => {
     dispatch(getIngredientsListActionRequest());
     getIngredientsFromApi().then(
       data => {

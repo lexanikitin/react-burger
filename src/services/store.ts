@@ -20,9 +20,9 @@ import {
 } from './action-types';
 import {getCookie} from "../utils/cookies";
 
-const wsFeedUrl:string = 'wss://norma.nomoreparties.space/orders/all';
+const wsFeedUrl: string = 'wss://norma.nomoreparties.space/orders/all';
 
-const wsFeedActions:TFeedActions = {
+const wsFeedActions: TFeedActions = {
   wsInit: WS_FEED_CONNECTION_START,
   wsSendMessage: WS_FEED_SEND_MESSAGE,
   onOpen: WS_FEED_CONNECTION_SUCCESS,
@@ -30,10 +30,10 @@ const wsFeedActions:TFeedActions = {
   onError: WS_FEED_CONNECTION_ERROR,
   onMessage: WS_FEED_GET_MESSAGE
 };
-const accessToken:string = getCookie('burgerAccessToken')
-const wsPrivateFeedUrl:string = `wss://norma.nomoreparties.space/orders?token=${accessToken}`;
+const accessToken: string = getCookie('burgerAccessToken')
+const wsPrivateFeedUrl: string = `wss://norma.nomoreparties.space/orders?token=${accessToken}`;
 
-const wsPrivateFeedActions:TPrivateFeedActions = {
+const wsPrivateFeedActions: TPrivateFeedActions = {
   wsInit: WS_PRIVATE_FEED_CONNECTION_START,
   wsSendMessage: WS_PRIVATE_FEED_SEND_MESSAGE,
   onOpen: WS_PRIVATE_FEED_CONNECTION_SUCCESS,
@@ -43,10 +43,13 @@ const wsPrivateFeedActions:TPrivateFeedActions = {
 };
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 export const initStore = (initialState = {}) =>
-  createStore(rootReducer, initialState, composeEnhancers(
-    applyMiddleware(
-      thunkMiddleware,
-      socketMiddleware(wsFeedUrl, wsFeedActions),
-      socketMiddleware(wsPrivateFeedUrl, wsPrivateFeedActions)
-    )));
+  createStore(
+    rootReducer,
+    initialState,
+    composeEnhancers(
+      applyMiddleware(
+        thunkMiddleware,
+        socketMiddleware(wsFeedUrl, wsFeedActions),
+        socketMiddleware(wsPrivateFeedUrl, wsPrivateFeedActions)
+      )));
 

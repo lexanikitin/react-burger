@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 import {GET_INGREDIENTS_LIST_REQUEST} from "./list";
 import {TResponseAuthUser, TResponseGetProfile, TResponseRefreshToken, TUser} from "../../utils/types";
 import {AppDispatch, AppThunk} from "../types";
+import {useDispatch} from "../hooks";
 
 export const AUTH_FORGOT_PASSWORD_REQUEST: 'AUTH_FORGOT_PASSWORD_REQUEST' = 'AUTH_FORGOT_PASSWORD_REQUEST';
 export const AUTH_FORGOT_PASSWORD_SUCCESS: 'AUTH_FORGOT_PASSWORD_SUCCESS' = 'AUTH_FORGOT_PASSWORD_SUCCESS';
@@ -360,8 +361,8 @@ export const getProfile: AppThunk = (accessToken) =>
       if (e === 'Код ошибки: 401') {
         if (refToken) {
 
-
-          refreshToken(refToken)
+          const dispatch = useDispatch();
+          dispatch(refreshToken(refToken))
         }
       } else {
         console.log(e.message);
@@ -380,7 +381,7 @@ export const patchProfile: AppThunk = (accessToken: string, name: string, email:
     }).catch(e => {
       if (e === 'Код ошибки: 401') {
         if (refToken) {
-          // @ts-ignore
+          const dispatch = useDispatch();
           dispatch(refreshToken(refToken))
         }
       } else {
